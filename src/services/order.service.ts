@@ -1,6 +1,6 @@
 import { OrderCreateRequest, OrderFilter } from '~/dto';
 import { BASE_URL, httpService } from '~/services/index.ts';
-import { ORDER_STATUS } from '~/shared/model/common.model.ts';
+import { ORDER_STATUS } from '~/constants';
 
 export const orderService = {
   createMyOrder: (payload: OrderCreateRequest) => {

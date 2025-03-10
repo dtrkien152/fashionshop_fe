@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, Input, Button } from 'antd';
-import { IUserState, login } from '~/shared/reducers/authReducer';
+import { IUserState, login } from '~/redux';
 import AvatarUpload from './AvatarUpload';
 import userService from "~/services/user.service.ts";
 import toast from 'react-hot-toast';

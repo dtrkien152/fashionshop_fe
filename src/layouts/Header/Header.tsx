@@ -5,7 +5,7 @@ import $ from 'jquery';
 import { ICategoryModel } from '../../dto';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '~/redux/store.ts';
-import { logout } from '~/shared/reducers/authReducer.ts';
+import { logout } from '~/redux';
 import { categoryService } from '~/services';
 import ProfileModal from "~/pages/AuthPage/ProfilePage/ProfileModal.tsx";
 import {useNavigate} from "react-router-dom";

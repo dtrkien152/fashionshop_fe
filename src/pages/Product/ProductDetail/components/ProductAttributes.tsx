@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { IProductSubDetailResponse } from '~/shared/model/product.model.ts';
+import { IProductSubDetailResponse } from '~/dto';
 
 export interface Props {
   productSubDetails: IProductSubDetailResponse[];

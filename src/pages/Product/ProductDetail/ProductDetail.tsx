@@ -3,7 +3,7 @@ import {useParams} from 'react-router-dom';
 import productService from '~/services/product.service.ts';
 import ProductSection from '~/pages/Product/ProductDetail/components/ProductSection.tsx';
 import RecommendProducts from '~/pages/Product/ProductDetail/components/RecommendProducts.tsx';
-import {IProductDetailResponse} from '~/shared/model/product.model.ts';
+import {IProductDetailResponse} from '~/dto';
 
 const ProductDetail = () => {
     const {id} = useParams<{ id: string }>();

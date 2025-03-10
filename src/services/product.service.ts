@@ -1,6 +1,6 @@
 import { BASE_URL, httpService } from '~/services/index.ts';
-import { SORT_BY_ENUM } from '~/shared/model/common.model.ts';
-import { IProductSearchParam } from '~/shared/model/product.model.ts';
+import { IProductSearchParam } from '~/dto';
+import { SORT_BY_ENUM } from '~/constants';
 
 const productService = {
   getArrival: () => {

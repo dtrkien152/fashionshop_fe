@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { ROUTER_PATH } from '~/routes';
 import { useSelector } from 'react-redux';
 import { RootState } from '~/redux/store.ts';
-import { formatCurrencyVND } from '~/shared/utils/stringformat.ts';
+import { CurrencyUtils } from '~/utils';
 
 const OrderProductSection = () => {
   const { products } = useSelector((state: RootState) => state.cart);
@@ -108,23 +108,23 @@ const OrderProductSection = () => {
                 <div className="cr-checkout-summary">
                   <div>
                     <span className="text-left">Sub-Total</span>
-                    <span className="text-right">{formatCurrencyVND(1000000 * 0.9)}</span>
+                    <span className="text-right">{CurrencyUtils.formatCurrencyVND(1000000 * 0.9)}</span>
                   </div>
                   <div>
                     <span className="text-left">VAT (10%): </span>
-                    <span className="text-right">{formatCurrencyVND(1000000 * 0.1)}</span>
+                    <span className="text-right">{CurrencyUtils.formatCurrencyVND(1000000 * 0.1)}</span>
                   </div>
                   <div>
                     <span className="text-left">Delivery Charges</span>
-                    <span className="text-right">{formatCurrencyVND(30000)}</span>
+                    <span className="text-right">{CurrencyUtils.formatCurrencyVND(30000)}</span>
                   </div>
                   <div>
                     <span className="text-left">Voucher Charges</span>
-                    <span className="text-right">{formatCurrencyVND(20000)}</span>
+                    <span className="text-right">{CurrencyUtils.formatCurrencyVND(20000)}</span>
                   </div>
                   <div className="cr-checkout-summary-total">
                     <span className="text-left">Total Amount</span>
-                    <span className="text-right">{formatCurrencyVND(1000000 + 30000 - 20000)}</span>
+                    <span className="text-right">{CurrencyUtils.formatCurrencyVND(1000000 + 30000 - 20000)}</span>
                   </div>
                 </div>
               </div>

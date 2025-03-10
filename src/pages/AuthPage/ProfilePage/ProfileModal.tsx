@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Modal, Tabs, Avatar, Layout, Menu, message, Upload, Button } from 'antd';
-import { UserOutlined, HomeOutlined, LockOutlined, UploadOutlined } from '@ant-design/icons';
+import { Layout, Menu, message, Modal } from 'antd';
+import { HomeOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
 import PersonalInfoTab from '~/pages/AuthPage/ProfilePage/components/PersonalInfoTab.tsx';
 import ChangePasswordTab from '~/pages/AuthPage/ProfilePage/components/ChangePasswordTab.tsx';
 import AddressManagementTab from '~/pages/AuthPage/ProfilePage/components/AddressManagementTab.tsx';
-import { IUserState } from '~/shared/reducers/authReducer.ts';
+import { IUserState } from '~/redux';
 import { useSelector } from 'react-redux';
 import { RcFile, UploadChangeParam } from 'antd/es/upload';
 

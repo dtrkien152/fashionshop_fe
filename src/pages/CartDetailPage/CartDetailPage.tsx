@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '~/redux/store.ts';
-import { removeFromCart, updateUnit } from '~/shared/reducers/cartReducer.ts';
+import { removeFromCart, updateUnit } from '~/redux';
 import { Link } from 'react-router-dom';
 import { ROUTER_PATH } from '~/routes';
-import { formatCurrencyVND } from '~/shared/utils/stringformat.ts';
+import { CurrencyUtils } from '~/utils';
 import { cartService } from '~/services';
 import toast from 'react-hot-toast';
 import { CartDetailRequest } from '~/dto';
@@ -119,7 +119,7 @@ const CartDetailPage = () => {
                                   </td>
                                   <td className="cr-cart-price">
                                     <span className="amount">
-                                      {formatCurrencyVND(product.salePrice)}
+                                      {CurrencyUtils.formatCurrencyVND(product.salePrice)}
                                     </span>
                                   </td>
                                   <td className="cr-cart-qty">

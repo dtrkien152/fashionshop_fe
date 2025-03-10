@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '~/redux/store.ts';
 import { Link } from 'react-router-dom';
 import { ROUTER_PATH } from '~/routes';
-import { formatCurrencyVND } from '~/shared/utils/stringformat.ts';
+import { CurrencyUtils } from '~/utils';
 
 interface Props {}
 
@@ -65,8 +65,8 @@ const OrderSummary: React.FC<Props> = () => {
                       </div>
                     </div>
                     <p className="cr-price">
-                      <span className="new-price">{formatCurrencyVND(product.salePrice)}</span>{' '}
-                      <span className="old-price">{formatCurrencyVND(product.originalPrice)}</span>
+                      <span className="new-price">{CurrencyUtils.formatCurrencyVND(product.salePrice)}</span>{' '}
+                      <span className="old-price">{CurrencyUtils.formatCurrencyVND(product.originalPrice)}</span>
                     </p>
                   </div>
                 </div>

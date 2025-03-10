@@ -1,78 +1,35 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { IMAGES } from '~/images';
-import * as React from "react";
-import {IProductItemResponse} from "~/shared/model/product.model.ts";
-import {productService} from "~/services";
-import {ROUTER_PATH} from "~/routes";
-import {useNavigate} from "react-router-dom";
+import * as React from 'react';
+import { IProductItemResponse } from '~/dto';
+import { productService } from '~/services';
+import { ROUTER_PATH } from '~/routes';
+import { useNavigate } from 'react-router-dom';
 
-// const products = [
-//   {
-//     img: IMAGES.product.image9,
-//     category: 'Snacks',
-//     rating: 4.5,
-//     title: 'Best snakes with hazel nut mix pack 200gm',
-//     newPrice: '$120.25',
-//     oldPrice: '$123.25',
-//   },
-//   {
-//     img: IMAGES.product.image10,
-//     category: 'Snacks',
-//     rating: 5.0,
-//     title: 'Sweet snakes crunchy nut mix 250gm pack',
-//     newPrice: '$100.00',
-//     oldPrice: '$110.00',
-//   },
-//   {
-//     img: IMAGES.product.image11,
-//     category: 'Snacks',
-//     rating: 4.5,
-//     title: 'Best snakes with hazel nut mix pack 200gm',
-//     newPrice: '$120.25',
-//     oldPrice: '$123.25',
-//   },
-//   {
-//     img: IMAGES.product.image12,
-//     category: 'Snacks',
-//     rating: 5.0,
-//     title: 'Sweet snakes crunchy nut mix 250gm pack',
-//     newPrice: '$100.00',
-//     oldPrice: '$110.00',
-//   },
-//   {
-//     img: IMAGES.product.image13,
-//     category: 'Snacks',
-//     rating: 5.0,
-//     title: 'Sweet snakes crunchy nut mix 250gm pack',
-//     newPrice: '$100.00',
-//     oldPrice: '$110.00',
-//   },
-// ];
-
-interface Props{
-  productId:number;
+interface Props {
+  productId: number;
 }
-export default function RecommendProducts(props:Props) {
+
+export default function RecommendProducts(props: Props) {
   const [products, setProducts] = React.useState<IProductItemResponse[]>([]);
   const navigate = useNavigate();
 
   React.useEffect(() => {
     fetchProducts();
   }, []);
-  const handleNavigate = (productId) => {
+  const handleNavigate = (productId: number) => {
     navigate(ROUTER_PATH.productDetail.extract.replace(':id', productId.toString()));
   };
 
   const fetchProducts = async () => {
     productService
-        .getRecommendProduct(props.productId)
-        .then((resp) => {
-          console.log('cate ',resp.data)
-          setProducts(resp.data);
-        })
-        .catch((reason) => {
-          console.log('error fetch product ', reason);
-        });
+      .getRecommendProduct(props.productId)
+      .then((resp) => {
+        console.log('cate ', resp.data);
+        setProducts(resp.data);
+      })
+      .catch((reason) => {
+        console.log('error fetch product ', reason);
+      });
   };
   return (
     <section
@@ -89,9 +46,7 @@ export default function RecommendProducts(props:Props) {
                 <h2>Sản phẩm liên quan</h2>
               </div>
               <div className="cr-banner-sub-title">
-                <p>
-                  Những sản phẩm bạn có thể thích
-                </p>
+                <p>Những sản phẩm bạn có thể thích</p>
               </div>
             </div>
           </div>
@@ -109,7 +64,7 @@ export default function RecommendProducts(props:Props) {
                   <div className="cr-product-card">
                     <div className="cr-product-image">
                       <div className="cr-image-inner zoom-image-hover">
-                        <img src={product.thumbnailUrl} alt={product.name} />
+                        <img src={product.thumbnailUrl} alt={product.productName} />
                       </div>
                       <div className="cr-side-view">
                         <a href="#" className="wishlist">
@@ -128,9 +83,13 @@ export default function RecommendProducts(props:Props) {
                         <i className="ri-shopping-bag-line"></i>
                       </a>
                     </div>
-                    <div className="cr-product-details" onClick={()=>handleNavigate(product.id)} style={{cursor:"pointer"}}>
+                    <div
+                      className="cr-product-details"
+                      onClick={() => handleNavigate(product.id)}
+                      style={{ cursor: 'pointer' }}
+                    >
                       <div className="cr-brand">
-                        <a >{product.name}</a>
+                        <a>{product.productName}</a>
                         {/*<div className="cr-star">*/}
                         {/*  {Array.from({ length: 5 }, (_, i) => (*/}
                         {/*    <i*/}
@@ -141,8 +100,11 @@ export default function RecommendProducts(props:Props) {
                         {/*  <p>({product.rating.toFixed(1)})</p>*/}
                         {/*</div>*/}
                       </div>
-                      <a  className="title">
-                        {product.description}
+                      <a className="title">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                        consequat
                       </a>
                       <p className="cr-price">
                         <span className="new-price">{product.originalPrice}</span>{' '}

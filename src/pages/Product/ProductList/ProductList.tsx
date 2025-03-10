@@ -1,12 +1,10 @@
 import * as React from 'react';
-import { IProductItemResponse, IProductSearchParam } from '~/shared/model/product.model.ts';
-import {useNavigate, useSearchParams} from 'react-router-dom';
-import { SORT_BY_ENUM } from '~/shared/model/common.model.ts';
+import { IProductItemResponse, IProductSearchParam } from '~/dto';
+import { useSearchParams } from 'react-router-dom';
 import { productService } from '~/services';
-import { IMAGES } from '~/images';
-import {formatCurrencyVND} from "~/shared/utils/stringformat.ts";
-import {use, useState} from "react";
-import {CategorySelect} from "~/pages/Product/ProductList/components/CategorySelect.tsx";
+import { CurrencyUtils } from '~/utils';
+import { CategorySelect } from '~/pages/Product/ProductList/components/CategorySelect.tsx';
+import { SORT_BY_ENUM } from '~/constants';
 
 const DEFAULT_SEARCH_PARAMS: IProductSearchParam = {
   keyword: null,
@@ -20,7 +18,6 @@ export const ProductList = () => {
   const [products, setProducts] = React.useState<IProductItemResponse[]>([]);
   const [data, setData] = React.useState<any>({});
   const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
 
   React.useEffect(() => {
     fetchProducts().then();
@@ -29,6 +26,7 @@ export const ProductList = () => {
   React.useEffect(() => {
     fetchProducts().then();
   }, [searchParams]); // Theo dõi sự thay đổi của query param
+
   const buildSearchParams = (): IProductSearchParam => {
     return {
       keyword: searchParams.get('keyword') ?? DEFAULT_SEARCH_PARAMS.keyword,
@@ -43,11 +41,11 @@ export const ProductList = () => {
 
   const fetchProducts = async () => {
     const params = buildSearchParams();
-    const model={...params,page:params.page+1};
+    const model = { ...params, page: params.page + 1 };
     productService
       .search(model)
       .then((resp) => {
-        console.log('re ',resp.data.data);
+        console.log('re ', resp.data.data);
         setProducts(resp.data.data);
         setData(resp.data);
       })
@@ -55,7 +53,6 @@ export const ProductList = () => {
         console.log('error fetch product ', reason);
       });
   };
-
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSearchParams({
@@ -70,6 +67,7 @@ export const ProductList = () => {
       page: String(page),
     });
   };
+
   return (
     <div>
       <section className="section-shop padding-tb-100">
@@ -111,15 +109,16 @@ export const ProductList = () => {
                     </div>
                     <div className="center-content">
                       <div>
-                        <CategorySelect/>
+                        <CategorySelect />
                       </div>
-                      <span>{products.length||0} được tìm kiếm</span>
+                      <span>{products.length || 0} được tìm kiếm</span>
                     </div>
                     <div className="cr-select">
                       <label>Sắp xếp theo :</label>
-                      <select className="form-select"
-                              aria-label="Default select example"
-                              onChange={handleSortChange}
+                      <select
+                        className="form-select"
+                        aria-label="Default select example"
+                        onChange={handleSortChange}
                       >
                         <option value={SORT_BY_ENUM.NEWEST}>Mới nhất</option>
                         <option value={SORT_BY_ENUM.LATEST}>Lâu nhất</option>
@@ -131,72 +130,74 @@ export const ProductList = () => {
                 </div>
               </div>
               <div className="row col-50 mb-minus-24">
-                {products.map((product:IProductItemResponse, index) => (
-                    <div
-                        key={product.id}
-                        className="col-lg-3 col-6 cr-product-box mb-24"
-                        data-product-id={product.id} // Gắn thuộc tính động vào thẻ div
-                    >
-                      <div className="cr-product-card">
-                        <div className="cr-product-image">
-                          <div className="cr-image-inner zoom-image-hover">
-                            <img src={product.thumbnailUrl} alt={product.productName} />
-                          </div>
-                          <div className="cr-side-view">
-                            <a href="#" className="wishlist" onClick={(e) => e.preventDefault()}>
-                              <i className="ri-heart-line"></i>
-                            </a>
-                            <a
-                                className="model-oraganic-product"
-                                data-bs-toggle="modal"
-                                href="#quickview"
-                                role="button"
-                                onClick={(e) => e.preventDefault()}
-                            >
-                              <i className="ri-eye-line"></i>
-                            </a>
-                          </div>
-                          <a className="cr-shopping-bag" href="#" onClick={(e) => e.preventDefault()}>
-                            <i className="ri-shopping-bag-line"></i>
+                {products.map((product: IProductItemResponse, index) => (
+                  <div
+                    key={index}
+                    className="col-lg-3 col-6 cr-product-box mb-24"
+                    data-product-id={product.id} // Gắn thuộc tính động vào thẻ div
+                  >
+                    <div className="cr-product-card">
+                      <div className="cr-product-image">
+                        <div className="cr-image-inner zoom-image-hover">
+                          <img src={product.thumbnailUrl} alt={product.productName} />
+                        </div>
+                        <div className="cr-side-view">
+                          <a href="#" className="wishlist" onClick={(e) => e.preventDefault()}>
+                            <i className="ri-heart-line"></i>
+                          </a>
+                          <a
+                            className="model-oraganic-product"
+                            data-bs-toggle="modal"
+                            href="#quickview"
+                            role="button"
+                            onClick={(e) => e.preventDefault()}
+                          >
+                            <i className="ri-eye-line"></i>
                           </a>
                         </div>
-                        <div className="cr-product-details">
-                          <div className="cr-brand">
-                            <a href="#">{product.category}</a>
-                            <div className="cr-star">
-                              <i className="ri-star-fill"></i>
-                              <i className="ri-star-fill"></i>
-                              <i className="ri-star-fill"></i>
-                              <i className="ri-star-fill"></i>
-                              <i className="ri-star-line"></i>
-                              <p>(4.5)</p>
-                            </div>
+                        <a className="cr-shopping-bag" href="#" onClick={(e) => e.preventDefault()}>
+                          <i className="ri-shopping-bag-line"></i>
+                        </a>
+                      </div>
+                      <div className="cr-product-details">
+                        <div className="cr-brand">
+                          <a href="#">{product.category}</a>
+                          <div className="cr-star">
+                            <i className="ri-star-fill"></i>
+                            <i className="ri-star-fill"></i>
+                            <i className="ri-star-fill"></i>
+                            <i className="ri-star-fill"></i>
+                            <i className="ri-star-line"></i>
+                            <p>(4.5)</p>
                           </div>
-                          <a href="#" className="title" onClick={(e) => e.preventDefault()}>
-                            {product.productName}
-                          </a>
-                          <p className="text">{product.productName}</p>
-                          <p className="cr-price">
-                            <span className="new-price">{formatCurrencyVND(product.salePrice)}</span>{' '}
-                            <span className="old-price">{formatCurrencyVND(product.originalPrice)}</span>
-                          </p>
                         </div>
+                        <a href="#" className="title" onClick={(e) => e.preventDefault()}>
+                          {product.productName}
+                        </a>
+                        <p className="text">{product.productName}</p>
+                        <p className="cr-price">
+                          <span className="new-price">{CurrencyUtils.formatCurrencyVND(product.salePrice)}</span>{' '}
+                          <span className="old-price">
+                            {CurrencyUtils.formatCurrencyVND(product.originalPrice)}
+                          </span>
+                        </p>
                       </div>
                     </div>
+                  </div>
                 ))}
               </div>
 
               {/*PAGINATION*/}
               <nav aria-label="..." className="cr-pagination">
                 <ul className="pagination">
-                  {[...Array(data?.totalPages||1).keys()].map((page) => (
-                      <li
-                          key={page}
-                          className={`page-item ${Number(searchParams.get('page')) === page ? 'active' : ''}`}
-                          onClick={() => handlePageChange(page)}
-                      >
-                        <span className="page-link">{page + 1}</span>
-                      </li>
+                  {[...Array(data?.totalPages || 1).keys()].map((page) => (
+                    <li
+                      key={page}
+                      className={`page-item ${Number(searchParams.get('page')) === page ? 'active' : ''}`}
+                      onClick={() => handlePageChange(page)}
+                    >
+                      <span className="page-link">{page + 1}</span>
+                    </li>
                   ))}
                 </ul>
               </nav>

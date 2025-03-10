@@ -3,9 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ROUTER_PATH } from '~/routes';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '~/redux/store.ts';
-import { removeFromCart, setOpenCart, updateUnit } from '~/shared/reducers/cartReducer.ts';
+import { removeFromCart, setOpenCart, updateUnit } from '~/redux';
 import { useMemo } from 'react';
-import { formatCurrencyVND } from '~/shared/utils/stringformat.ts';
+import { CurrencyUtils } from '~/utils';
 import { cartService } from '~/services';
 import toast from 'react-hot-toast';
 import { CartDetailRequest } from '~/dto';
@@ -107,7 +107,7 @@ const Cart: React.FC<Props> = (props) => {
                       </div>
                     </div>
                     <span className="cart-price">
-                      <span>{formatCurrencyVND(product.salePrice)}</span>
+                      <span>{CurrencyUtils.formatCurrencyVND(product.salePrice)}</span>
                     </span>
                     <div className="cr-cart-qty">
                       <div className="cart-qty-plus-minus">
@@ -168,15 +168,15 @@ const Cart: React.FC<Props> = (props) => {
                 <tbody>
                   <tr>
                     <td className="text-left">Sub-Total :</td>
-                    <td className="text-right">{formatCurrencyVND(totalPrice * 0.9)}</td>
+                    <td className="text-right">{CurrencyUtils.formatCurrencyVND(totalPrice * 0.9)}</td>
                   </tr>
                   <tr>
                     <td className="text-left">VAT (10%) :</td>
-                    <td className="text-right">{formatCurrencyVND(totalPrice * 0.1)}</td>
+                    <td className="text-right">{CurrencyUtils.formatCurrencyVND(totalPrice * 0.1)}</td>
                   </tr>
                   <tr>
                     <td className="text-left">Total :</td>
-                    <td className="text-right primary-color">{formatCurrencyVND(totalPrice)}</td>
+                    <td className="text-right primary-color">{CurrencyUtils.formatCurrencyVND(totalPrice)}</td>
                   </tr>
                 </tbody>
               </table>

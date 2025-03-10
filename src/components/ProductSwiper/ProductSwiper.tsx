@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import ProductCard from '../ProductCard/ProductCard.tsx';
 import { useCountDown } from '~/hooks';
-import { IProductItemResponse } from '~/shared/model/product.model.ts';
+import { IProductItemResponse } from '~/dto';
 import { productService } from '~/services';
 
 interface Props {}

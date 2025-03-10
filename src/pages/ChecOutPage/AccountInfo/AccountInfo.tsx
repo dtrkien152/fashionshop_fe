@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { authService } from '~/services';
-import { login } from '~/shared/reducers/authReducer.ts';
+import { login } from '~/redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '~/redux/store.ts';
 import toast from 'react-hot-toast';

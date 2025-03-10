@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '~/redux/store.ts';
 import { Link } from 'react-router-dom';
 import { ROUTER_PATH } from '~/routes';
-import { formatCurrencyVND } from '~/shared/utils/stringformat.ts';
+import { CurrencyUtils } from '~/utils';
 
 const OrderListPage = () => {
   const { products } = useSelector((state: RootState) => state.cart);
@@ -76,7 +76,7 @@ const OrderListPage = () => {
                     </div>
                     <div className="cr-checkout-summary-total">
                       <span className="text-left">Total Amount</span>
-                      <span className="text-right">{formatCurrencyVND(1000000 + 30000 - 20000)}</span>
+                      <span className="text-right">{CurrencyUtils.formatCurrencyVND(1000000 + 30000 - 20000)}</span>
                     </div>
                   </div>
                 </div>

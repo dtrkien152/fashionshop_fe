@@ -6,7 +6,7 @@ import { OutletWrapper } from '~/layouts/DefaultLayout/styles.ts';
 import { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '~/redux/store.ts';
-import { setCartCode, setOpenCart, setProducts } from '~/shared/reducers/cartReducer.ts';
+import { setCartCode, setOpenCart, setProducts } from '~/redux';
 import { useFingerprints } from '~/hooks';
 import { useEffect } from 'react';
 import { cartService } from '~/services';

@@ -1,7 +1,5 @@
-// src/shared/reducer/index.ts
 import { combineReducers } from '@reduxjs/toolkit';
-import authReducer from './authReducer';
-import cartReducer from '~/shared/reducers/cartReducer.ts';
+import { authReducer, cartReducer } from '~/redux/index.ts';
 
 const rootReducer = combineReducers({
     auth: authReducer,

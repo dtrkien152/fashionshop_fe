@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { IShipFee } from '~/models';
-import { formatCurrencyVND } from '~/shared/utils/stringformat.ts';
+import { CurrencyUtils } from '~/utils';
 
 interface Props {
   shipFee?: IShipFee;
@@ -18,7 +18,7 @@ const DeliveryMethod: React.FC<Props> = (props) => {
             {props.shipFee && props.shipFee?.triggerPrice > 0 && (
               <div className="cr-del-desc">
                 Congratulations! Your order meets the criteria for {props.shipFee?.name} (applies to
-                orders over {formatCurrencyVND(props.shipFee?.triggerPrice)}). Enjoy your
+                orders over {CurrencyUtils.formatCurrencyVND(props.shipFee?.triggerPrice)}). Enjoy your
                 delivery! 🚚🎉
               </div>
             )}

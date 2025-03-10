@@ -1,21 +1,50 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { LocalStorageUtils } from '~/utils';
 
-const initialState = {
-  auth: {
-    token: null,
-  },
+export interface IUserState {
+    id?: number | null;
+    email?: string | null;
+    role?: string | null;
+    token?: string | null;
+    avatar?:string | null;
+    fullName?:string | null;
+    phone?:string | null;
+    isLoggedIn?:boolean;
 }
 
+const initialState: IUserState = LocalStorageUtils.getUserFromStorage() || {
+    id: null,
+    email: null,
+    fullName: null,
+    role: null,
+    avatar: null,
+    token: null,
+    isLoggedIn: false,
+};
+
 const authSlice = createSlice({
-  name: 'auth',
-  initialState,
-  reducers: {
-    setAuth: (state, action) => {
-      state.auth = action.payload
+    name: 'auth',
+    initialState,
+    reducers: {
+        login: (state: IUserState, action: PayloadAction<IUserState>) => {
+            Object.assign(state, action.payload);
+            state.isLoggedIn = true;
+            LocalStorageUtils.saveUserToStorage(state);
+        },
+        logout: (state) => {
+            Object.assign(state, {
+                id: null,
+                email: null,
+                role: null,
+                token: null,
+                avatar: null,
+                fullName:null
+            });
+            state.isLoggedIn = false;
+            LocalStorageUtils.clearUserStorage();
+        },
     },
-  },
-})
+});
 
-export const { setAuth } = authSlice.actions
-
-export default authSlice.reducer
+export const { login, logout } = authSlice.actions;
+export default authSlice.reducer;

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ProductCard } from '~/components';
-import { IProductItemResponse } from '~/shared/model/product.model.ts';
+import { IProductItemResponse } from '~/dto';
 import { productService } from '~/services';
 
 interface Props {}
@@ -69,8 +69,8 @@ const ProductCollection: React.FC<Props> = () => {
               <div className="tab-pane fade show active product-block" id="all">
                 <div className="row">
                   {products.map((item, i) => (
-                    <div className="col-md-4 col-sm-6 col-xs-6 cr-col-5 cr-product-box">
-                      <ProductCard product={item} key={i} />
+                    <div key={i} className="col-md-4 col-sm-6 col-xs-6 cr-col-5 cr-product-box">
+                      <ProductCard product={item} />
                     </div>
                   ))}
                 </div>
@@ -78,8 +78,8 @@ const ProductCollection: React.FC<Props> = () => {
               <div className="tab-pane fade" id="womens">
                 <div className="row">
                   {products.map((item, i) => (
-                    <div className="col-md-4 col-sm-6 col-xs-6 cr-col-5 cr-product-box">
-                      <ProductCard product={item} key={i} />
+                    <div key={i} className="col-md-4 col-sm-6 col-xs-6 cr-col-5 cr-product-box">
+                      <ProductCard product={item} />
                     </div>
                   ))}
                 </div>
@@ -87,8 +87,8 @@ const ProductCollection: React.FC<Props> = () => {
               <div className="tab-pane fade" id="mens">
                 <div className="row">
                   {products.map((item, i) => (
-                    <div className="col-md-4 col-sm-6 col-xs-6 cr-col-5 cr-product-box">
-                      <ProductCard product={item} key={i} />
+                    <div key={i} className="col-md-4 col-sm-6 col-xs-6 cr-col-5 cr-product-box">
+                      <ProductCard product={item} />
                     </div>
                   ))}
                 </div>
@@ -96,8 +96,8 @@ const ProductCollection: React.FC<Props> = () => {
               <div className="tab-pane fade" id="kids">
                 <div className="row">
                   {products.map((item, i) => (
-                    <div className="col-md-4 col-sm-6 col-xs-6 cr-col-5 cr-product-box">
-                      <ProductCard product={item} key={i} />
+                    <div key={i} className="col-md-4 col-sm-6 col-xs-6 cr-col-5 cr-product-box">
+                      <ProductCard product={item} />
                     </div>
                   ))}
                 </div>

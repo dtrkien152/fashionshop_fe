@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { IProductItemResponse } from '~/shared/model/product.model';
+import { IProductItemResponse } from '~/dto';
 import { useNavigate } from 'react-router-dom';
 import { CartDetailRequest, CartProduct } from '~/dto';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart } from '~/shared/reducers/cartReducer.ts';
+import { addToCart } from '~/redux';
 import { ROUTER_PATH } from '~/routes';
 import toast from 'react-hot-toast';
-import { formatCurrencyVND } from '~/shared/utils/stringformat.ts';
+import { CurrencyUtils } from '~/utils';
 import { cartService } from '~/services';
 import { RootState } from '~/redux/store.ts';
 
@@ -106,8 +106,8 @@ const ProductCard: React.FC<Props> = ({ product }: Props) => {
             <span>{product?.productName}</span>
           </h5>
           <span className="cr-price">
-            <span className="new-price">{formatCurrencyVND(product?.salePrice)}</span>
-            <span className="old-price">{formatCurrencyVND(product?.originalPrice)}</span>
+            <span className="new-price">{CurrencyUtils.formatCurrencyVND(product?.salePrice)}</span>
+            <span className="old-price">{CurrencyUtils.formatCurrencyVND(product?.originalPrice)}</span>
           </span>
           <div className="cr-pro-option">
             <div className="cr-pro-color">

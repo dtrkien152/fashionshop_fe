@@ -1,4 +1,4 @@
-import { SORT_BY_ENUM } from '~/shared/model/common.model.ts';
+import { SORT_BY_ENUM } from '~/constants';
 
 export interface IProductItemResponse {
   id: number;
@@ -17,12 +17,13 @@ export interface IProductItemResponse {
 }
 
 export interface IProductSearchParam {
-  keyword?:string|null,
-  categoryId?:number|null,
-  sortBy?:SORT_BY_ENUM|SORT_BY_ENUM.NEWEST,
-  limit?: number|10,
-  page?:number|0
+  keyword?: string | null;
+  categoryId?: number | null;
+  sortBy?: SORT_BY_ENUM;
+  limit?: number | 10;
+  page?: number | 0;
 }
+
 export interface IProductSubDetailResponse {
   id: number;
   size: string;
@@ -34,13 +35,13 @@ export interface IProductSubDetailResponse {
 export interface IProductDetailResponse {
   productId: number;
   productName: string;
-  description:string;
-  thumbnailUrl:string;
+  description: string;
+  thumbnailUrl: string;
   imageUrls?: string[];
   categoryId: number;
   salePrice: number;
   originalPrice: number;
   categoryName: string;
   unitOnOrder: number;
-  productSubDetails: IProductSubDetailResponse[]|[];
+  productSubDetails: IProductSubDetailResponse[] | [];
 }

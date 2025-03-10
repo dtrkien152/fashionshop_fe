@@ -14,7 +14,7 @@ import { IShipFee } from '~/models';
 import { OrderCreateRequest, OrderProduct } from '~/dto';
 import { PAYMENT_STATUS, PAYMENT_TYPE } from '~/constants';
 import toast from 'react-hot-toast';
-import { resetCart } from '~/shared/reducers/cartReducer.ts';
+import { resetCart } from '~/redux';
 import { useNavigate } from 'react-router-dom';
 import { ROUTER_PATH } from '~/routes';
 

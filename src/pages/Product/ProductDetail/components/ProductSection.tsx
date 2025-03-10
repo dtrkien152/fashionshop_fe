@@ -2,15 +2,15 @@ import { useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Thumbs } from 'swiper/modules';
 import TabComponent from '~/pages/Product/ProductDetail/components/TabComponent.tsx';
-import { IProductDetailResponse, IProductSubDetailResponse } from '~/shared/model/product.model.ts';
+import { IProductDetailResponse, IProductSubDetailResponse } from '~/dto';
 import ProductAttributes from '~/pages/Product/ProductDetail/components/ProductAttributes.tsx';
 import { CartDetailRequest, CartProduct } from '~/dto';
-import { addToCart } from '~/shared/reducers/cartReducer.ts';
+import { addToCart } from '~/redux';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 import { RootState } from '~/redux/store.ts';
 import { cartService } from '~/services';
-import { formatCurrencyVND } from '~/shared/utils/stringformat.ts';
+import { CurrencyUtils } from '~/utils';
 
 interface Props {
   products?: IProductDetailResponse;
@@ -197,10 +197,10 @@ const ProductSection = (props: Props) => {
               </div>
               <div className="cr-product-price">
                 <span className="new-price">
-                  {formatCurrencyVND(props.products?.salePrice ?? 0)}
+                  {CurrencyUtils.formatCurrencyVND(props.products?.salePrice ?? 0)}
                 </span>
                 <span className="old-price">
-                  {formatCurrencyVND(props.products?.originalPrice ?? 0)}
+                  {CurrencyUtils.formatCurrencyVND(props.products?.originalPrice ?? 0)}
                 </span>
               </div>
               <ProductAttributes
