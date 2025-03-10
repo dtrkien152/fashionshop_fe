@@ -5,7 +5,6 @@ import {BrowserHistory, createBrowserHistory} from 'history';
 import {Navigate, Route, Router, Routes} from 'react-router-dom';
 import {PRIVATE_ROUTERS, PUBLIC_ROUTERS, RouteItem, ROUTER_PATH} from '~/routes';
 import {AuthGuard} from '~/guard';
-import {ToastContainer} from "react-toastify";
 
 type Props = {
     basename?: string;
@@ -57,8 +56,6 @@ function App() {
                     <Route path="*" element={<Navigate to={ROUTER_PATH.notFound.extract} replace/>}/>
                 </Routes>
             </CustomRouter>
-            <ToastContainer/>
-
         </>
     );
 }

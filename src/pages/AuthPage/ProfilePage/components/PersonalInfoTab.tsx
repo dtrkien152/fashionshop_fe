@@ -4,7 +4,7 @@ import { Form, Input, Button } from 'antd';
 import { IUserState, login } from '~/shared/reducers/authReducer';
 import AvatarUpload from './AvatarUpload';
 import userService from "~/services/user.service.ts";
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 
 const PersonalInfoTab: React.FC = () => {
     const dispatch = useDispatch();
