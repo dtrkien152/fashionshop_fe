@@ -1,19 +1,18 @@
 import * as React from 'react';
-import { LayoutWrapper } from '~/layouts/DefaultLayout/styles.ts';
 import { Footer, Header } from '~/layouts';
+import { Outlet } from 'react-router-dom';
 
-interface DefaultLayoutProps {
-  children: React.ReactNode
-}
+interface DefaultLayoutProps {}
 
-const DefaultLayout: React.FC<DefaultLayoutProps> = ({ children }) => {
+const DefaultLayout: React.FC<DefaultLayoutProps> = () => {
   return (
-    <LayoutWrapper className={'wrapper'}>
+    <>
+      {/*<Loader/>*/}
       <Header />
-      {children}
+      <Outlet />
       <Footer />
-    </LayoutWrapper>
-  )
-}
+    </>
+  );
+};
 
 export default DefaultLayout;
