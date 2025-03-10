@@ -2,7 +2,7 @@ import { IMAGES } from '~/images';
 import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import $ from 'jquery';
-import { ICategory } from '~/interfaces/ICategory.ts';
+import { ICategoryModel } from '~/interfaces';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '~/redux/store.ts';
 import { logout } from '~/shared/reducers/authReducer.ts';
@@ -17,7 +17,7 @@ const Header: React.FC<Props> = (props) => {
   const menuRef = useRef<any>(null);
   const [prevScroll, setPrevScroll] = useState(window.scrollY);
   const [prevDirection, setPrevDirection] = useState(0);
-  const [categories, setCategories] = React.useState<ICategory[]>([]);
+  const [categories, setCategories] = React.useState<ICategoryModel[]>([]);
   const { email, avatar, fullName } = useSelector((state: RootState) => state.auth);
 
   const handleLogout = () => {
@@ -89,7 +89,7 @@ const Header: React.FC<Props> = (props) => {
                 <input className="search-input" type="text" placeholder="Search For items..." />
                 <select className="form-select" aria-label="Default select example">
                   <option selected>All Categories</option>
-                  {categories.map((category: ICategory) => (
+                  {categories.map((category: ICategoryModel) => (
                     <option value={category.id}>{category.name}</option>
                   ))}
                 </select>
@@ -499,7 +499,7 @@ const Header: React.FC<Props> = (props) => {
                       Category
                     </a>
                     <ul className="dropdown-menu">
-                      {categories.map((category: ICategory) => (
+                      {categories.map((category: ICategoryModel) => (
                         <li>
                           <a className="dropdown-item" href="shop-left-sidebar.html">
                             {category.name}

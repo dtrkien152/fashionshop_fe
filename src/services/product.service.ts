@@ -14,12 +14,11 @@ const productService = {
     };
     return httpService.post(BASE_URL + '/api/products/search', model);
   },
-
   getTopSelling: async () => {
     httpService.attachTokenToHeader();
     return await httpService.get(BASE_URL + '/api/products/top-selling');
   },
-  searchProduct: async (model: IProductSearchParam) => {
+  search: async (model: IProductSearchParam) => {
     httpService.attachTokenToHeader();
     return await httpService.post(BASE_URL + '/api/products/search', model);
   }

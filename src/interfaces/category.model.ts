@@ -1,4 +1,4 @@
-export interface ICategory {
+export interface ICategoryModel {
   id: number;
   code: string;
   name: string;

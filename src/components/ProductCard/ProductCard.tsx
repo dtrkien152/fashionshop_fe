@@ -1,19 +1,18 @@
 import * as React from 'react';
-import {IProductItemResponse} from "~/shared/model/product.model.ts";
+import { IProductItemResponse } from '~/shared/model/product.model.ts';
 
 interface Props {
-  product:IProductItemResponse
+  product: IProductItemResponse;
 }
 
-const ProductCard: React.FC<Props> = (props:Props) => {
+const ProductCard: React.FC<Props> = (props: Props) => {
   return (
     <div className="product-card-2">
       <div className="cr-product-inner">
         <div className="cr-pro-image-outer">
           <div className="cr-pro-image">
             <a href="product-left-sidebar.html" className="image">
-              <img className="main-image" src={props.product?.images[0]||''} alt="Product" />
-              <img className="hover-image" src={props.product?.images[1]||''} alt="Product" />
+              <img className="main-image" src={props.product.thumbnailUrl} alt="Product" />
             </a>
             {props.product?.flag && (
               <span className="flags">

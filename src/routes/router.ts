@@ -43,8 +43,8 @@ export const ROUTER_PATH = {
     extract: '/product/:id',
   },
   productList: {
-    relative: 'productList',
-    extract: '/productList',
+    relative: 'product',
+    extract: '/product',
   },
   notFound: {
     relative: 'error/not-found',

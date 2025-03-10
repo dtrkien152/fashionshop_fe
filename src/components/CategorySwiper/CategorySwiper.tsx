@@ -2,11 +2,11 @@
 import * as React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
-import { ICategory } from '~/interfaces/ICategory.ts';
+import { ICategoryModel } from '~/interfaces';
 import { categoryService } from '~/services';
 
 const CategorySwiper: React.FC = () => {
-  const [categories, setCategories] = React.useState<ICategory[]>([]);
+  const [categories, setCategories] = React.useState<ICategoryModel[]>([]);
 
   React.useEffect(() => {
     const fetchCategories = async () => {
@@ -48,7 +48,7 @@ const CategorySwiper: React.FC = () => {
             }}
             className="category-slider swiper-container"
           >
-            {categories.map((category: ICategory) => (
+            {categories.map((category: ICategoryModel) => (
               <SwiperSlide key={category.id}>
                 <div className="category-block">
                   <div className="category-icon">
