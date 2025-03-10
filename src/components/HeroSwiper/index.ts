@@ -1,0 +1,1 @@
+export {default as HeroSwiper} from "./HeroSwiper.tsx";

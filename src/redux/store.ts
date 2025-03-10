@@ -2,23 +2,32 @@ import {combineReducers, configureStore} from '@reduxjs/toolkit'
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux'
 import {persistReducer, persistStore} from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-
+import { authReducer } from '~/redux/slices';
+import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from 'redux-persist/es/constants';
 
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['auth', 'theme', 'websocket'],
+    whitelist: ['auth'],
 }
 
-const rootReducer = combineReducers({})
+const rootReducer = combineReducers({
+    auth: authReducer,
+})
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 const store = configureStore({
     reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+          serializableCheck: {
+              ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+          },
+      }),
 })
 
-export const persistor = persistStore(store)
+export const persist = persistStore(store)
 
 export type RootState = ReturnType<typeof store.getState>
 
