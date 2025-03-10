@@ -12,9 +12,8 @@ export const getUserFromStorage = (): UserState | null => {
 };
 
 export const saveUserToStorage = (user: UserState) => {
-    const { id, email, role, token } = user;
-    localStorage.setItem(USER_KEY, JSON.stringify({ id, email, role }));
-    localStorage.setItem(TOKEN_KEY, token ?? '');
+    localStorage.setItem(USER_KEY, JSON.stringify(user));
+    localStorage.setItem(TOKEN_KEY, user.token ?? '');
 };
 
 export const clearUserStorage = () => {

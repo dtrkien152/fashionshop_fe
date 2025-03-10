@@ -4,16 +4,26 @@ import { useEffect, useRef, useState } from 'react';
 import $ from "jquery";
 import { ICategory } from '~/interfaces/ICategory.ts';
 import { getAllCategories } from '~/components/CategorySwiper/api/category.api.ts';
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "~/redux/store.ts";
+import {logout} from "~/shared/reducers/authReducer.ts";
 
 interface Props {
   onOpenCart: () => void;
 }
 
 const Header: React.FC<Props> = (props) => {
+  const dispatch = useDispatch();
   const menuRef = useRef<any>(null);
   const [prevScroll, setPrevScroll] = useState(window.scrollY);
   const [prevDirection, setPrevDirection] = useState(0);
   const [categories, setCategories] = React.useState<ICategory[]>([]);
+  const { email, avatar,fullName } = useSelector((state: RootState) => state.auth);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    window.location.href = '/login';
+  };
 
   React.useEffect(() => {
     const fetchCategories = async () => {
@@ -87,43 +97,79 @@ const Header: React.FC<Props> = (props) => {
                   <i className="ri-search-line"></i>
                 </a>
               </form>
+               {/*header */}
               <div className="cr-right-bar">
                 <ul className="navbar-nav">
                   <li className="nav-item dropdown">
                     <a
-                      className="nav-link dropdown-toggle cr-right-bar-item"
-                      href="javascript:void(0)"
+                        className="nav-link dropdown-toggle cr-right-bar-item"
+                        href="#"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
                     >
-                      <i className="ri-user-3-line"></i>
-                      <span>Account</span>
+                      {avatar ? (
+                          <img
+                              src={avatar}
+                              alt={fullName || 'Avatar'}
+                              className="rounded-circle"
+                              style={{ width: '30px', height: '30px', marginRight: '8px' }}
+                          />
+                      ) : (
+                          <i className="ri-user-3-line"></i>
+                      )}
+                      <span>{fullName || 'Account'}</span>
                     </a>
                     <ul className="dropdown-menu">
-                      <li>
-                        <a className="dropdown-item" href="register.html">
-                          Register
-                        </a>
-                      </li>
-                      <li>
-                        <a className="dropdown-item" href="checkout.html">
-                          Checkout
-                        </a>
-                      </li>
-                      <li>
-                        <a className="dropdown-item" href="/login">
-                          Login
-                        </a>
-                      </li>
+                      {email ? (
+                          <>
+                            <li>
+                              <a className="dropdown-item" href="/profile">
+                                Thông tin cá nhân
+                              </a>
+                            </li>
+                            <li>
+                              <a className="dropdown-item" href="/change-password">
+                                Đổi mật khẩu
+                              </a>
+                            </li>
+                            <li>
+                              <a
+                                  className="dropdown-item"
+                                  onClick={handleLogout}
+                                  style={{ cursor: 'pointer' }}
+                              >
+                                Logout
+                              </a>
+
+                            </li>
+                          </>
+                      ) : (
+                          <>
+                            <li>
+                              <a className="dropdown-item" href="/register">
+                                Register
+                              </a>
+                            </li>
+                            <li>
+                              <a className="dropdown-item" href="/login">
+                                Login
+                              </a>
+                            </li>
+                          </>
+                      )}
                     </ul>
                   </li>
                 </ul>
-                <a href="wishlist.html" className="cr-right-bar-item">
+                <a href="/wishlist" className="cr-right-bar-item">
                   <i className="ri-heart-3-line"></i>
                   <span>Wishlist</span>
                 </a>
                 <a
-                  href="javascript:void(0)"
-                  className="cr-right-bar-item Shopping-toggle"
-                  onClick={props.onOpenCart}
+                    href="#"
+                    className="cr-right-bar-item Shopping-toggle"
+                    onClick={() => {
+                      // Xử lý mở giỏ hàng nếu cần
+                    }}
                 >
                   <i className="ri-shopping-cart-line"></i>
                   <span>Cart</span>

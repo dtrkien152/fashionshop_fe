@@ -6,5 +6,5 @@ export const loginPage = (email:string, password: string) =>
         email,
         password
     }
-   return api.post(`/auth/sign-in`,payload);
+   return api.post(`api/auth/sign-in`,payload);
 }

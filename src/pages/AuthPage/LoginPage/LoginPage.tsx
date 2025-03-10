@@ -28,6 +28,7 @@ const LoginPage = () => {
       dispatch(login(response.data));
 
       alert('Đăng nhập thành công');
+      window.location.href = '/';
       setError('');
     } catch (reason) {
       console.log(reason);
