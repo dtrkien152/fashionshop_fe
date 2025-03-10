@@ -1,113 +1,172 @@
-import { IMAGES } from '~/images';
+import React, {useState, ChangeEvent, FormEvent} from 'react';
+import authService from "~/services/auth.service.ts";
+import {useNavigate} from "react-router-dom";
 
-const RegisterPage = () => {
-  return (
-    <section className="section-register padding-tb-100">
-      <div className="container">
-        <div className="row d-none">
-          <div className="col-lg-12">
-            <div className="mb-30" data-aos="fade-up" data-aos-duration="2000" data-aos-delay="400">
-              <div className="cr-banner">
-                <h2>Register</h2>
-              </div>
-              <div className="cr-banner-sub-title">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                  ut labore lacus vel facilisis. </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-12">
-            <div className="cr-register" data-aos="fade-up" data-aos-duration="2000" data-aos-delay="400">
-              <div className="form-logo">
-                <img src={IMAGES.logo} alt="logo" />
-              </div>
-              <form className="cr-content-form">
-                <div className="row">
-                  <div className="col-12 col-sm-6">
-                    <div className="form-group">
-                      <label>Firast Name*</label>
-                      <input type="text" placeholder="Enter Your First Name" className="cr-form-control" />
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-group">
-                      <label>Last Name*</label>
-                      <input type="text" placeholder="Enter Your Last Name" className="cr-form-control" />
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-group">
-                      <label>Email*</label>
-                      <input type="email" placeholder="Enter Your email" className="cr-form-control" />
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-group">
-                      <label>Phone Number*</label>
-                      <input type="text" placeholder="Enter Your phone number"
-                             className="cr-form-control" />
-                    </div>
-                  </div>
-                  <div className="col-12">
-                    <div className="form-group">
-                      <label>Address*</label>
-                      <input type="text" placeholder="Address" className="cr-form-control" />
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-group">
-                      <label>City*</label>
-                      <select className="cr-form-control" aria-label="Default select example">
-                        <option selected>City</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-group">
-                      <label>Post Code</label>
-                      <input type="email" placeholder="Post Code" className="cr-form-control" />
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-group">
-                      <label>Country*</label>
-                      <select className="cr-form-control" aria-label="Default select example">
-                        <option selected>Country</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-group">
-                      <label>Region State*</label>
-                      <select className="cr-form-control" aria-label="Default select example">
-                        <option selected>Region/State</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="cr-register-buttons">
-                    <button type="button" className="cr-button">Signup</button>
-                    <a href="login.html" className="link">
-                      Have an account?
-                    </a>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
+interface FormData {
+    email: string;
+    password: string;
+    confirmPassword: string;
 }
+
+interface FormErrors {
+    email?: string;
+    password?: string;
+    confirmPassword?: string;
+}
+
+const RegisterPage: React.FC = () => {
+    const [formData, setFormData] = useState<FormData>({
+        email: '',
+        password: '',
+        confirmPassword: '',
+    });
+    const navigate = useNavigate();
+    const [errors, setErrors] = useState<FormErrors>({});
+    const [apiError, setApiError] = useState<string>('');
+
+    // Kiểm tra định dạng email
+    const isValidEmail = (email: string): boolean =>
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+    // Xử lý khi input thay đổi
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const {name, value} = e.target;
+        setFormData({...formData, [name]: value});
+        setErrors({...errors, [name]: ''}); // Reset lỗi khi nhập input
+        setApiError(''); // Reset lỗi API
+    };
+
+    // Xác thực dữ liệu form
+    const validateForm = (): boolean => {
+        const newErrors: FormErrors = {};
+
+        if (!formData.email) {
+            newErrors.email = 'Vui lòng nhập email.';
+        } else if (!isValidEmail(formData.email)) {
+            newErrors.email = 'Email không đúng định dạng.';
+        }
+
+        if (!formData.password) {
+            newErrors.password = 'Vui lòng nhập mật khẩu.';
+        } else if (formData.password.length < 8) {
+            newErrors.password = 'Mật khẩu phải tối thiểu 8 ký tự.';
+        }
+
+        if (!formData.confirmPassword) {
+            newErrors.confirmPassword = 'Vui lòng xác nhận mật khẩu.';
+        } else if (formData.confirmPassword !== formData.password) {
+            newErrors.confirmPassword = 'Mật khẩu xác nhận không khớp.';
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+    // Xử lý đăng ký
+    const handleRegister = async (e: FormEvent) => {
+        e.preventDefault(); // Chặn reload trang khi submit form
+        if (!validateForm()) return;
+        authService.register(formData.email, formData.password).then(() => {
+            alert('Đăng ký thành công! Mã kích hoạt sẽ được gửi đến account');
+            navigate('/login');
+        }).catch((error) => {
+        console.log('error', error);
+            setApiError(error.data.message);
+        })
+    };
+
+    return (
+        <section className="section-register padding-tb-100">
+            <div className="container">
+                <div className="row">
+                    <div className="col-12">
+                        <div
+                            className="cr-register"
+                            data-aos="fade-up"
+                            data-aos-duration="2000"
+                            data-aos-delay="400"
+                        >
+                            <div className="mb-30" data-aos="fade-up" data-aos-duration="2000" data-aos-delay="400">
+                                <div className="cr-banner">
+                                    <h2>Đăng Ký Tài Khoản</h2>
+                                </div>
+                                <div className="cr-banner-sub-title">
+                                    <p>Tạo tài khoản trên hệ thống để
+                                        nhận nhiều ưu đãi hơn. </p>
+                                </div>
+                            </div>
+
+                        <form className="cr-content-form" onSubmit={handleRegister}>
+                            <div className="row">
+                                <div className="col-12">
+                                    <div className="form-group">
+                                        <label>Email*</label>
+                                        <input
+                                            type="text"
+                                            placeholder="Email"
+                                            className="cr-form-control"
+                                            name="email"
+                                            value={formData.email}
+                                            onChange={handleInputChange}
+                                        />
+                                        {errors.email && (
+                                            <p className="error-text">{errors.email}</p>
+                                        )}
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label>Mật khẩu*</label>
+                                        <input
+                                            type="password"
+                                            placeholder="Nhập mật khẩu"
+                                            className="cr-form-control"
+                                            name="password"
+                                            value={formData.password}
+                                            onChange={handleInputChange}
+                                        />
+                                        {errors.password && (
+                                            <p className="error-text">{errors.password}</p>
+                                        )}
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label>Xác nhận mật khẩu</label>
+                                        <input
+                                            type="password"
+                                            placeholder="Xác nhận mật khẩu"
+                                            className="cr-form-control"
+                                            name="confirmPassword"
+                                            value={formData.confirmPassword}
+                                            onChange={handleInputChange}
+                                        />
+                                        {errors.confirmPassword && (
+                                            <p className="error-text">{errors.confirmPassword}</p>
+                                        )}
+                                    </div>
+                                </div>
+
+                                <div className="cr-register-buttons">
+                                    <button type="submit" className="cr-button">
+                                        Đăng ký
+                                    </button>
+                                    <a href="/login" className="link">
+                                        Đã có tài khoản?
+                                    </a>
+                                </div>
+
+                                {apiError && (
+                                    <p className="error-text api-error">{apiError}</p>
+                                )}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</section>
+)
+    ;
+};
+
 export default RegisterPage;

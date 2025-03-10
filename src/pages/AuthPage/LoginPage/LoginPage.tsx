@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { IMAGES } from '~/images';
 import { login } from '~/shared/reducers/authReducer';
 import { useDispatch } from 'react-redux';
 import { authService } from '~/services';
+import {GoogleSSOButton} from "~/pages/AuthPage/SSO/GoogleSSOButton.tsx";
+import {GoogleOAuthProvider} from "@react-oauth/google";
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -48,60 +49,69 @@ const LoginPage = () => {
         <div className="row">
           <div className="col-12">
             <div
-              className="cr-login"
-              data-aos="fade-up"
-              data-aos-duration="2000"
-              data-aos-delay="400"
+                className="cr-login"
+                data-aos="fade-up"
+                data-aos-duration="2000"
+                data-aos-delay="400"
             >
-              <div className="form-logo" style={{ width: 'fit-content' }}>
-                <img src={IMAGES.logo} alt="logo" style={{ width: '100%' }} />
+              <div className="mb-30" data-aos="fade-up" data-aos-duration="2000" data-aos-delay="400">
+                <div className="cr-banner">
+                  <h2>Đăng nhập</h2>
+                </div>
               </div>
+
               <form className="cr-content-form" onSubmit={(e) => e.preventDefault()}>
                 <div className="form-group">
                   <label>Email Address*</label>
                   <input
-                    type="email"
-                    placeholder="Enter Your Email"
-                    className="cr-form-control"
-                    value={email}
-                    onChange={handleInputChange(setEmail)}
+                      type="email"
+                      placeholder="Enter Your Email"
+                      className="cr-form-control"
+                      value={email}
+                      onChange={handleInputChange(setEmail)}
                   />
                 </div>
                 <div className="form-group">
                   <label>Password*</label>
                   <input
-                    type="password"
-                    placeholder="Enter Your Password"
-                    className="cr-form-control"
-                    value={password}
-                    onChange={handleInputChange(setPassword)}
+                      type="password"
+                      placeholder="Enter Your Password"
+                      className="cr-form-control"
+                      value={password}
+                      onChange={handleInputChange(setPassword)}
                   />
                 </div>
 
                 {error && (
-                  <div className="error-message" style={{ color: 'red', marginTop: '10px' }}>
-                    {error}
-                  </div>
+                    <div className="error-message" style={{color: 'red', marginTop: '10px'}}>
+                      {error}
+                    </div>
                 )}
 
                 <div className="remember">
                   <span className="form-group custom">
-                    <input type="checkbox" id="rememberMe" />
+                    <input type="checkbox" id="rememberMe"/>
                     <label htmlFor="rememberMe">Remember Me</label>
                   </span>
                   <a className="link" href="forgot.html">
-                    Forgot Password?
+                    Quên mật khẩu?
                   </a>
                 </div>
 
-                <br />
+                <br/>
 
                 <div className="login-buttons">
                   <button type="button" className="cr-button" onClick={handleLogin}>
-                    Login
+                    Đăng nhập
                   </button>
-                  <a href="register.html" className="link">
-                    Signup?
+                  {/*<p>Hoặc đăng nhập với:</p>*/}
+                  {/*/!*<GoogleSSOButton/>*!/*/}
+                  {/*<GoogleOAuthProvider*/}
+                  {/*    clientId="630518824425-deg6kk43dfitd19bqppghedatmjr5beg.apps.googleusercontent.com">*/}
+                  {/*  <GoogleSSOButton/>*/}
+                  {/*</GoogleOAuthProvider>*/}
+                  <a href="/register" className="link">
+                    Đăng ký?
                   </a>
                 </div>
               </form>

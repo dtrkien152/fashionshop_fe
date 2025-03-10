@@ -11,3 +11,14 @@
     -ms-flex-pack: justify;
     justify-content: space-between;
 }
+
+.error-text {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.api-error {
+    margin-top: 15px;
+    text-align: center;
+}

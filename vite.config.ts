@@ -17,7 +17,8 @@ export default defineConfig(({ mode }) => {
       }),
     ],
     optimizeDeps: {
-      include: ['@ckeditor/ckeditor5-react'],
+      include: ['@ckeditor/ckeditor5-react','@react-oauth/google'],
+
     },
     build: {
       rollupOptions: {},
