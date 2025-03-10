@@ -1,7 +1,9 @@
+@import "assets/css/vendor/materialdesignicons.min.css";
 @import "assets/css/vendor/remixicon.css";
+@import "assets/css/vendor/flaticons.css";
 @import "assets/css/vendor/animate.css";
 @import "assets/css/vendor/bootstrap.min.css";
-@import "assets/css/vendor/animate.css";
+/*@import "assets/css/vendor/aos.min.css";*/
 @import "assets/css/vendor/range-slider.css";
 @import "assets/css/vendor/swiper-bundle.min.css";
 @import "assets/css/vendor/jquery.slick.css";

@@ -9,7 +9,6 @@ const Header = () => {
             <div className="top-header">
               <a href="index.html" className="cr-logo">
                 <img src={IMAGES.logo} alt="logo" className="logo" />
-                <img src={IMAGES.darkLogo} alt="logo" className="dark-logo" />
               </a>
               <form className="cr-search">
                 <input className="search-input" type="text" placeholder="Search For items..." />

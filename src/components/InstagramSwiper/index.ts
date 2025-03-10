@@ -1,0 +1,1 @@
+export {default as InstagramSwiper} from './InstagramSwiper';
