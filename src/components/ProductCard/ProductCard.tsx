@@ -1,45 +1,60 @@
 import * as React from 'react';
-import {IProductItemResponse} from "~/shared/model/product.model.ts";
+import { IProductItemResponse } from '~/shared/model/product.model';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
-  product:IProductItemResponse
+  product: IProductItemResponse;
 }
 
-const ProductCard: React.FC<Props> = (props:Props) => {
+const ProductCard: React.FC<Props> = ({ product }: Props) => {
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    navigate(`/product/${product?.id}`);
+  };
+
   return (
-    <div className="product-card-2">
+    <div className="product-card-2" onClick={handleNavigate} style={{ cursor: 'pointer' }}>
       <div className="cr-product-inner">
         <div className="cr-pro-image-outer">
           <div className="cr-pro-image">
-            <a href="product-left-sidebar.html" className="image">
-              <img className="main-image" src={props.product?.images[0]||''} alt="Product" />
-              <img className="hover-image" src={props.product?.images[1]||''} alt="Product" />
-            </a>
-            {props.product?.flag && (
+            <div className="image">
+              <img className="main-image" src={product.thumbnailUrl} alt="Product" />
+              {/*<img className="hover-image" src={product?.images[1] || ''} alt="Product" />*/}
+            </div>
+            {product?.flag && (
               <span className="flags">
-                <span className={props.product.flag.type}>{props.product.flag.value}</span>
+                <span className={product.flag.type}>{product.flag.value}</span>
               </span>
             )}
             <div className="cr-pro-actions">
               <a
                 className="model-oraganic-product"
                 data-bs-toggle="modal"
-                href="#quickview"
                 role="button"
+                onClick={(e) => e.stopPropagation()}
               >
                 <i className="ri-eye-line"></i>
               </a>
-              <a href="compare.html" className="cr-btn-group compare" title="Compare">
+              <a
+                className="cr-btn-group compare"
+                title="Compare"
+                onClick={(e) => e.stopPropagation()}
+              >
                 <i className="mdi mdi-vector-arrange-below"></i>
               </a>
               <a
-                href="javascript:void(0)"
                 title="Add To Cart"
                 className="add-to-cart cr-shopping-bag"
+                onClick={(e) => e.stopPropagation()}
               >
                 <i className="ri-shopping-cart-line"></i>
               </a>
-              <a href="javascript:void(0)" className="cr-btn-group wishlist" title="Wishlist">
+              <a
+                className="cr-btn-group wishlist"
+                title="Wishlist"
+                onClick={(e) => e.stopPropagation()}
+              >
                 <i className="ri-heart-line"></i>
               </a>
             </div>
@@ -47,38 +62,42 @@ const ProductCard: React.FC<Props> = (props:Props) => {
         </div>
         <div className="cr-pro-content">
           <div className="cr-info">
-            <a href="shop-left-sidebar.html">{props.product?.category}</a>
+            <span>{product?.category}</span>
           </div>
           <h5 className="cr-pro-title">
-            <a href="product-left-sidebar.html">{props.product?.productName}</a>
+            <span>{product?.productName}</span>
           </h5>
           <span className="cr-price">
-            <span className="new-price">{props.product?.salePrice}</span>
-            <span className="old-price">{props.product?.originalPrice}</span>
+            <span className="new-price">{product?.salePrice}</span>
+            <span className="old-price">{product?.originalPrice}</span>
           </span>
           <div className="cr-pro-option">
             <div className="cr-pro-color">
               <ul className="cr-opt-swatch cr-change-img">
-                {props.product?.colors &&
-                  props.product.colors.map((color, index) => (
-                    <li key={index} className={index === 0 ? 'active' : ''}>
-                      <a href="javascript:void(0)" className="cr-opt-clr-img">
-                        <span style={{ backgroundColor: color }}></span>
-                      </a>
-                    </li>
-                  ))}
+                {product?.colors?.map((color, index) => (
+                  <li key={index} className={index === 0 ? 'active' : ''}>
+                    <a
+                      onClick={(e) => e.stopPropagation()}
+                      className="cr-opt-clr-img"
+                    >
+                      <span style={{ backgroundColor: color }}></span>
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
             <div className="cr-pro-size">
               <ul className="cr-opt-size">
-                {props.product?.size &&
-                  props.product.size.map((size, index) => (
-                    <li key={index} className={index === 0 ? 'active' : ''}>
-                      <a href="#" className="cr-opt-sz">
-                        {size}
-                      </a>
-                    </li>
-                  ))}
+                {product?.size?.map((size, index) => (
+                  <li key={index} className={index === 0 ? 'active' : ''}>
+                    <a
+                      onClick={(e) => e.stopPropagation()}
+                      className="cr-opt-sz"
+                    >
+                      {size}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
@@ -87,4 +106,5 @@ const ProductCard: React.FC<Props> = (props:Props) => {
     </div>
   );
 };
+
 export default ProductCard;

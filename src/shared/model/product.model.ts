@@ -10,7 +10,8 @@ export interface IProductItemResponse {
     type: 'sale' | 'new' | 'hot';
     value: string;
   };
-  images: [string, string]; // Ảnh đầu là thumbnailUrl của product, ảnh sau là 1 ảnh của subproduct
+  thumbnailUrl: string;
+  imageUrls: [string, string]; // Ảnh đầu là thumbnailUrl của product, ảnh sau là 1 ảnh của subproduct
   colors: string[]; // Các thuộc tính của subproduct
   size: string[]; // Các thuộc tính của subproduct
 }
@@ -21,4 +22,23 @@ export interface IProductSearchParam {
   sortBy?:SORT_BY_ENUM|SORT_BY_ENUM.NEWEST,
   limit?: number|10,
   page?:number|0
+}
+export interface IProductSubDetailResponse {
+  id: number;
+  size: string;
+  color: string;
+  isActive: boolean;
+  totalQuantity: number;
+}
+
+export interface IProductDetailResponse {
+  product_id: number;
+  productName: string;
+  description:string;
+  thumbnailUrl:string;
+  imageUrls?: string[];
+  category_id: number;
+  category_name: string;
+  unitOnOrder: number;
+  productSubDetails: IProductSubDetailResponse[]|[];
 }

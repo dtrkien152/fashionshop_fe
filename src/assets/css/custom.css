@@ -1,0 +1,13 @@
+.custom-text{
+    min-width: 100px;
+    margin-right: 10px;
+    color: #2b2b2d;
+    font-weight: 600;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex
+;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}

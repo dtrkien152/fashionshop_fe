@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import productService from '~/services/product.service.ts';
+import ProductSection from '~/pages/Product/ProductDetail/components/ProductSection.tsx';
+import PopularProducts from '~/pages/Product/ProductDetail/components/PopularProducts.tsx';
+import { IProductDetailResponse } from '~/shared/model/product.model.ts';
+
 
 interface Product {
   id: string;
@@ -11,40 +15,30 @@ interface Product {
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const [product, setProduct] = useState<Product | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const [product, setProduct] = useState<IProductDetailResponse | null>(null);
 
   useEffect(() => {
     if (!id) return;
 
     const fetchProductDetail = async () => {
-      setLoading(true);
       try {
-        const response = await axios.get(`/api/products/${id}`);
+        const response = await productService.getProductDetail(id);
         setProduct(response.data);
-        setError(null);
+        console.log(response.data.data);
       } catch (e) {
-        setError('Failed to fetch product details.');
         setProduct(null);
       } finally {
-        setLoading(false);
       }
     };
 
     fetchProductDetail();
   }, [id]);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
-  if (!product) return <p>Product not found.</p>;
-
   return (
-    <div>
-      <h1>{product.name}</h1>
-      <p>{product.description}</p>
-      <p>Price: ${product.price}</p>
-    </div>
+    <>
+      <ProductSection  products={product}/>
+      <PopularProducts />
+    </>
   );
 };
 
