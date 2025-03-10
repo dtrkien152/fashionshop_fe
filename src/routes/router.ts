@@ -7,6 +7,8 @@ import {
   NotFoundPage,
   RegisterPage,
 } from '~/pages';
+import ProductDetail from '~/pages/Product/ProductDetail/ProductDetail.tsx';
+import { ProductList } from '~/pages/Product/ProductList/ProductList.tsx';
 
 export interface RouteItem {
   path: string;
@@ -35,6 +37,14 @@ export const ROUTER_PATH = {
   register: {
     relative: 'register',
     extract: '/register',
+  },
+  productDetail: {
+    relative: 'product/:id',
+    extract: '/product/:id',
+  },
+  productList: {
+    relative: 'productList',
+    extract: '/productList',
   },
   notFound: {
     relative: 'error/not-found',
@@ -70,6 +80,14 @@ export const PUBLIC_ROUTERS: RouteItem[] = [
       {
         path: ROUTER_PATH.notFound.relative,
         component: NotFoundPage,
+      },
+      {
+        path: ROUTER_PATH.productList.relative,
+        component: ProductList,
+      },
+      {
+        path: ROUTER_PATH.productDetail.relative,
+        component: ProductDetail,
       },
     ],
   },

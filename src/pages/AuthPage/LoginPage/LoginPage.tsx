@@ -1,47 +1,105 @@
+import React, { useState } from 'react';
 import { IMAGES } from '~/images';
+import { login } from '~/shared/reducers/authReducer';
+import { useDispatch } from 'react-redux';
+import { authService } from '~/services';
 
 const LoginPage = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const dispatch = useDispatch();
+  const handleLogin = async () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!email || !password) {
+      setError('Vui lòng nhập email và password');
+      return;
+    }
+
+    if (!emailRegex.test(email)) {
+      setError('Sai định dạng email,vui lòng nhập lại');
+      return;
+    }
+
+    try {
+      const response = await authService.login(email, password);
+      dispatch(login(response.data));
+
+      alert('Đăng nhập thành công');
+      window.location.href = '/';
+      setError('');
+    } catch (reason) {
+      console.log(reason);
+      setError('Sai thông tin email hoặc mật khẩu, xin mời nhập lại');
+    }
+  };
+
+  const handleInputChange =
+    (setter: React.Dispatch<React.SetStateAction<string>>) =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setter(e.target.value);
+      setError('');
+    };
+
   return (
     <section className="section-login padding-tb-150">
       <div className="container">
-        <div className="row d-none">
-          <div className="col-lg-12">
-            <div className="mb-30" data-aos="fade-up" data-aos-duration="2000" data-aos-delay="400">
-              <div className="cr-banner">
-                <h2>Login</h2>
-              </div>
-              <div className="cr-banner-sub-title">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                  ut labore lacus vel facilisis. </p>
-              </div>
-            </div>
-          </div>
-        </div>
         <div className="row">
           <div className="col-12">
-            <div className="cr-login" data-aos="fade-up" data-aos-duration="2000" data-aos-delay="400">
-              <div className="form-logo">
-                <img src={IMAGES.logo} alt="logo" />
+            <div
+              className="cr-login"
+              data-aos="fade-up"
+              data-aos-duration="2000"
+              data-aos-delay="400"
+            >
+              <div className="form-logo" style={{ width: 'fit-content' }}>
+                <img src={IMAGES.logo} alt="logo" style={{ width: '100%' }} />
               </div>
-              <form className="cr-content-form">
+              <form className="cr-content-form" onSubmit={(e) => e.preventDefault()}>
                 <div className="form-group">
                   <label>Email Address*</label>
-                  <input type="email" placeholder="Enter Your Email" className="cr-form-control" />
+                  <input
+                    type="email"
+                    placeholder="Enter Your Email"
+                    className="cr-form-control"
+                    value={email}
+                    onChange={handleInputChange(setEmail)}
+                  />
                 </div>
                 <div className="form-group">
                   <label>Password*</label>
-                  <input type="password" placeholder="Enter Your password" className="cr-form-control" />
+                  <input
+                    type="password"
+                    placeholder="Enter Your Password"
+                    className="cr-form-control"
+                    value={password}
+                    onChange={handleInputChange(setPassword)}
+                  />
                 </div>
+
+                {error && (
+                  <div className="error-message" style={{ color: 'red', marginTop: '10px' }}>
+                    {error}
+                  </div>
+                )}
+
                 <div className="remember">
-                                <span className="form-group custom">
-                                    <input type="checkbox" id="html" />
-                                    <label htmlFor="html">Remember Me</label>
-                                </span>
-                  <a className="link" href="forgot.html">Forgot Password?</a>
+                  <span className="form-group custom">
+                    <input type="checkbox" id="rememberMe" />
+                    <label htmlFor="rememberMe">Remember Me</label>
+                  </span>
+                  <a className="link" href="forgot.html">
+                    Forgot Password?
+                  </a>
                 </div>
+
                 <br />
+
                 <div className="login-buttons">
-                  <button type="button" className="cr-button">Login</button>
+                  <button type="button" className="cr-button" onClick={handleLogin}>
+                    Login
+                  </button>
                   <a href="register.html" className="link">
                     Signup?
                   </a>
@@ -52,6 +110,7 @@ const LoginPage = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
+
 export default LoginPage;

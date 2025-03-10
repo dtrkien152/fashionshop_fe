@@ -3149,6 +3149,8 @@ ul.navbar-nav .dropdown:hover .dropdown-menu {
 .product-card-2 .cr-pro-image img {
     width: 100%;
     border-radius: 5px;
+    height: 260px;
+    object-fit: cover;
 }
 .product-card-2 .cr-pro-image .main-image {
     border: 1px solid #eee;

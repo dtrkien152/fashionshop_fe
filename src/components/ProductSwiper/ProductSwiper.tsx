@@ -1,140 +1,36 @@
 import * as React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { IMAGES } from '~/images';
 import { Autoplay } from 'swiper/modules';
 import ProductCard from '../ProductCard/ProductCard.tsx';
 import { useCountDown } from '~/hooks';
+import { IProductItemResponse } from '~/shared/model/product.model.ts';
+import { formatCurrencyVND } from '~/shared/utils/stringformat.ts';
+import { productService } from '~/services';
 
 interface Props {}
 
 const ProductSwiper: React.FC<Props> = () => {
   const { days, hours, minutes, seconds } = useCountDown(7 * 24 * 60 * 60 * 1000);
-  const products = [
-    {
-      id: 1,
-      category: 'Women Tops',
-      title: 'Colorful top for women',
-      price: '$6.00',
-      oldPrice: '$9.00',
-      flag: {
-        type: 'sale',
-        value: '50% Sale',
-      },
-      images: [IMAGES.product.image18, IMAGES.product.image19],
-      colors: ['#74c7ff', '#f39fab'],
-      size: ['M', 'L', 'XL'],
-    },
-    {
-      id: 2,
-      category: 'Men T-shirt',
-      title: 'Blue T-shirt for men',
-      price: '$11.00',
-      oldPrice: '$22.00',
-      flag: {
-        type: 'trending',
-        value: 'Trending',
-      },
-      images: [IMAGES.product.image30, IMAGES.product.image29],
-      colors: ['#74c7ff'],
-      size: ['M', 'XL'],
-    },
-    {
-      id: 3,
-      category: 'Kids',
-      title: 'Pink T-shirt for girl',
-      price: '$29.00',
-      oldPrice: '$39.00',
-      images: [IMAGES.product.image24, IMAGES.product.image25],
-      colors: ['#74c7ff', '#f2f05f'],
-      size: ['S', 'M'],
-    },
-    {
-      id: 4,
-      category: 'Shorts',
-      title: 'Girl nightdress shorts',
-      price: '$57.00',
-      oldPrice: '$62.00',
-      flag: {
-        type: 'new',
-        value: 'New',
-      },
-      images: [IMAGES.product.image20, IMAGES.product.image21],
-      colors: ['#50aae7', '#f2f05f'],
-      size: ['S', 'M'],
-    },
-    {
-      id: 5,
-      category: 'T-shirt',
-      title: 'Black T-shirt for women',
-      price: '$35.00',
-      oldPrice: '$42.00',
-      images: [IMAGES.product.image22, IMAGES.product.image23],
-      colors: ['#000000', '#837aff'],
-      size: ['S', 'M'],
-    },
-    {
-      id: 6,
-      category: 'Women Tops',
-      title: 'Colorful top for women',
-      price: '$6.00',
-      oldPrice: '$9.00',
-      flag: {
-        type: 'sale',
-        value: '50% Sale',
-      },
-      images: [IMAGES.product.image18, IMAGES.product.image19],
-      colors: ['#74c7ff', '#f39fab'],
-      size: ['M', 'L', 'XL'],
-    },
-    {
-      id: 7,
-      category: 'Men T-shirt',
-      title: 'Blue T-shirt for men',
-      price: '$11.00',
-      oldPrice: '$22.00',
-      flag: {
-        type: 'trending',
-        value: 'Trending',
-      },
-      images: [IMAGES.product.image30, IMAGES.product.image29],
-      colors: ['#74c7ff'],
-      size: ['M', 'XL'],
-    },
-    {
-      id: 8,
-      category: 'Kids',
-      title: 'Pink T-shirt for girl',
-      price: '$29.00',
-      oldPrice: '$39.00',
-      images: [IMAGES.product.image24, IMAGES.product.image25],
-      colors: ['#74c7ff', '#f2f05f'],
-      size: ['S', 'M'],
-    },
-    {
-      id: 9,
-      category: 'Shorts',
-      title: 'Girl nightdress shorts',
-      price: '$57.00',
-      oldPrice: '$62.00',
-      flag: {
-        type: 'new',
-        value: 'New',
-      },
-      images: [IMAGES.product.image20, IMAGES.product.image21],
-      colors: ['#50aae7', '#f2f05f'],
-      size: ['S', 'M'],
-    },
-    {
-      id: 10,
-      category: 'T-shirt',
-      title: 'Black T-shirt for women',
-      price: '$35.00',
-      oldPrice: '$42.00',
-      images: [IMAGES.product.image22, IMAGES.product.image23],
-      colors: ['#000000', '#837aff'],
-      size: ['S', 'M'],
-    },
-  ];
+  const [products, setProducts] = React.useState<IProductItemResponse[]>([]);
+  React.useEffect(() => {
+    fetchProducts();
+  }, []);
+  const fetchProducts = async () => {
+    productService.getArrival()
+      .then((resp) => {
+        const data: IProductItemResponse[] = resp.data.data;
+        setProducts(
+          data.map((item) => ({
+            ...item,
+            salePrice: formatCurrencyVND(Number(item.salePrice)),
+            originalPrice: formatCurrencyVND(Number(item.originalPrice)),
+          }))
+        );
+      })
+      .catch((reason) => {
+        console.log('error fetch product ', reason);
+      });
+  };
 
   return (
     <section className="section-product padding-b-100" data-aos="fade-up" data-aos-duration="2000">
@@ -194,11 +90,12 @@ const ProductSwiper: React.FC<Props> = () => {
           }}
           className={'new-product-slider swiper-container mb-minus-24'}
         >
-          {products.map((product, index) => (
-            <SwiperSlide key={index}>
-              <ProductCard {...product} />
-            </SwiperSlide>
-          ))}
+          {products &&
+            products.map((product, index) => (
+              <SwiperSlide key={index}>
+                <ProductCard product={product} />
+              </SwiperSlide>
+            ))}
         </Swiper>
       </div>
     </section>

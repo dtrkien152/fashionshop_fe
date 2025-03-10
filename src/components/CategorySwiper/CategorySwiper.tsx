@@ -1,18 +1,24 @@
+// components/CategorySwiper.tsx
 import * as React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
+import { ICategory } from '~/interfaces/ICategory.ts';
+import { categoryService } from '~/services';
 
-interface Props {}
-const CategorySwiper: React.FC<Props> = () => {
-  const categories = [
-    { icon: 'fi fi-tr-shirt-long-sleeve', title: 'Shirt', items: 67 },
-    { icon: 'fi fi-tr-hat-cowboy-side', title: 'Hats', items: 81 },
-    { icon: 'fi fi-tr-boot-heeled', title: 'Boot', items: 32 },
-    { icon: 'fi fi-tr-shirt-tank-top', title: 'Tops', items: 78 },
-    { icon: 'fi fi-tr-vest', title: 'Vest', items: 64 },
-    { icon: 'fi fi-tr-socks', title: 'Socks', items: 24 },
-    { icon: 'fi fi-tr-sunglasses', title: 'Sunglasses', items: 46 },
-  ];
+const CategorySwiper: React.FC = () => {
+  const [categories, setCategories] = React.useState<ICategory[]>([]);
+
+  React.useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await categoryService.getAll();
+        setCategories(response.data);
+      } catch (error) {
+        console.error('Failed to fetch categories', error);
+      }
+    };
+    fetchCategories();
+  }, []);
 
   return (
     <section className="section-popular margin-b-100" data-aos="fade-up" data-aos-duration="2000">
@@ -42,17 +48,17 @@ const CategorySwiper: React.FC<Props> = () => {
             }}
             className="category-slider swiper-container"
           >
-            {categories.map((category, index) => (
-              <SwiperSlide key={index}>
+            {categories.map((category: ICategory) => (
+              <SwiperSlide key={category.id}>
                 <div className="category-block">
-                  <div className={`category-icon icon-${index + 1}`}>
-                    <i className={category.icon}></i>
+                  <div className="category-icon">
+                    <img src={category.thumbnailUrl} alt={category.name} className="img-fluid" />
                   </div>
                   <div className="category-title">
                     <h4>
-                      <a href="shop-left-sidebar.html">{category.title}</a>
+                      <a href="shop-left-sidebar.html">{category.name}</a>
                     </h4>
-                    <p>({category.items} Items)</p>
+                    <p>{category.code}</p>
                   </div>
                 </div>
               </SwiperSlide>
@@ -63,4 +69,5 @@ const CategorySwiper: React.FC<Props> = () => {
     </section>
   );
 };
+
 export default CategorySwiper;

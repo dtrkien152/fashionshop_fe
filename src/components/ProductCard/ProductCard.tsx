@@ -1,32 +1,23 @@
 import * as React from 'react';
+import {IProductItemResponse} from "~/shared/model/product.model.ts";
 
 interface Props {
-  category: string;
-  title: string;
-  price: string;
-  oldPrice: string;
-  flag?: {
-    type: string;
-    value: string;
-  };
-  images: string[];
-  colors: string[];
-  size: string[];
+  product:IProductItemResponse
 }
 
-const ProductCard: React.FC<Props> = (props) => {
+const ProductCard: React.FC<Props> = (props:Props) => {
   return (
     <div className="product-card-2">
       <div className="cr-product-inner">
         <div className="cr-pro-image-outer">
           <div className="cr-pro-image">
             <a href="product-left-sidebar.html" className="image">
-              <img className="main-image" src={props.images[0]} alt="Product" />
-              <img className="hover-image" src={props.images[1]} alt="Product" />
+              <img className="main-image" src={props.product?.images[0]||''} alt="Product" />
+              <img className="hover-image" src={props.product?.images[1]||''} alt="Product" />
             </a>
-            {props.flag && (
+            {props.product?.flag && (
               <span className="flags">
-                <span className={props.flag.type}>{props.flag.value}</span>
+                <span className={props.product.flag.type}>{props.product.flag.value}</span>
               </span>
             )}
             <div className="cr-pro-actions">
@@ -56,20 +47,20 @@ const ProductCard: React.FC<Props> = (props) => {
         </div>
         <div className="cr-pro-content">
           <div className="cr-info">
-            <a href="shop-left-sidebar.html">{props.category}</a>
+            <a href="shop-left-sidebar.html">{props.product?.category}</a>
           </div>
           <h5 className="cr-pro-title">
-            <a href="product-left-sidebar.html">{props.title}</a>
+            <a href="product-left-sidebar.html">{props.product?.productName}</a>
           </h5>
           <span className="cr-price">
-            <span className="new-price">{props.price}</span>
-            <span className="old-price">{props.oldPrice}</span>
+            <span className="new-price">{props.product?.salePrice}</span>
+            <span className="old-price">{props.product?.originalPrice}</span>
           </span>
           <div className="cr-pro-option">
             <div className="cr-pro-color">
               <ul className="cr-opt-swatch cr-change-img">
-                {props.colors &&
-                  props.colors.map((color, index) => (
+                {props.product?.colors &&
+                  props.product.colors.map((color, index) => (
                     <li key={index} className={index === 0 ? 'active' : ''}>
                       <a href="javascript:void(0)" className="cr-opt-clr-img">
                         <span style={{ backgroundColor: color }}></span>
@@ -80,8 +71,8 @@ const ProductCard: React.FC<Props> = (props) => {
             </div>
             <div className="cr-pro-size">
               <ul className="cr-opt-size">
-                {props.size &&
-                  props.size.map((size, index) => (
+                {props.product?.size &&
+                  props.product.size.map((size, index) => (
                     <li key={index} className={index === 0 ? 'active' : ''}>
                       <a href="#" className="cr-opt-sz">
                         {size}

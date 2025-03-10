@@ -1,17 +1,41 @@
 import { IMAGES } from '~/images';
 import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
-import $ from "jquery";
+import $ from 'jquery';
+import { ICategory } from '~/interfaces/ICategory.ts';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '~/redux/store.ts';
+import { logout } from '~/shared/reducers/authReducer.ts';
+import { categoryService } from '~/services';
 
 interface Props {
   onOpenCart: () => void;
 }
 
 const Header: React.FC<Props> = (props) => {
+  const dispatch = useDispatch();
   const menuRef = useRef<any>(null);
   const [prevScroll, setPrevScroll] = useState(window.scrollY);
   const [prevDirection, setPrevDirection] = useState(0);
+  const [categories, setCategories] = React.useState<ICategory[]>([]);
+  const { email, avatar, fullName } = useSelector((state: RootState) => state.auth);
 
+  const handleLogout = () => {
+    dispatch(logout());
+    window.location.href = '/login';
+  };
+
+  React.useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await categoryService.getAll();
+        setCategories(response.data);
+      } catch (error) {
+        console.error('Failed to fetch categories', error);
+      }
+    };
+    fetchCategories();
+  }, []);
   useEffect(() => {
     const checkScroll = () => {
       const curScroll = window.scrollY;
@@ -28,11 +52,11 @@ const Header: React.FC<Props> = (props) => {
       if (menuRef.current) {
         if (direction === 2 && curScroll > -133) {
           setPrevDirection(direction);
-          menuRef.current.classList.add("menu_fixed_up");
+          menuRef.current.classList.add('menu_fixed_up');
         } else if (direction === 1) {
           setPrevDirection(direction);
-          menuRef.current.classList.add("menu_fixed");
-          menuRef.current.classList.remove("menu_fixed_up");
+          menuRef.current.classList.add('menu_fixed');
+          menuRef.current.classList.remove('menu_fixed_up');
         }
       }
     };
@@ -42,14 +66,14 @@ const Header: React.FC<Props> = (props) => {
       if (!nextElement) return;
       const distance = nextElement.offset().top;
       if (window.scrollY <= distance + 9) {
-        menuRef.current?.classList.remove("menu_fixed");
+        menuRef.current?.classList.remove('menu_fixed');
       } else {
         checkScroll();
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, [prevScroll, prevDirection]);
 
   return (
@@ -58,56 +82,89 @@ const Header: React.FC<Props> = (props) => {
         <div className="row">
           <div className="col-lg-12">
             <div className="top-header">
-              <a href="index.html" className="cr-logo">
+              <a href="/" className="cr-logo">
                 <img src={IMAGES.logo} alt="logo" className="logo" />
               </a>
               <form className="cr-search">
                 <input className="search-input" type="text" placeholder="Search For items..." />
                 <select className="form-select" aria-label="Default select example">
                   <option selected>All Categories</option>
-                  <option value="1">Mens</option>
-                  <option value="2">Womens</option>
-                  <option value="3">Electronics</option>
+                  {categories.map((category: ICategory) => (
+                    <option value={category.id}>{category.name}</option>
+                  ))}
                 </select>
                 <a href="javascript:void(0)" className="search-btn">
                   <i className="ri-search-line"></i>
                 </a>
               </form>
+              {/*header */}
               <div className="cr-right-bar">
                 <ul className="navbar-nav">
                   <li className="nav-item dropdown">
                     <a
                       className="nav-link dropdown-toggle cr-right-bar-item"
-                      href="javascript:void(0)"
+                      href="#"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
                     >
-                      <i className="ri-user-3-line"></i>
-                      <span>Account</span>
+                      {avatar ? (
+                        <img
+                          src={avatar}
+                          alt={fullName || 'Avatar'}
+                          className="rounded-circle"
+                          style={{ width: '30px', height: '30px', marginRight: '8px' }}
+                        />
+                      ) : (
+                        <i className="ri-user-3-line"></i>
+                      )}
+                      <span>{fullName || 'Account'}</span>
                     </a>
                     <ul className="dropdown-menu">
-                      <li>
-                        <a className="dropdown-item" href="register.html">
-                          Register
-                        </a>
-                      </li>
-                      <li>
-                        <a className="dropdown-item" href="checkout.html">
-                          Checkout
-                        </a>
-                      </li>
-                      <li>
-                        <a className="dropdown-item" href="login.html">
-                          Login
-                        </a>
-                      </li>
+                      {email ? (
+                        <>
+                          <li>
+                            <a className="dropdown-item" href="/profile">
+                              Thông tin cá nhân
+                            </a>
+                          </li>
+                          <li>
+                            <a className="dropdown-item" href="/change-password">
+                              Đổi mật khẩu
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              className="dropdown-item"
+                              onClick={handleLogout}
+                              style={{ cursor: 'pointer' }}
+                            >
+                              Logout
+                            </a>
+                          </li>
+                        </>
+                      ) : (
+                        <>
+                          <li>
+                            <a className="dropdown-item" href="/register">
+                              Register
+                            </a>
+                          </li>
+                          <li>
+                            <a className="dropdown-item" href="/login">
+                              Login
+                            </a>
+                          </li>
+                        </>
+                      )}
                     </ul>
                   </li>
                 </ul>
-                <a href="wishlist.html" className="cr-right-bar-item">
+                <a href="/wishlist" className="cr-right-bar-item">
                   <i className="ri-heart-3-line"></i>
                   <span>Wishlist</span>
                 </a>
                 <a
-                  href="javascript:void(0)"
+                  href="#"
                   className="cr-right-bar-item Shopping-toggle"
                   onClick={props.onOpenCart}
                 >
@@ -442,21 +499,13 @@ const Header: React.FC<Props> = (props) => {
                       Category
                     </a>
                     <ul className="dropdown-menu">
-                      <li>
-                        <a className="dropdown-item" href="shop-left-sidebar.html">
-                          Shop Left sidebar
-                        </a>
-                      </li>
-                      <li>
-                        <a className="dropdown-item" href="shop-right-sidebar.html">
-                          Shop Right sidebar
-                        </a>
-                      </li>
-                      <li>
-                        <a className="dropdown-item" href="shop-full-width.html">
-                          Full Width
-                        </a>
-                      </li>
+                      {categories.map((category: ICategory) => (
+                        <li>
+                          <a className="dropdown-item" href="shop-left-sidebar.html">
+                            {category.name}
+                          </a>
+                        </li>
+                      ))}
                     </ul>
                   </li>
                   <li className="nav-item dropdown">
