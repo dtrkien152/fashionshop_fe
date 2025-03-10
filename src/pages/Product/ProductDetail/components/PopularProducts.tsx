@@ -1,50 +1,68 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { IMAGES } from '~/images';
+import * as React from "react";
+import {IProductItemResponse} from "~/shared/model/product.model.ts";
+import {productService} from "~/services";
 
-const products = [
-  {
-    img: IMAGES.product.image9,
-    category: 'Snacks',
-    rating: 4.5,
-    title: 'Best snakes with hazel nut mix pack 200gm',
-    newPrice: '$120.25',
-    oldPrice: '$123.25',
-  },
-  {
-    img: IMAGES.product.image10,
-    category: 'Snacks',
-    rating: 5.0,
-    title: 'Sweet snakes crunchy nut mix 250gm pack',
-    newPrice: '$100.00',
-    oldPrice: '$110.00',
-  },
-  {
-    img: IMAGES.product.image11,
-    category: 'Snacks',
-    rating: 4.5,
-    title: 'Best snakes with hazel nut mix pack 200gm',
-    newPrice: '$120.25',
-    oldPrice: '$123.25',
-  },
-  {
-    img: IMAGES.product.image12,
-    category: 'Snacks',
-    rating: 5.0,
-    title: 'Sweet snakes crunchy nut mix 250gm pack',
-    newPrice: '$100.00',
-    oldPrice: '$110.00',
-  },
-  {
-    img: IMAGES.product.image13,
-    category: 'Snacks',
-    rating: 5.0,
-    title: 'Sweet snakes crunchy nut mix 250gm pack',
-    newPrice: '$100.00',
-    oldPrice: '$110.00',
-  },
-];
+// const products = [
+//   {
+//     img: IMAGES.product.image9,
+//     category: 'Snacks',
+//     rating: 4.5,
+//     title: 'Best snakes with hazel nut mix pack 200gm',
+//     newPrice: '$120.25',
+//     oldPrice: '$123.25',
+//   },
+//   {
+//     img: IMAGES.product.image10,
+//     category: 'Snacks',
+//     rating: 5.0,
+//     title: 'Sweet snakes crunchy nut mix 250gm pack',
+//     newPrice: '$100.00',
+//     oldPrice: '$110.00',
+//   },
+//   {
+//     img: IMAGES.product.image11,
+//     category: 'Snacks',
+//     rating: 4.5,
+//     title: 'Best snakes with hazel nut mix pack 200gm',
+//     newPrice: '$120.25',
+//     oldPrice: '$123.25',
+//   },
+//   {
+//     img: IMAGES.product.image12,
+//     category: 'Snacks',
+//     rating: 5.0,
+//     title: 'Sweet snakes crunchy nut mix 250gm pack',
+//     newPrice: '$100.00',
+//     oldPrice: '$110.00',
+//   },
+//   {
+//     img: IMAGES.product.image13,
+//     category: 'Snacks',
+//     rating: 5.0,
+//     title: 'Sweet snakes crunchy nut mix 250gm pack',
+//     newPrice: '$100.00',
+//     oldPrice: '$110.00',
+//   },
+// ];
 
 export default function PopularProducts() {
+  const [products, setProducts] = React.useState<IProductItemResponse[]>([]);
+  React.useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    productService
+        .getTopSelling()
+        .then((resp) => {
+          setProducts(resp.data.data);
+        })
+        .catch((reason) => {
+          console.log('error fetch product ', reason);
+        });
+  };
   return (
     <section
       className="section-popular-products padding-tb-100"
@@ -81,7 +99,7 @@ export default function PopularProducts() {
                   <div className="cr-product-card">
                     <div className="cr-product-image">
                       <div className="cr-image-inner zoom-image-hover">
-                        <img src={product.img} alt={product.title} />
+                        <img src={product.thumbnailUrl} alt={product.productName} />
                       </div>
                       <div className="cr-side-view">
                         <a href="#" className="wishlist">
@@ -102,23 +120,23 @@ export default function PopularProducts() {
                     </div>
                     <div className="cr-product-details">
                       <div className="cr-brand">
-                        <a href="shop-left-sidebar.html">{product.category}</a>
-                        <div className="cr-star">
-                          {Array.from({ length: 5 }, (_, i) => (
-                            <i
-                              key={i}
-                              className={i < product.rating ? 'ri-star-fill' : 'ri-star-line'}
-                            ></i>
-                          ))}
-                          <p>({product.rating.toFixed(1)})</p>
-                        </div>
+                        <a >{product.category}</a>
+                        {/*<div className="cr-star">*/}
+                        {/*  {Array.from({ length: 5 }, (_, i) => (*/}
+                        {/*    <i*/}
+                        {/*      key={i}*/}
+                        {/*      className={i < product.rating ? 'ri-star-fill' : 'ri-star-line'}*/}
+                        {/*    ></i>*/}
+                        {/*  ))}*/}
+                        {/*  <p>({product.rating.toFixed(1)})</p>*/}
+                        {/*</div>*/}
                       </div>
                       <a href="product-left-sidebar.html" className="title">
-                        {product.title}
+                        {product.productName}
                       </a>
                       <p className="cr-price">
-                        <span className="new-price">{product.newPrice}</span>{' '}
-                        <span className="old-price">{product.oldPrice}</span>
+                        <span className="new-price">{product.originalPrice}</span>{' '}
+                        <span className="old-price">{product.salePrice}</span>
                       </p>
                     </div>
                   </div>
