@@ -28,35 +28,35 @@ const ProductCard: React.FC<Props> = ({ product }: Props) => {
               </span>
             )}
             <div className="cr-pro-actions">
-              <button
+              <a
                 className="model-oraganic-product"
                 data-bs-toggle="modal"
                 role="button"
                 onClick={(e) => e.stopPropagation()}
               >
                 <i className="ri-eye-line"></i>
-              </button>
-              <button
+              </a>
+              <a
                 className="cr-btn-group compare"
                 title="Compare"
                 onClick={(e) => e.stopPropagation()}
               >
                 <i className="mdi mdi-vector-arrange-below"></i>
-              </button>
-              <button
+              </a>
+              <a
                 title="Add To Cart"
                 className="add-to-cart cr-shopping-bag"
                 onClick={(e) => e.stopPropagation()}
               >
                 <i className="ri-shopping-cart-line"></i>
-              </button>
-              <button
+              </a>
+              <a
                 className="cr-btn-group wishlist"
                 title="Wishlist"
                 onClick={(e) => e.stopPropagation()}
               >
                 <i className="ri-heart-line"></i>
-              </button>
+              </a>
             </div>
           </div>
         </div>
@@ -76,11 +76,12 @@ const ProductCard: React.FC<Props> = ({ product }: Props) => {
               <ul className="cr-opt-swatch cr-change-img">
                 {product?.colors?.map((color, index) => (
                   <li key={index} className={index === 0 ? 'active' : ''}>
-                    <span
-                      style={{ backgroundColor: color }}
+                    <a
                       onClick={(e) => e.stopPropagation()}
                       className="cr-opt-clr-img"
-                    ></span>
+                    >
+                      <span style={{ backgroundColor: color }}></span>
+                    </a>
                   </li>
                 ))}
               </ul>
@@ -89,12 +90,12 @@ const ProductCard: React.FC<Props> = ({ product }: Props) => {
               <ul className="cr-opt-size">
                 {product?.size?.map((size, index) => (
                   <li key={index} className={index === 0 ? 'active' : ''}>
-                    <span
+                    <a
                       onClick={(e) => e.stopPropagation()}
                       className="cr-opt-sz"
                     >
                       {size}
-                    </span>
+                    </a>
                   </li>
                 ))}
               </ul>

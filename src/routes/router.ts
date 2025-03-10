@@ -38,13 +38,13 @@ export const ROUTER_PATH = {
     relative: 'register',
     extract: '/register',
   },
-  productDetail: {
-    relative: 'product/:id',
-    extract: '/product/:id',
-  },
   productList: {
     relative: 'product',
     extract: '/product',
+  },
+  productDetail: {
+    relative: 'product/:id',
+    extract: '/product/:id',
   },
   notFound: {
     relative: 'error/not-found',

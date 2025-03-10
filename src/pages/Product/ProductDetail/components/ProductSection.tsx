@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Thumbs } from 'swiper/modules';
+import { Thumbs } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
@@ -8,11 +8,11 @@ import TabComponent from '~/pages/Product/ProductDetail/components/TabComponent.
 import { IProductDetailResponse, IProductSubDetailResponse } from '~/shared/model/product.model.ts';
 import ProductAttributes from '~/pages/Product/ProductDetail/components/ProductAttributes.tsx';
 
-
 interface Props {
-  products: IProductDetailResponse|null;
+  products: IProductDetailResponse | null;
 }
-const ProductSection = (props:Props) => {
+
+const ProductSection = (props: Props) => {
   // const images = [
   //   IMAGES.product.image9,
   //   IMAGES.product.image10,
@@ -41,9 +41,8 @@ const ProductSection = (props:Props) => {
 
   const handleProductSelect = (product: IProductSubDetailResponse | null) => {
     setSelectedProduct(product);
-    console.log("Sản phẩm được chọn:", product);
+    console.log('Sản phẩm được chọn:', product);
   };
-
 
   const handleMouseLeave = () => {
     setZoomStyle({
@@ -64,14 +63,13 @@ const ProductSection = (props:Props) => {
           <div className="col-xxl-4 col-xl-5 col-md-6 col-12 mb-24">
             <div className="vehicle-detail-banner banner-content clearfix">
               <Swiper
-                modules={[Navigation, Thumbs]}
+                modules={[Thumbs]}
                 spaceBetween={10}
-                navigation
                 thumbs={{ autoScrollOffset: 1 }}
                 className="banner-slider"
               >
                 {props.products?.imageUrls?.map((image, index) => (
-                  <SwiperSlide key={index}>
+                  <SwiperSlide className="slider slider-for" key={index}>
                     <div
                       className="slider-banner-image zoom-image-hover"
                       ref={imageContainerRef}
@@ -108,12 +106,8 @@ const ProductSection = (props:Props) => {
           </div>
           <div className="col-xxl-8 col-xl-7 col-md-6 col-12 mb-24">
             <div className="cr-size-and-weight-contain">
-              <h2 className="heading">
-                {props.products?.productName}
-              </h2>
-              <p>
-                {props.products?.description}
-              </p>
+              <h2 className="heading">{props.products?.productName}</h2>
+              <p>{props.products?.description}</p>
             </div>
             <div className="cr-size-and-weight">
               <div className="cr-review-star">
@@ -123,9 +117,8 @@ const ProductSection = (props:Props) => {
                   <i className="ri-fire-fill"></i>
                   <i className="ri-fire-fill"></i>
                   <i className="ri-fire-fill"></i>
-
                 </div>
-                <p>(Đã bán: {props.products?.unitOnOrder||0} )</p>
+                <p>(Đã bán: {props.products?.unitOnOrder || 0} )</p>
               </div>
               <div className="list">
                 <ul>
@@ -177,23 +170,10 @@ const ProductSection = (props:Props) => {
                 <span className="new-price">$120.25</span>
                 <span className="old-price">$123.25</span>
               </div>
-              <div className="cr-size-weight">
-                {/*<h5>*/}
-                {/*  <span>Size</span>/<span>Weight</span> :*/}
-                {/*</h5>*/}
-                {/*<div className="cr-kg">*/}
-                {/*  <ul>*/}
-                {/*    <li className="active-color">50kg</li>*/}
-                {/*    <li>80kg</li>*/}
-                {/*    <li>120kg</li>*/}
-                {/*    <li>200kg</li>*/}
-                {/*  </ul>*/}
-                {/*</div>*/}
-                <ProductAttributes
-                  productSubDetails={props.products?.productSubDetails || []}
-                  onSelect={handleProductSelect}
-                />
-              </div>
+              <ProductAttributes
+                productSubDetails={props.products?.productSubDetails || []}
+                onSelect={handleProductSelect}
+              />
               <div className="cr-add-card">
                 <div className="cr-qty-main">
                   <input

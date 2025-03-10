@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import { IProductSubDetailResponse } from '~/shared/model/product.model.ts';
 
 export interface Props {
   productSubDetails: IProductSubDetailResponse[];
   onSelect: (selectedProduct: IProductSubDetailResponse | null) => void;
 }
+
 const ProductAttributes = (props: Props) => {
   const [selectedColor, setSelectedColor] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
@@ -39,58 +40,54 @@ const ProductAttributes = (props: Props) => {
   };
 
   return (
-    <div className="p-4">
-      <div className="mb-4">
-        <label className="text-lg font-semibold mb-2 custom-text">Màu sắc:</label>
-        <div className="flex gap-2">
-          {colors.map((color) => (
-            <button
-              key={color}
-              onClick={() => handleColorSelect(color)}
-              className={`px-4 py-1 rounded-lg border ${
-                {
-                  true: 'border-blue-500 bg-blue-100',
-                  false: 'border-gray-300 bg-white',
-                }[selectedColor === color]
-              }`}
-            >
-              {color}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div className="mb-4">
-        <label className="text-lg font-semibold mb-2 custom-text">Kích thước:</label>
-        <div className="flex gap-2">
-          {sizes.map((size) => {
-            const isDisabled = !props.productSubDetails.some(
-              (item) => item.color === selectedColor && item.size === size
-            );
-            return (
-              <button
-                key={size}
-                onClick={() => handleSizeSelect(size)}
-                disabled={isDisabled}
-                className={`px-4 py-1 rounded-lg border ${
-                  {
-                    true: 'border-blue-500 bg-blue-100',
-                    false: 'border-gray-300 bg-white',
-                  }[selectedSize === size]
-                } ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+    <div>
+      <div className="cr-size-weight">
+        <h5>
+          <span>Màu sắc</span> :
+        </h5>
+        <div className="cr-kg">
+          <ul>
+            {colors.map((color, index) => (
+              <li
+                key={index}
+                className={selectedColor === color ? 'active-color' : ''}
+                onClick={() => handleColorSelect(color)}
               >
-                {size}
-              </button>
-            );
-          })}
+                {color}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
-
+      <div className="cr-size-weight">
+        <h5>
+          <span>Kích thước</span> :
+        </h5>
+        <div className="cr-kg">
+          <ul>
+            {sizes.map((size, index) => {
+              const isDisabled = !props.productSubDetails.some(
+                (item) => item.color === selectedColor && item.size === size
+              );
+              return (
+                <li
+                  key={index}
+                  className={(selectedSize === size ? 'active-color' : '') + (isDisabled ? 'disabled' : '')}
+                  onClick={() => handleSizeSelect(size)}
+                >
+                  {size}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </div>
       {selectedColor && selectedSize && (
-        <div className="mb-4">
-          <label className="text-lg font-semibold mb-2 custom-text">
-            Số lượng còn lại:  <span className="ml-2">{'  '+maxQuantity}</span>
-          </label>
+        <div className="cr-size-weight">
+          <h5>
+            <span>Số lượng còn lại</span> :
+          </h5>
+          <div className="cr-kg">{'  ' + maxQuantity}</div>
         </div>
       )}
     </div>
