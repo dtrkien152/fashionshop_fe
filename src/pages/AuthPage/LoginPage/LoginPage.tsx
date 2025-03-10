@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { IMAGES } from '~/images';
 import { login } from '~/shared/reducers/authReducer';
 import { useDispatch } from 'react-redux';
 import { authService } from '~/services';
+import {GoogleSSOButton} from "~/pages/AuthPage/SSO/GoogleSSOButton.tsx";
+import {GoogleOAuthProvider} from "@react-oauth/google";
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -93,7 +94,7 @@ const LoginPage = () => {
                     <label htmlFor="rememberMe">Remember Me</label>
                   </span>
                   <a className="link" href="forgot.html">
-                    Forgot Password?
+                    Quên mật khẩu?
                   </a>
                 </div>
 
@@ -101,10 +102,16 @@ const LoginPage = () => {
 
                 <div className="login-buttons">
                   <button type="button" className="cr-button" onClick={handleLogin}>
-                    Login
+                    Đăng nhập
                   </button>
+                  {/*<p>Hoặc đăng nhập với:</p>*/}
+                  {/*/!*<GoogleSSOButton/>*!/*/}
+                  {/*<GoogleOAuthProvider*/}
+                  {/*    clientId="630518824425-deg6kk43dfitd19bqppghedatmjr5beg.apps.googleusercontent.com">*/}
+                  {/*  <GoogleSSOButton/>*/}
+                  {/*</GoogleOAuthProvider>*/}
                   <a href="/register" className="link">
-                    Signup?
+                    Đăng ký?
                   </a>
                 </div>
               </form>
