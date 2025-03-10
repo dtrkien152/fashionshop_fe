@@ -32,13 +32,15 @@ export interface IProductSubDetailResponse {
 }
 
 export interface IProductDetailResponse {
-  product_id: number;
+  productId: number;
   productName: string;
   description:string;
   thumbnailUrl:string;
   imageUrls?: string[];
-  category_id: number;
-  category_name: string;
+  categoryId: number;
+  salePrice: number;
+  originalPrice: number;
+  categoryName: string;
   unitOnOrder: number;
   productSubDetails: IProductSubDetailResponse[]|[];
 }

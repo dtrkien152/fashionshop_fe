@@ -37,8 +37,8 @@ const ProductCard: React.FC<Props> = ({ product }: Props) => {
     cartService.addToCartDetails(payload).then(() => {
       const cartProduct: CartProduct = {
         productId: product.id,
-        productName: product.productName as string,
-        thumbnailUrl: product.thumbnailUrl as string,
+        productName: product.productName,
+        thumbnailUrl: product.thumbnailUrl,
         salePrice: product.salePrice,
         originalPrice: product.originalPrice,
         unit: 1,

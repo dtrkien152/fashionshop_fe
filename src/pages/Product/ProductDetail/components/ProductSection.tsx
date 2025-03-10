@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 import { RootState } from '~/redux/store.ts';
 import { cartService } from '~/services';
+import { formatCurrencyVND } from '~/shared/utils/stringformat.ts';
 
 interface Props {
   products?: IProductDetailResponse;
@@ -32,10 +33,10 @@ const ProductSection = (props: Props) => {
     const payload = {
       products: [
         {
-          productId: props.products.product_id,
+          productId: props.products.productId,
           color: productSubDetailSelected.color,
           size: productSubDetailSelected.size,
-          unit
+          unit,
         },
       ],
       cartCode: cartCode,
@@ -43,11 +44,11 @@ const ProductSection = (props: Props) => {
     cartService.addToCartDetails(payload).then((res) => {
       console.log(res);
       const cartProduct: CartProduct = {
-        productId: props.products?.product_id as number,
-        productName: props.products?.productName as string,
-        thumbnailUrl: props.products?.thumbnailUrl as string,
-        salePrice: 0,
-        originalPrice: 0,
+        productId: props.products?.productId as number,
+        productName: props.products?.productName,
+        thumbnailUrl: props.products?.thumbnailUrl,
+        salePrice: props.products?.salePrice,
+        originalPrice: props.products?.originalPrice,
         unit,
         color: productSubDetailSelected.color,
         size: productSubDetailSelected.size,
@@ -195,8 +196,12 @@ const ProductSection = (props: Props) => {
                 </ul>
               </div>
               <div className="cr-product-price">
-                <span className="new-price">$120.25</span>
-                <span className="old-price">$123.25</span>
+                <span className="new-price">
+                  {formatCurrencyVND(props.products?.salePrice ?? 0)}
+                </span>
+                <span className="old-price">
+                  {formatCurrencyVND(props.products?.originalPrice ?? 0)}
+                </span>
               </div>
               <ProductAttributes
                 productSubDetails={props.products?.productSubDetails || []}
