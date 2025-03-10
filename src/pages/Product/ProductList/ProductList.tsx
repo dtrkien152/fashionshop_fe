@@ -3,8 +3,8 @@ import { IProductItemResponse, IProductSearchParam } from '~/shared/model/produc
 import { formatCurrencyVND } from '~/shared/utils/stringformat.ts';
 import { useSearchParams } from 'react-router-dom';
 import { SORT_BY_ENUM } from '~/shared/model/common.model.ts';
-import { ProductListBreadcrumb } from '~/pages/Product/ProductList/components/ProductListBreadcrumb.tsx';
 import { productService } from '~/services';
+import { IMAGES } from '~/images';
 
 const DEFAULT_SEARCH_PARAMS: IProductSearchParam = {
   keyword: null,
@@ -16,7 +16,6 @@ const DEFAULT_SEARCH_PARAMS: IProductSearchParam = {
 
 export const ProductList = () => {
   const [searchParams] = useSearchParams();
-
   const [products, setProducts] = React.useState<IProductItemResponse[]>([]);
 
   React.useEffect(() => {
@@ -37,7 +36,8 @@ export const ProductList = () => {
 
   const fetchProducts = async () => {
     const params = buildSearchParams();
-    productService.searchProduct(params)
+    productService
+      .search(params)
       .then((resp) => {
         const data: IProductItemResponse[] = resp.data.data;
         setProducts(
@@ -54,140 +54,6 @@ export const ProductList = () => {
   };
   return (
     <div>
-      <div className="cr-sidebar-overlay"></div>
-      <div id="cr_mobile_menu" className="cr-side-cart cr-mobile-menu">
-        <div className="cr-menu-title">
-          <span className="menu-title">My Menu</span>
-          <button type="button" className="cr-close">
-            ×
-          </button>
-        </div>
-        <div className="cr-menu-inner">
-          <div className="cr-menu-content">
-            <ul>
-              <li className="dropdown drop-list">
-                <a href="index.html">Home</a>
-              </li>
-              <li className="dropdown drop-list">
-                <span className="menu-toggle"></span>
-                <a href="javascript:void(0)" className="dropdown-list">
-                  Category
-                </a>
-                <ul className="sub-menu">
-                  <li>
-                    <a href="shop-left-sidebar.html">Shop Left sidebar</a>
-                  </li>
-                  <li>
-                    <a href="shop-right-sidebar.html">Shop Right sidebar</a>
-                  </li>
-                  <li>
-                    <a href="shop-full-width.html">Full Width</a>
-                  </li>
-                </ul>
-              </li>
-              <li className="dropdown drop-list">
-                <span className="menu-toggle"></span>
-                <a href="javascript:void(0)" className="dropdown-list">
-                  product
-                </a>
-                <ul className="sub-menu">
-                  <li>
-                    <a href="product-left-sidebar.html">product Left sidebar</a>
-                  </li>
-                  <li>
-                    <a href="product-right-sidebar.html">product Right sidebar</a>
-                  </li>
-                  <li>
-                    <a href="product-full-width.html">Product Full Width </a>
-                  </li>
-                </ul>
-              </li>
-              <li className="dropdown drop-list">
-                <span className="menu-toggle"></span>
-                <a href="javascript:void(0)" className="dropdown-list">
-                  Pages
-                </a>
-                <ul className="sub-menu">
-                  <li>
-                    <a href="about.html">About Us</a>
-                  </li>
-                  <li>
-                    <a href="contact-us.html">Contact Us</a>
-                  </li>
-                  <li>
-                    <a href="cart.html">Cart</a>
-                  </li>
-                  <li>
-                    <a href="checkout.html">Checkout</a>
-                  </li>
-                  <li>
-                    <a href="track-order.html">Track Order</a>
-                  </li>
-                  <li>
-                    <a href="wishlist.html">Wishlist</a>
-                  </li>
-                  <li>
-                    <a href="faq.html">Faq</a>
-                  </li>
-                  <li>
-                    <a href="login.html">Login</a>
-                  </li>
-                  <li>
-                    <a href="register.html">Register</a>
-                  </li>
-                  <li>
-                    <a href="policy.html">Policy</a>
-                  </li>
-                </ul>
-              </li>
-              <li className="dropdown drop-list">
-                <span className="menu-toggle"></span>
-                <a href="javascript:void(0)" className="dropdown-list">
-                  Blog
-                </a>
-                <ul className="sub-menu">
-                  <li>
-                    <a href="blog-left-sidebar.html">Left Sidebar</a>
-                  </li>
-                  <li>
-                    <a href="blog-right-sidebar.html">Right Sidebar</a>
-                  </li>
-                  <li>
-                    <a href="blog-full-width.html">Full Width</a>
-                  </li>
-                  <li>
-                    <a href="blog-detail-left-sidebar.html">Detail Left Sidebar</a>
-                  </li>
-                  <li>
-                    <a href="blog-detail-right-sidebar.html">Detail Right Sidebar</a>
-                  </li>
-                  <li>
-                    <a href="blog-detail-full-width.html">Detail Full Width</a>
-                  </li>
-                </ul>
-              </li>
-              <li className="dropdown drop-list">
-                <span className="menu-toggle"></span>
-                <a href="javascript:void(0)">Element</a>
-                <ul className="sub-menu">
-                  <li>
-                    <a href="elements-products.html">Products</a>
-                  </li>
-                  <li>
-                    <a href="elements-typography.html">Typography</a>
-                  </li>
-                  <li>
-                    <a href="elements-buttons.html">Buttons</a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <ProductListBreadcrumb/>
-
       <section className="section-shop padding-tb-100">
         <div className="container">
           <div className="row d-none">
@@ -224,12 +90,6 @@ export const ProductList = () => {
                       <a href="javascript:void(0)" className="shop_side_view">
                         <i className="ri-filter-line"></i>
                       </a>
-                      <a href="javascript:void(0)" className="gridCol active-grid">
-                        <i className="ri-grid-line"></i>
-                      </a>
-                      <a href="javascript:void(0)" className="gridRow">
-                        <i className="ri-list-check-2"></i>
-                      </a>
                     </div>
                     <div className="center-content">
                       <span>We found 29 items for you!</span>
@@ -248,12 +108,12 @@ export const ProductList = () => {
                   </div>
                 </div>
               </div>
-              <div className="row col-50 mb-minus-24">
+              <div className={'row col-50 mb-minus-24'}>
                 <div className="col-lg-3 col-6 cr-product-box mb-24">
                   <div className="cr-product-card">
                     <div className="cr-product-image">
                       <div className="cr-image-inner zoom-image-hover">
-                        <img src="assets/img/product/1.jpg" alt="product-1" />
+                        <img src={IMAGES.product.image1} alt="product-1" />
                       </div>
                       <div className="cr-side-view">
                         <a href="javascript:void(0)" className="wishlist">
@@ -302,7 +162,7 @@ export const ProductList = () => {
                   <div className="cr-product-card">
                     <div className="cr-product-image">
                       <div className="cr-image-inner zoom-image-hover">
-                        <img src="assets/img/product/9.jpg" alt="product-1" />
+                        <img src={IMAGES.product.image9} alt="product-1" />
                       </div>
                       <div className="cr-side-view">
                         <a href="javascript:void(0)" className="wishlist">
@@ -351,7 +211,7 @@ export const ProductList = () => {
                   <div className="cr-product-card">
                     <div className="cr-product-image">
                       <div className="cr-image-inner zoom-image-hover">
-                        <img src="assets/img/product/2.jpg" alt="product-1" />
+                        <img src={IMAGES.product.image2} alt="product-1" />
                       </div>
                       <div className="cr-side-view">
                         <a href="javascript:void(0)" className="wishlist">
@@ -400,7 +260,7 @@ export const ProductList = () => {
                   <div className="cr-product-card">
                     <div className="cr-product-image">
                       <div className="cr-image-inner zoom-image-hover">
-                        <img src="assets/img/product/3.jpg" alt="product-1" />
+                        <img src={IMAGES.product.image3} alt="product-1" />
                       </div>
                       <div className="cr-side-view">
                         <a href="javascript:void(0)" className="wishlist">
@@ -449,7 +309,7 @@ export const ProductList = () => {
                   <div className="cr-product-card">
                     <div className="cr-product-image">
                       <div className="cr-image-inner zoom-image-hover">
-                        <img src="assets/img/product/10.jpg" alt="product-1" />
+                        <img src={IMAGES.product.image10} alt="product-1" />
                       </div>
                       <div className="cr-side-view">
                         <a href="javascript:void(0)" className="wishlist">
@@ -498,7 +358,7 @@ export const ProductList = () => {
                   <div className="cr-product-card">
                     <div className="cr-product-image">
                       <div className="cr-image-inner zoom-image-hover">
-                        <img src="assets/img/product/17.jpg" alt="product-1" />
+                        <img src={IMAGES.product.image17} alt="product-1" />
                       </div>
                       <div className="cr-side-view">
                         <a href="javascript:void(0)" className="wishlist">
@@ -547,7 +407,7 @@ export const ProductList = () => {
                   <div className="cr-product-card">
                     <div className="cr-product-image">
                       <div className="cr-image-inner zoom-image-hover">
-                        <img src="assets/img/product/13.jpg" alt="product-1" />
+                        <img src={IMAGES.product.image13} alt="product-1" />
                       </div>
                       <div className="cr-side-view">
                         <a href="javascript:void(0)" className="wishlist">
@@ -596,7 +456,7 @@ export const ProductList = () => {
                   <div className="cr-product-card">
                     <div className="cr-product-image">
                       <div className="cr-image-inner zoom-image-hover">
-                        <img src="assets/img/product/11.jpg" alt="product-1" />
+                        <img src={IMAGES.product.image11} alt="product-1" />
                       </div>
                       <div className="cr-side-view">
                         <a href="javascript:void(0)" className="wishlist">
@@ -645,7 +505,7 @@ export const ProductList = () => {
                   <div className="cr-product-card">
                     <div className="cr-product-image">
                       <div className="cr-image-inner zoom-image-hover">
-                        <img src="assets/img/product/12.jpg" alt="product-1" />
+                        <img src={IMAGES.product.image12} alt="product-1" />
                       </div>
                       <div className="cr-side-view">
                         <a href="javascript:void(0)" className="wishlist">
@@ -694,7 +554,7 @@ export const ProductList = () => {
                   <div className="cr-product-card">
                     <div className="cr-product-image">
                       <div className="cr-image-inner zoom-image-hover">
-                        <img src="assets/img/product/1.jpg" alt="product-1" />
+                        <img src={IMAGES.product.image1} alt="product-1" />
                       </div>
                       <div className="cr-side-view">
                         <a href="javascript:void(0)" className="wishlist">
@@ -743,7 +603,7 @@ export const ProductList = () => {
                   <div className="cr-product-card">
                     <div className="cr-product-image">
                       <div className="cr-image-inner zoom-image-hover">
-                        <img src="assets/img/product/9.jpg" alt="product-1" />
+                        <img src={IMAGES.product.image9} alt="product-1" />
                       </div>
                       <div className="cr-side-view">
                         <a href="javascript:void(0)" className="wishlist">
@@ -792,7 +652,7 @@ export const ProductList = () => {
                   <div className="cr-product-card">
                     <div className="cr-product-image">
                       <div className="cr-image-inner zoom-image-hover">
-                        <img src="assets/img/product/2.jpg" alt="product-1" />
+                        <img src={IMAGES.product.image2} alt="product-1" />
                       </div>
                       <div className="cr-side-view">
                         <a href="javascript:void(0)" className="wishlist">

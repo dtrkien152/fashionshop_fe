@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { IMAGES } from '~/images';
+import { Link } from 'react-router-dom';
+import { ROUTER_PATH } from '~/routes';
 
 interface Props {
   open: boolean;
@@ -71,8 +73,8 @@ const Cart: React.FC<Props> = (props) => {
                       {product.title}
                     </a>
                     <span className="cart-price">
-                    <span>$56.00</span>
-                  </span>
+                      <span>$56.00</span>
+                    </span>
                     <div className="cr-cart-qty">
                       <div className="cart-qty-plus-minus">
                         <button type="button" className="plus">
@@ -119,12 +121,12 @@ const Cart: React.FC<Props> = (props) => {
               </table>
             </div>
             <div className="cart_btn">
-              <a href="cart.html" className="cr-button">
+              <Link to={ROUTER_PATH.cart.extract} className="cr-button">
                 View Cart
-              </a>
-              <a href="checkout.html" className="cr-btn-secondary">
+              </Link>
+              <Link to={ROUTER_PATH.checkout.extract} className="cr-btn-secondary">
                 Checkout
-              </a>
+              </Link>
             </div>
           </div>
         </div>
