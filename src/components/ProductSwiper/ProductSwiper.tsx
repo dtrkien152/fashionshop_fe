@@ -4,7 +4,6 @@ import { Autoplay } from 'swiper/modules';
 import ProductCard from '../ProductCard/ProductCard.tsx';
 import { useCountDown } from '~/hooks';
 import { IProductItemResponse } from '~/shared/model/product.model.ts';
-import { formatCurrencyVND } from '~/shared/utils/stringformat.ts';
 import { productService } from '~/services';
 
 interface Props {}
@@ -13,19 +12,12 @@ const ProductSwiper: React.FC<Props> = () => {
   const { days, hours, minutes, seconds } = useCountDown(7 * 24 * 60 * 60 * 1000);
   const [products, setProducts] = React.useState<IProductItemResponse[]>([]);
   React.useEffect(() => {
-    fetchProducts();
+    fetchProducts().then();
   }, []);
   const fetchProducts = async () => {
     productService.getArrival()
       .then((resp) => {
-        const data: IProductItemResponse[] = resp.data.data;
-        setProducts(
-          data.map((item) => ({
-            ...item,
-            salePrice: formatCurrencyVND(Number(item.salePrice)),
-            originalPrice: formatCurrencyVND(Number(item.originalPrice)),
-          }))
-        );
+        setProducts(resp.data.data);
       })
       .catch((reason) => {
         console.log('error fetch product ', reason);

@@ -56,9 +56,9 @@ class Services {
     this.axios.interceptors.request.eject(this.interceptors);
   }
 
-  handleResponse(response: AxiosResponse, error: AxiosError, isSuccess: boolean) {
+  handleResponse(response: AxiosResponse, error: AxiosError, isSuccess: boolean): Promise<AxiosResponse> {
     if (isSuccess) {
-      return response;
+      return Promise.resolve(response);
     } else {
       return Promise.reject(error.response);
     }

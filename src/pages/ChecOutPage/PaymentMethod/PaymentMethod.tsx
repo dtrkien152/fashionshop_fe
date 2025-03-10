@@ -17,20 +17,14 @@ const PaymentMethod: React.FC<Props> = () => {
             <form action="#" className="payment-options">
               <span className="cr-pay-option">
                 <span>
-                  <input type="radio" id="pay1" name="radio-group" checked />
+                  <input type="radio" id="pay1" name="payment-options" checked />
                   <label htmlFor="pay1">Cash On Delivery</label>
                 </span>
               </span>
               <span className="cr-pay-option">
                 <span>
-                  <input type="radio" id="pay2" name="radio-group" />
-                  <label htmlFor="pay2">UPI</label>
-                </span>
-              </span>
-              <span className="cr-pay-option">
-                <span>
-                  <input type="radio" id="pay3" name="radio-group" />
-                  <label htmlFor="pay3">Bank Transfer</label>
+                  <input type="radio" id="pay2" name="payment-options" disabled />
+                  <label htmlFor="pay2">VN-PAY</label>
                 </span>
               </span>
             </form>

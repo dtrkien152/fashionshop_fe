@@ -22,3 +22,14 @@
     margin-top: 15px;
     text-align: center;
 }
+
+.error-message {
+    color: red;
+    font-size: 13px;
+}
+
+.required::after {
+    content: " *";
+    color: red;
+    font-weight: bold;
+}

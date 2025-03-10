@@ -6,16 +6,9 @@ import PopularProducts from '~/pages/Product/ProductDetail/components/PopularPro
 import { IProductDetailResponse } from '~/shared/model/product.model.ts';
 
 
-interface Product {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-}
-
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const [product, setProduct] = useState<IProductDetailResponse | null>(null);
+  const [product, setProduct] = useState<IProductDetailResponse>();
 
   useEffect(() => {
     if (!id) return;
@@ -26,17 +19,17 @@ const ProductDetail = () => {
         setProduct(response.data);
         console.log(response.data.data);
       } catch (e) {
-        setProduct(null);
+        setProduct(undefined);
       } finally {
       }
     };
 
-    fetchProductDetail();
+    fetchProductDetail().then();
   }, [id]);
 
   return (
     <>
-      <ProductSection  products={product}/>
+      <ProductSection products={product}/>
       <PopularProducts />
     </>
   );

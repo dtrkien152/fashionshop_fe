@@ -1,7 +1,14 @@
 import * as React from 'react';
-import { IMAGES } from '~/images';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ROUTER_PATH } from '~/routes';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '~/redux/store.ts';
+import { removeFromCart, setOpenCart, updateUnit } from '~/shared/reducers/cartReducer.ts';
+import { useMemo } from 'react';
+import { formatCurrencyVND } from '~/shared/utils/stringformat.ts';
+import { cartService } from '~/services';
+import toast from 'react-hot-toast';
+import { CartDetailRequest } from '~/dto';
 
 interface Props {
   open: boolean;
@@ -9,50 +16,43 @@ interface Props {
 }
 
 const Cart: React.FC<Props> = (props) => {
-  const products = [
-    {
-      id: 1,
-      category: 'Women Tops',
-      title: 'Colorful top for women',
-      price: '$6.00',
-      oldPrice: '$9.00',
-      flag: {
-        type: 'sale',
-        value: '50% Sale',
-      },
-      images: [IMAGES.product.image18, IMAGES.product.image19],
-      colors: ['#74c7ff', '#f39fab'],
-      size: ['M', 'L', 'XL'],
-    },
-    {
-      id: 2,
-      category: 'Men T-shirt',
-      title: 'Blue T-shirt for men',
-      price: '$11.00',
-      oldPrice: '$22.00',
-      flag: {
-        type: 'trending',
-        value: 'Trending',
-      },
-      images: [IMAGES.product.image30, IMAGES.product.image29],
-      colors: ['#74c7ff'],
-      size: ['M', 'XL'],
-    },
-    {
-      id: 3,
-      category: 'Kids',
-      title: 'Pink T-shirt for girl',
-      price: '$29.00',
-      oldPrice: '$39.00',
-      images: [IMAGES.product.image24, IMAGES.product.image25],
-      colors: ['#74c7ff', '#f2f05f'],
-      size: ['S', 'M'],
-    },
-  ];
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { products } = useSelector((state: RootState) => state.cart);
+  const { cartCode } = useSelector((state: RootState) => state.cart);
+
+  const totalPrice = useMemo(
+    () => products.reduce((acc, current) => acc + current.salePrice * current.unit, 0),
+    [products]
+  );
+
+  const onUpdateUnit = (productId: number, color: string, size: string, unit: number) => {
+    if (!cartCode) return;
+    const payload: CartDetailRequest = {
+      products: [{
+        productId: productId,
+        color: color,
+        size: size,
+        unit: unit
+      }],
+      cartCode: cartCode
+    }
+    cartService.updateToCartDetails(payload).then(() => {
+      dispatch(updateUnit({ productId, color, size, unit }));
+    })
+  };
+
+  const onRemoveFromCart = (productId: number, color: string, size: string) => {
+    if (!cartCode) return;
+    cartService.removeCartDetail(cartCode, productId, color, size).then(() => {
+      toast.success("Remove product in cart successfully!")
+      dispatch(removeFromCart({ productId, color, size }));
+    });
+  };
 
   return (
     <>
-      <div className="cr-cart-overlay"></div>
+      <div className="cr-cart-overlay" style={{ display: props.open ? 'block' : 'none' }}></div>
       <div className={'cr-cart-view ' + (props.open ? 'cr-cart-view-active' : '')}>
         <div className="cr-cart-inner">
           <div className="cr-cart-top">
@@ -65,35 +65,74 @@ const Cart: React.FC<Props> = (props) => {
             <ul className="crcart-pro-items">
               {products.map((product, index) => (
                 <li key={index}>
-                  <a href="product-left-sidebar.html" className="crside_pro_img">
-                    <img src={product.images[0]} alt="product-1" />
-                  </a>
+                  <Link
+                    to={ROUTER_PATH.productDetail.extract.replace(
+                      ':id',
+                      product.productId.toString()
+                    )}
+                    className="crside_pro_img"
+                  >
+                    <img src={product.thumbnailUrl} alt="product-1" />
+                  </Link>
                   <div className="cr-pro-content">
-                    <a href="product-left-sidebar.html" className="cart_pro_title">
-                      {product.title}
-                    </a>
+                    <Link
+                      to={ROUTER_PATH.productDetail.extract.replace(
+                        ':id',
+                        product.productId.toString()
+                      )}
+                      className="cart_pro_title"
+                    >
+                      {product.productName}
+                    </Link>
                     <span className="cart-price">
-                      <span>$56.00</span>
+                      <span>{formatCurrencyVND(product.salePrice)}</span>
                     </span>
                     <div className="cr-cart-qty">
                       <div className="cart-qty-plus-minus">
-                        <button type="button" className="plus">
+                        <button
+                          type="button"
+                          className="plus"
+                          onClick={() =>
+                            onUpdateUnit(
+                              product.productId,
+                              product.color,
+                              product.size,
+                              product.unit + 1
+                            )
+                          }
+                        >
                           +
                         </button>
                         <input
                           type="text"
                           placeholder="."
-                          value="1"
+                          value={product.unit}
                           minLength={1}
                           maxLength={20}
                           className="quantity"
                         />
-                        <button type="button" className="minus">
+                        <button
+                          type="button"
+                          className="minus"
+                          onClick={() =>
+                            onUpdateUnit(
+                              product.productId,
+                              product.color,
+                              product.size,
+                              product.unit - 1
+                            )
+                          }
+                        >
                           -
                         </button>
                       </div>
                     </div>
-                    <a href="javascript:void(0)" className="remove">
+                    <a
+                      onClick={() =>
+                        onRemoveFromCart(product.productId, product.color, product.size)
+                      }
+                      className="remove"
+                    >
                       ×
                     </a>
                   </div>
@@ -107,26 +146,38 @@ const Cart: React.FC<Props> = (props) => {
                 <tbody>
                   <tr>
                     <td className="text-left">Sub-Total :</td>
-                    <td className="text-right">$300.00</td>
+                    <td className="text-right">{formatCurrencyVND(totalPrice * 0.9)}</td>
                   </tr>
                   <tr>
-                    <td className="text-left">VAT (20%) :</td>
-                    <td className="text-right">$60.00</td>
+                    <td className="text-left">VAT (10%) :</td>
+                    <td className="text-right">{formatCurrencyVND(totalPrice * 0.1)}</td>
                   </tr>
                   <tr>
                     <td className="text-left">Total :</td>
-                    <td className="text-right primary-color">$360.00</td>
+                    <td className="text-right primary-color">{formatCurrencyVND(totalPrice)}</td>
                   </tr>
                 </tbody>
               </table>
             </div>
             <div className="cart_btn">
-              <Link to={ROUTER_PATH.cart.extract} className="cr-button">
+              <a
+                onClick={() => {
+                  navigate(ROUTER_PATH.cart.extract);
+                  dispatch(setOpenCart(false));
+                }}
+                className="cr-button"
+              >
                 View Cart
-              </Link>
-              <Link to={ROUTER_PATH.checkout.extract} className="cr-btn-secondary">
+              </a>
+              <a
+                onClick={() => {
+                  navigate(ROUTER_PATH.checkout.extract);
+                  dispatch(setOpenCart(false));
+                }}
+                className="cr-btn-secondary"
+              >
                 Checkout
-              </Link>
+              </a>
             </div>
           </div>
         </div>

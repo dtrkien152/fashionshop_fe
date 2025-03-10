@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { ProductCard } from '~/components';
 import { IProductItemResponse } from '~/shared/model/product.model.ts';
-import { formatCurrencyVND } from '~/shared/utils/stringformat.ts';
 import { productService } from '~/services';
 
 interface Props {}
@@ -17,14 +16,7 @@ const ProductCollection: React.FC<Props> = () => {
     productService
       .getTopSelling()
       .then((resp) => {
-        const data: IProductItemResponse[] = resp.data.data;
-        setProducts(
-          data.map((item) => ({
-            ...item,
-            salePrice: formatCurrencyVND(Number(item.salePrice)),
-            originalPrice: formatCurrencyVND(Number(item.originalPrice)),
-          }))
-        );
+        setProducts(resp.data.data);
       })
       .catch((reason) => {
         console.log('error fetch product ', reason);

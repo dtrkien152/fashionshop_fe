@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { IProductItemResponse, IProductSearchParam } from '~/shared/model/product.model.ts';
-import { formatCurrencyVND } from '~/shared/utils/stringformat.ts';
 import { useSearchParams } from 'react-router-dom';
 import { SORT_BY_ENUM } from '~/shared/model/common.model.ts';
 import { productService } from '~/services';
@@ -19,7 +18,7 @@ export const ProductList = () => {
   const [products, setProducts] = React.useState<IProductItemResponse[]>([]);
 
   React.useEffect(() => {
-    fetchProducts();
+    fetchProducts().then();
   }, []);
 
   const buildSearchParams = (): IProductSearchParam => {
@@ -39,14 +38,7 @@ export const ProductList = () => {
     productService
       .search(params)
       .then((resp) => {
-        const data: IProductItemResponse[] = resp.data.data;
-        setProducts(
-          data.map((item) => ({
-            ...item,
-            salePrice: formatCurrencyVND(Number(item.salePrice)),
-            originalPrice: formatCurrencyVND(Number(item.originalPrice)),
-          }))
-        );
+        setProducts(resp.data.data);
       })
       .catch((reason) => {
         console.log('error fetch product ', reason);

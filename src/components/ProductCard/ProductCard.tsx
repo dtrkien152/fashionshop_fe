@@ -1,6 +1,15 @@
 import * as React from 'react';
+import { useState } from 'react';
 import { IProductItemResponse } from '~/shared/model/product.model';
 import { useNavigate } from 'react-router-dom';
+import { CartDetailRequest, CartProduct } from '~/dto';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart } from '~/shared/reducers/cartReducer.ts';
+import { ROUTER_PATH } from '~/routes';
+import toast from 'react-hot-toast';
+import { formatCurrencyVND } from '~/shared/utils/stringformat.ts';
+import { cartService } from '~/services';
+import { RootState } from '~/redux/store.ts';
 
 interface Props {
   product: IProductItemResponse;
@@ -8,9 +17,41 @@ interface Props {
 
 const ProductCard: React.FC<Props> = ({ product }: Props) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { cartCode } = useSelector((state: RootState) => state.cart);
+  const [colorSelected, setColorSelected] = useState<string>(product.colors[0]);
+  const [sizeSelected, setSizeSelected] = useState<string>(product.size[0]);
+
+  const onClickAddToCard = () => {
+    const payload = {
+      products: [
+        {
+          productId: product.id,
+          color: colorSelected,
+          size: sizeSelected,
+          unit: 1
+        },
+      ],
+      cartCode: cartCode,
+    } as CartDetailRequest;
+    cartService.addToCartDetails(payload).then(() => {
+      const cartProduct: CartProduct = {
+        productId: product.id,
+        productName: product.productName as string,
+        thumbnailUrl: product.thumbnailUrl as string,
+        salePrice: 0,
+        originalPrice: 0,
+        unit: 1,
+        color: colorSelected,
+        size: sizeSelected,
+      };
+      dispatch(addToCart(cartProduct));
+      toast.success('Add product in cart successfully!');
+    });
+  };
 
   const handleNavigate = () => {
-    navigate(`/product/${product?.id}`);
+    navigate(ROUTER_PATH.productDetail.extract.replace(':id', product.id.toString()));
   };
 
   return (
@@ -37,16 +78,12 @@ const ProductCard: React.FC<Props> = ({ product }: Props) => {
                 <i className="ri-eye-line"></i>
               </a>
               <a
-                className="cr-btn-group compare"
-                title="Compare"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <i className="mdi mdi-vector-arrange-below"></i>
-              </a>
-              <a
                 title="Add To Cart"
                 className="add-to-cart cr-shopping-bag"
-                onClick={(e) => e.stopPropagation()}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onClickAddToCard();
+                }}
               >
                 <i className="ri-shopping-cart-line"></i>
               </a>
@@ -68,18 +105,15 @@ const ProductCard: React.FC<Props> = ({ product }: Props) => {
             <span>{product?.productName}</span>
           </h5>
           <span className="cr-price">
-            <span className="new-price">{product?.salePrice}</span>
-            <span className="old-price">{product?.originalPrice}</span>
+            <span className="new-price">{formatCurrencyVND(product?.salePrice)}</span>
+            <span className="old-price">{formatCurrencyVND(product?.originalPrice)}</span>
           </span>
           <div className="cr-pro-option">
             <div className="cr-pro-color">
               <ul className="cr-opt-swatch cr-change-img">
                 {product?.colors?.map((color, index) => (
-                  <li key={index} className={index === 0 ? 'active' : ''}>
-                    <a
-                      onClick={(e) => e.stopPropagation()}
-                      className="cr-opt-clr-img"
-                    >
+                  <li key={index} className={color === colorSelected ? 'active' : ''}>
+                    <a onClick={() => setColorSelected(color)} className="cr-opt-clr-img">
                       <span style={{ backgroundColor: color }}></span>
                     </a>
                   </li>
@@ -89,11 +123,8 @@ const ProductCard: React.FC<Props> = ({ product }: Props) => {
             <div className="cr-pro-size">
               <ul className="cr-opt-size">
                 {product?.size?.map((size, index) => (
-                  <li key={index} className={index === 0 ? 'active' : ''}>
-                    <a
-                      onClick={(e) => e.stopPropagation()}
-                      className="cr-opt-sz"
-                    >
+                  <li key={index} className={size === sizeSelected ? 'active' : ''}>
+                    <a onClick={() => setSizeSelected(size)} className="cr-opt-sz">
                       {size}
                     </a>
                   </li>
