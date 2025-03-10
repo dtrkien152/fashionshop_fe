@@ -19,8 +19,8 @@ const ProductCard: React.FC<Props> = ({ product }: Props) => {
         <div className="cr-pro-image-outer">
           <div className="cr-pro-image">
             <div className="image">
-              <img className="main-image" src={product?.images[0] || ''} alt="Product" />
-              <img className="hover-image" src={product?.images[1] || ''} alt="Product" />
+              <img className="main-image" src={product.thumbnailUrl} alt="Product" />
+              {/*<img className="hover-image" src={product?.images[1] || ''} alt="Product" />*/}
             </div>
             {product?.flag && (
               <span className="flags">

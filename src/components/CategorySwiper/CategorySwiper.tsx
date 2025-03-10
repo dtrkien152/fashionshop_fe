@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
-import { ICategoryModel } from '~/interfaces';
+import { ICategoryModel } from '../../dto';
 import { categoryService } from '~/services';
 
 const CategorySwiper: React.FC = () => {

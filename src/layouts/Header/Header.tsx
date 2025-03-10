@@ -2,7 +2,7 @@ import { IMAGES } from '~/images';
 import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import $ from 'jquery';
-import { ICategoryModel } from '~/interfaces';
+import { ICategoryModel } from '../../dto';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '~/redux/store.ts';
 import { logout } from '~/shared/reducers/authReducer.ts';
