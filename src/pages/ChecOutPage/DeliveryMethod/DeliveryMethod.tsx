@@ -15,16 +15,19 @@ const DeliveryMethod: React.FC<Props> = (props) => {
         </div>
         <div className="cr-sb-block-content">
           <div className="cr-checkout-del">
-            <div className="cr-del-desc">
-              Congratulations! Your order meets the criteria for {props.shipFee?.name} (applies to
-              orders over {formatCurrencyVND(props.shipFee?.triggerPrice || 0)}). Enjoy your delivery! 🚚🎉
-            </div>
+            {props.shipFee && props.shipFee?.triggerPrice > 0 && (
+              <div className="cr-del-desc">
+                Congratulations! Your order meets the criteria for {props.shipFee?.name} (applies to
+                orders over {formatCurrencyVND(props.shipFee?.triggerPrice)}). Enjoy your
+                delivery! 🚚🎉
+              </div>
+            )}
             <form action="#">
               <span className="cr-del-option">
                 <span>
-                  <span className="cr-del-opt-head">Normal Shipping</span>
+                  <span className="cr-del-opt-head">Normal Rate</span>
                   <input type="radio" id="normal-ship" name="delivery-options" checked />
-                  <label htmlFor="normal-ship">Rate - ${props.shipFee?.fee}</label>
+                  <label htmlFor="normal-ship">{props.shipFee?.name} - ${props.shipFee?.fee}</label>
                 </span>
                 {/*<span>*/}
                 {/*  <span className="cr-del-opt-head">Express Rate</span>*/}

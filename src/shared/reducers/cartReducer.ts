@@ -3,17 +3,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CartProduct } from '~/dto';
 
 export interface ICartState {
-  cartInfo: {
-    fingerprint: string | null;
-  };
+  cartCode?: string;
   products: CartProduct[];
   openCart: boolean;
 }
 
 const initialState: ICartState = {
-  cartInfo: {
-    fingerprint: null,
-  },
   products: [],
   openCart: false,
 };
@@ -22,8 +17,8 @@ const authSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    setFingerprint: (state, action: PayloadAction<string>) => {
-      state.cartInfo.fingerprint = action.payload;
+    setCartCode: (state, action: PayloadAction<string>) => {
+      state.cartCode = action.payload;
     },
     setProducts: (state, action: PayloadAction<CartProduct[]>) => {
       state.products = action.payload;
@@ -87,6 +82,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { setFingerprint, setProducts, setOpenCart, addToCart, removeFromCart, resetCart, updateUnit } =
+export const { setCartCode, setProducts, setOpenCart, addToCart, removeFromCart, resetCart, updateUnit } =
   authSlice.actions;
 export default authSlice.reducer;

@@ -4,10 +4,12 @@ import { Thumbs } from 'swiper/modules';
 import TabComponent from '~/pages/Product/ProductDetail/components/TabComponent.tsx';
 import { IProductDetailResponse, IProductSubDetailResponse } from '~/shared/model/product.model.ts';
 import ProductAttributes from '~/pages/Product/ProductDetail/components/ProductAttributes.tsx';
-import { CartProduct } from '~/dto';
+import { CartDetailRequest, CartProduct } from '~/dto';
 import { addToCart } from '~/shared/reducers/cartReducer.ts';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
+import { RootState } from '~/redux/store.ts';
+import { cartService } from '~/services';
 
 interface Props {
   products?: IProductDetailResponse;
@@ -15,6 +17,7 @@ interface Props {
 
 const ProductSection = (props: Props) => {
   const dispatch = useDispatch();
+  const { cartCode } = useSelector((state: RootState) => state.cart);
   const [productSubDetailSelected, setProductSubDetailSelected] =
     useState<IProductSubDetailResponse>();
   const [unit, setUnit] = useState(1);
@@ -25,18 +28,33 @@ const ProductSection = (props: Props) => {
   const onClickAddToCard = () => {
     if (!productSubDetailSelected) return;
     if (!props.products) return;
-    const cartProduct: CartProduct = {
-      productId: props.products.product_id,
-      productName: props.products.productName,
-      thumbnailUrl: props.products.thumbnailUrl,
-      salePrice: 0,
-      originalPrice: 0,
-      unit,
-      color: productSubDetailSelected.color,
-      size: productSubDetailSelected.size,
-    };
-    dispatch(addToCart(cartProduct));
-    toast.success('Add product in cart successfully!')
+    console.log(cartCode);
+    const payload = {
+      products: [
+        {
+          productId: props.products.product_id,
+          color: productSubDetailSelected.color,
+          size: productSubDetailSelected.size,
+          unit
+        },
+      ],
+      cartCode: cartCode,
+    } as CartDetailRequest;
+    cartService.addToCartDetails(payload).then((res) => {
+      console.log(res);
+      const cartProduct: CartProduct = {
+        productId: props.products?.product_id as number,
+        productName: props.products?.productName as string,
+        thumbnailUrl: props.products?.thumbnailUrl as string,
+        salePrice: 0,
+        originalPrice: 0,
+        unit,
+        color: productSubDetailSelected.color,
+        size: productSubDetailSelected.size,
+      };
+      dispatch(addToCart(cartProduct));
+      toast.success('Add product in cart successfully!');
+    });
   };
 
   const handleMouseMove = (e: any) => {
