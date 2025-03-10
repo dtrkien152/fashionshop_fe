@@ -7,8 +7,8 @@ const userService = {
     },
 
     // Cập nhật địa chỉ
-    updateAddress: (id: number, fullAddress: string) => {
-        return httpService.put(`${BASE_URL}/api/user/address/${id}`, { fullAddress,userId:id });
+    updateAddress: (model:any) => {
+        return httpService.put(`${BASE_URL}/api/user/address`, model);
     },
 
     // Xóa địa chỉ
@@ -17,8 +17,8 @@ const userService = {
     },
 
     // Thêm địa chỉ mới
-    addAddress: (fullAddress: string) => {
-        return httpService.post(`${BASE_URL}/api/user/address`, { fullAddress });
+    addAddress: (model:any) => {
+        return httpService.post(`${BASE_URL}/api/user/address`, model);
     },
 
     // Cập nhật thông tin cá nhân (ví dụ có sẵn)

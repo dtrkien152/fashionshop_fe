@@ -1,18 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import { Button, List, Card, Input, Form, message, Modal, Radio, Space, Popconfirm } from 'antd';
+import {
+    Button,
+    List,
+    Card,
+    Radio,
+    Space,
+    Popconfirm,
+    Col,
+    Row,
+    message,
+} from 'antd';
+import { EnvironmentOutlined } from '@ant-design/icons';
+import AddressUpdateModal from './AddressUpdateModal';
+import AddressCreateModal from './AddressCreateModal';
 import userService from '~/services/user.service.ts';
 
-interface Address {
+export interface Address {
     id: number;
+    addressName: string;
     fullAddress: string;
     isDefault: boolean;
 }
 
 const AddressManagementTab: React.FC = () => {
     const [addressData, setAddressData] = useState<Address[]>([]);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [editingAddress, setEditingAddress] = useState<Address | null>(null);
-    const [newAddress, setNewAddress] = useState('');
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+    const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+    const [editingAddress, setEditingAddress] = useState<Partial<Address> | null>(null);
     const [defaultAddressId, setDefaultAddressId] = useState<number | null>(null);
 
     useEffect(() => {
@@ -30,31 +44,13 @@ const AddressManagementTab: React.FC = () => {
         }
     };
 
-    const handleOpenModal = (address?: Address) => {
-        setIsModalOpen(true);
-        if (address) {
-            setEditingAddress(address);
-            setNewAddress(address.fullAddress);
-        } else {
-            setEditingAddress(null);
-            setNewAddress('');
-        }
+    const handleCreateAddress = () => {
+        setIsCreateModalOpen(true);
     };
 
-    const handleModalOk = async () => {
-        try {
-            if (editingAddress) {
-                await userService.updateAddress(editingAddress.id, newAddress);
-                message.success('Cập nhật địa chỉ thành công!');
-            } else {
-                await userService.addAddress(newAddress);
-                message.success('Thêm địa chỉ mới thành công!');
-            }
-            setIsModalOpen(false);
-            fetchAddresses();
-        } catch (error) {
-            message.error('Lỗi khi xử lý địa chỉ!');
-        }
+    const handleUpdateAddress = (address: Address) => {
+        setEditingAddress(address);
+        setIsUpdateModalOpen(true);
     };
 
     const handleDelete = async (id: number) => {
@@ -84,49 +80,65 @@ const AddressManagementTab: React.FC = () => {
                 dataSource={addressData}
                 renderItem={(item) => (
                     <List.Item key={item.id}>
-                        <Card>
-                            <Space direction="vertical" style={{ width: '100%' }}>
-                                <Radio
-                                    checked={item.id === defaultAddressId}
-                                    onChange={() => handleSetDefault(item.id)}
-                                >
-                                    {item.fullAddress}
-                                </Radio>
-                                <Space>
-                                    <Button type="link" onClick={() => handleOpenModal(item)}>Sửa</Button>
-                                    <Popconfirm
-                                        title="Bạn có chắc chắn muốn xóa địa chỉ này không?"
-                                        onConfirm={() => handleDelete(item.id)}
-                                        okText="Xóa"
-                                        cancelText="Hủy"
-                                    >
-                                        <Button type="link" danger>Xóa</Button>
-                                    </Popconfirm>
-                                </Space>
-                            </Space>
+                        <Card style={{ width: '100%' }}>
+                            <Row align="middle">
+                                <Col flex="40px">
+                                    <Radio
+                                        checked={item.id === defaultAddressId}
+                                        onChange={() => handleSetDefault(item.id)}
+                                    />
+                                </Col>
+                                <Col flex="auto">
+                                    <Row align="middle">
+                                        <Col flex="25px">
+                                            <EnvironmentOutlined style={{ fontSize: '20px', color: '#1890ff' }} />
+                                        </Col>
+                                        <Col flex="auto">
+                                            <p style={{ margin: 0, fontWeight: 'bold' }}>
+                                                {item.id === defaultAddressId && (
+                                                    <span style={{ color: 'gray', marginRight: '8px' }}>
+                                                        (Mặc định)
+                                                    </span>
+                                                )}
+                                                {item.addressName}
+                                            </p>
+                                            <p style={{ margin: 0, color: '#555' }}>{item.fullAddress}</p>
+                                        </Col>
+                                        <Space>
+                                            <Button type="link" onClick={() => handleUpdateAddress(item)}>Sửa</Button>
+                                            <Popconfirm
+                                                title="Bạn có chắc chắn muốn xóa địa chỉ này không?"
+                                                onConfirm={() => handleDelete(item.id)}
+                                                okText="Xóa"
+                                                cancelText="Hủy"
+                                            >
+                                                <Button type="link" danger>Xóa</Button>
+                                            </Popconfirm>
+                                        </Space>
+                                    </Row>
+                                </Col>
+                            </Row>
                         </Card>
                     </List.Item>
                 )}
             />
+            <Button type="dashed" onClick={handleCreateAddress}>Thêm địa chỉ mới</Button>
 
-            <Button type="dashed" onClick={() => handleOpenModal()}>Thêm địa chỉ mới</Button>
+            <AddressCreateModal
+                isOpen={isCreateModalOpen}
+                onClose={() => setIsCreateModalOpen(false)}
+                onSuccess={fetchAddresses} // Đảm bảo hàm fetchAddresses được truyền đúng
+            />
 
-            <Modal
-                title={editingAddress ? 'Cập nhật địa chỉ' : 'Thêm địa chỉ mới'}
-                visible={isModalOpen}
-                onOk={handleModalOk}
-                onCancel={() => setIsModalOpen(false)}
-            >
-                <Form layout="vertical">
-                    <Form.Item label="Địa chỉ">
-                        <Input
-                            placeholder="Nhập địa chỉ"
-                            value={newAddress}
-                            onChange={(e) => setNewAddress(e.target.value)}
-                        />
-                    </Form.Item>
-                </Form>
-            </Modal>
+
+            <AddressUpdateModal
+                visible={isUpdateModalOpen}
+                address={editingAddress}
+                onClose={() => setIsUpdateModalOpen(false)}
+                onSuccess={fetchAddresses}
+            />
+
+
         </>
     );
 };
