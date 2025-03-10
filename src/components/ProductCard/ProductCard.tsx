@@ -2,7 +2,7 @@ import * as React from 'react';
 import {IProductItemResponse} from "~/shared/model/product.model.ts";
 
 interface Props {
- product:IProductItemResponse
+  product:IProductItemResponse
 }
 
 const ProductCard: React.FC<Props> = (props:Props) => {

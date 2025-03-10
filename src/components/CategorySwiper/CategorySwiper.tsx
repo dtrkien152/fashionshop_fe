@@ -3,8 +3,7 @@ import * as React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import { ICategory } from '~/interfaces/ICategory.ts';
-import { getAllCategories } from '~/api/category/category.api.ts';
-
+import { categoryService } from '~/services';
 
 const CategorySwiper: React.FC = () => {
   const [categories, setCategories] = React.useState<ICategory[]>([]);
@@ -12,7 +11,7 @@ const CategorySwiper: React.FC = () => {
   React.useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await getAllCategories();
+        const response = await categoryService.getAll();
         setCategories(response.data);
       } catch (error) {
         console.error('Failed to fetch categories', error);
@@ -49,7 +48,7 @@ const CategorySwiper: React.FC = () => {
             }}
             className="category-slider swiper-container"
           >
-            {categories.map((category:ICategory) => (
+            {categories.map((category: ICategory) => (
               <SwiperSlide key={category.id}>
                 <div className="category-block">
                   <div className="category-icon">

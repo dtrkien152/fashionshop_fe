@@ -1,12 +1,12 @@
 import { IMAGES } from '~/images';
 import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
-import $ from "jquery";
+import $ from 'jquery';
 import { ICategory } from '~/interfaces/ICategory.ts';
-import { getAllCategories } from '~/api/category/category.api.ts';
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "~/redux/store.ts";
-import {logout} from "~/shared/reducers/authReducer.ts";
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '~/redux/store.ts';
+import { logout } from '~/shared/reducers/authReducer.ts';
+import { categoryService } from '~/services';
 
 interface Props {
   onOpenCart: () => void;
@@ -18,7 +18,7 @@ const Header: React.FC<Props> = (props) => {
   const [prevScroll, setPrevScroll] = useState(window.scrollY);
   const [prevDirection, setPrevDirection] = useState(0);
   const [categories, setCategories] = React.useState<ICategory[]>([]);
-  const { email, avatar,fullName } = useSelector((state: RootState) => state.auth);
+  const { email, avatar, fullName } = useSelector((state: RootState) => state.auth);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -28,7 +28,7 @@ const Header: React.FC<Props> = (props) => {
   React.useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await getAllCategories();
+        const response = await categoryService.getAll();
         setCategories(response.data);
       } catch (error) {
         console.error('Failed to fetch categories', error);
@@ -52,11 +52,11 @@ const Header: React.FC<Props> = (props) => {
       if (menuRef.current) {
         if (direction === 2 && curScroll > -133) {
           setPrevDirection(direction);
-          menuRef.current.classList.add("menu_fixed_up");
+          menuRef.current.classList.add('menu_fixed_up');
         } else if (direction === 1) {
           setPrevDirection(direction);
-          menuRef.current.classList.add("menu_fixed");
-          menuRef.current.classList.remove("menu_fixed_up");
+          menuRef.current.classList.add('menu_fixed');
+          menuRef.current.classList.remove('menu_fixed_up');
         }
       }
     };
@@ -66,14 +66,14 @@ const Header: React.FC<Props> = (props) => {
       if (!nextElement) return;
       const distance = nextElement.offset().top;
       if (window.scrollY <= distance + 9) {
-        menuRef.current?.classList.remove("menu_fixed");
+        menuRef.current?.classList.remove('menu_fixed');
       } else {
         checkScroll();
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, [prevScroll, prevDirection]);
 
   return (
@@ -97,65 +97,64 @@ const Header: React.FC<Props> = (props) => {
                   <i className="ri-search-line"></i>
                 </a>
               </form>
-               {/*header */}
+              {/*header */}
               <div className="cr-right-bar">
                 <ul className="navbar-nav">
                   <li className="nav-item dropdown">
                     <a
-                        className="nav-link dropdown-toggle cr-right-bar-item"
-                        href="#"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
+                      className="nav-link dropdown-toggle cr-right-bar-item"
+                      href="#"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
                     >
                       {avatar ? (
-                          <img
-                              src={avatar}
-                              alt={fullName || 'Avatar'}
-                              className="rounded-circle"
-                              style={{ width: '30px', height: '30px', marginRight: '8px' }}
-                          />
+                        <img
+                          src={avatar}
+                          alt={fullName || 'Avatar'}
+                          className="rounded-circle"
+                          style={{ width: '30px', height: '30px', marginRight: '8px' }}
+                        />
                       ) : (
-                          <i className="ri-user-3-line"></i>
+                        <i className="ri-user-3-line"></i>
                       )}
                       <span>{fullName || 'Account'}</span>
                     </a>
                     <ul className="dropdown-menu">
                       {email ? (
-                          <>
-                            <li>
-                              <a className="dropdown-item" href="/profile">
-                                Thông tin cá nhân
-                              </a>
-                            </li>
-                            <li>
-                              <a className="dropdown-item" href="/change-password">
-                                Đổi mật khẩu
-                              </a>
-                            </li>
-                            <li>
-                              <a
-                                  className="dropdown-item"
-                                  onClick={handleLogout}
-                                  style={{ cursor: 'pointer' }}
-                              >
-                                Logout
-                              </a>
-
-                            </li>
-                          </>
+                        <>
+                          <li>
+                            <a className="dropdown-item" href="/profile">
+                              Thông tin cá nhân
+                            </a>
+                          </li>
+                          <li>
+                            <a className="dropdown-item" href="/change-password">
+                              Đổi mật khẩu
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              className="dropdown-item"
+                              onClick={handleLogout}
+                              style={{ cursor: 'pointer' }}
+                            >
+                              Logout
+                            </a>
+                          </li>
+                        </>
                       ) : (
-                          <>
-                            <li>
-                              <a className="dropdown-item" href="/register">
-                                Register
-                              </a>
-                            </li>
-                            <li>
-                              <a className="dropdown-item" href="/login">
-                                Login
-                              </a>
-                            </li>
-                          </>
+                        <>
+                          <li>
+                            <a className="dropdown-item" href="/register">
+                              Register
+                            </a>
+                          </li>
+                          <li>
+                            <a className="dropdown-item" href="/login">
+                              Login
+                            </a>
+                          </li>
+                        </>
                       )}
                     </ul>
                   </li>
@@ -165,11 +164,9 @@ const Header: React.FC<Props> = (props) => {
                   <span>Wishlist</span>
                 </a>
                 <a
-                    href="#"
-                    className="cr-right-bar-item Shopping-toggle"
-                    onClick={() => {
-                      // Xử lý mở giỏ hàng nếu cần
-                    }}
+                  href="#"
+                  className="cr-right-bar-item Shopping-toggle"
+                  onClick={props.onOpenCart}
                 >
                   <i className="ri-shopping-cart-line"></i>
                   <span>Cart</span>
