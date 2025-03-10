@@ -22,3 +22,22 @@ export interface IProductSearchParam {
   limit?: number|10,
   page?:number|0
 }
+export interface IProductSubDetailResponse {
+  id: number;
+  size: string;
+  color: string;
+  isActive: boolean;
+  totalQuantity: number;
+}
+
+export interface IProductDetailResponse {
+  product_id: number;
+  productName: string;
+  description:string;
+  thumbnailUrl:string;
+  imageUrls?: string[];
+  category_id: number;
+  category_name: string;
+  unitOnOrder: number;
+  productSubDetails: IProductSubDetailResponse[]|[];
+}

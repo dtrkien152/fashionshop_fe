@@ -21,6 +21,10 @@ const productService = {
   search: async (model: IProductSearchParam) => {
     httpService.attachTokenToHeader();
     return await httpService.post(BASE_URL + '/api/products/search', model);
+  },
+  getProductDetail: async (id:string) => {
+    httpService.attachTokenToHeader();
+  return await httpService.get(BASE_URL + `/api/products/detail?productId=${id}`);
   }
 };
 

@@ -107,4 +107,7 @@ export const IMAGES = {
     image8: new URL('~/assets/img/blog/8.jpg', import.meta.url).href,
     image9: new URL('~/assets/img/blog/9.jpg', import.meta.url).href,
   },
+  review: {
+    image1: new URL('~/assets/img/review/1.jpg', import.meta.url).href
+  },
 };
