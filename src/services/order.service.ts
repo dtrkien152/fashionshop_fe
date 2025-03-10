@@ -7,9 +7,9 @@ export const orderService = {
     httpService.attachTokenToHeader();
     return httpService.post(BASE_URL + '/api/orders//my-orders', payload);
   },
-  createOrder: (payload: OrderCreateRequest) => {
+  createOrder: (payload: OrderCreateRequest, email: string) => {
     httpService.attachTokenToHeader();
-    return httpService.post(BASE_URL + '/api/orders', payload);
+    return httpService.post(BASE_URL + '/api/orders', payload, { params: { email } });
   },
   updateStatusOrder: (code: string, status: ORDER_STATUS) => {
     httpService.attachTokenToHeader();

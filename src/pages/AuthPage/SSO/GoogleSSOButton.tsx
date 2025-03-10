@@ -1,35 +1,40 @@
-import { GoogleLogin } from '@react-oauth/google';
+// GoogleSSOButton.tsx
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Button } from 'antd';
+import React from "react";
+import {FcGoogle} from "react-icons/fc"; // Hoặc sử dụng button mặc định tùy giao diện bạn muốn giữ
 
-export const GoogleSSOButton = () => {
+const GoogleSSOButton = () => {
     const navigate = useNavigate();
 
-    const handleSuccess = async (credentialResponse: any) => {
+    const handleGoogleLogin = async () => {
         try {
-            console.log('Credential:', credentialResponse);
-            // Gửi mã thông báo (token) đến backend
-            const result = await axios.get('http://localhost:5000/api/auth/google/callback', {
-                headers: {
-                    Authorization: `Bearer ${credentialResponse.credential}`,
-                },
-                withCredentials: true,
-            });
-            console.log('Đăng nhập thành công:', result.data);
-            navigate('/'); // Chuyển hướng về trang chủ hoặc trang mong muốn
+            // Gọi trực tiếp API Google SSO của backend
+            window.location.href = 'http://localhost:5000/api/auth/google';
         } catch (error) {
             console.error('Lỗi đăng nhập Google:', error);
         }
     };
 
-    const handleFailure = () => {
-        console.error('Lỗi xác thực Google');
-    };
-
     return (
-        <GoogleLogin
-            onSuccess={handleSuccess}
-            onError={handleFailure}
-        />
+        <Button
+            type="primary"
+            onClick={handleGoogleLogin}
+            style={{
+                backgroundColor: '#4285F4',
+                color: 'white',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                border: 'none'
+                ,height:40
+            }}
+        >
+            <FcGoogle size={20} /> {/* Logo Google */}
+            Đăng nhập với Google
+        </Button>
     );
 };
+
+export default GoogleSSOButton;

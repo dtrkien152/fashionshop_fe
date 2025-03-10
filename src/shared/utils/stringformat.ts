@@ -5,7 +5,7 @@
  * @returns Chuỗi định dạng tiền tệ VND
  */
 export const formatCurrencyVND=(amount: number, withSuffix: boolean = true): string =>{
-  if (isNaN(amount)) return '0 ₫';
+  if (!amount) return '0 ₫';
 
   const formattedAmount = amount.toLocaleString('vi-VN', {
     style: 'currency',

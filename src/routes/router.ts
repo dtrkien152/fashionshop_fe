@@ -20,8 +20,8 @@ export interface RouteItem {
 
 export const ROUTER_PATH = {
   home: {
-    relative: '',
-    extract: '',
+    relative: '/',
+    extract: '/',
   },
   cart: {
     relative: 'cart',

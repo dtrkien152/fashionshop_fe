@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '~/redux/store.ts';
 import { logout } from '~/shared/reducers/authReducer.ts';
 import { categoryService } from '~/services';
+import ProfileModal from "~/pages/AuthPage/ProfilePage/ProfileModal.tsx";
 
 interface Props {
   onOpenCart: () => void;
@@ -19,6 +20,18 @@ const Header: React.FC<Props> = (props) => {
   const [prevDirection, setPrevDirection] = useState(0);
   const [categories, setCategories] = React.useState<ICategoryModel[]>([]);
   const { email, avatar, fullName } = useSelector((state: RootState) => state.auth);
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [activeTab, setActiveTab] = useState<string>('1');
+
+  const handleOpenModal = (tabKey: string) => {
+    setActiveTab(tabKey);
+    setIsModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+  };
 
   const handleLogout = () => {
     dispatch(logout());
@@ -89,8 +102,8 @@ const Header: React.FC<Props> = (props) => {
                 <input className="search-input" type="text" placeholder="Search For items..." />
                 <select className="form-select" aria-label="Default select example">
                   <option selected>All Categories</option>
-                  {categories.map((category: ICategoryModel) => (
-                    <option value={category.id}>{category.name}</option>
+                  {categories.map((category: ICategoryModel, index: number) => (
+                    <option key={index} value={category.id}>{category.name}</option>
                   ))}
                 </select>
                 <a href="javascript:void(0)" className="search-btn">
@@ -121,27 +134,37 @@ const Header: React.FC<Props> = (props) => {
                     </a>
                     <ul className="dropdown-menu">
                       {email ? (
-                        <>
-                          <li>
-                            <a className="dropdown-item" href="/profile">
-                              Thông tin cá nhân
-                            </a>
-                          </li>
-                          <li>
-                            <a className="dropdown-item" href="/change-password">
-                              Đổi mật khẩu
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              className="dropdown-item"
-                              onClick={handleLogout}
-                              style={{ cursor: 'pointer' }}
-                            >
-                              Logout
-                            </a>
-                          </li>
-                        </>
+                          <>
+                            <li>
+                              <a
+                                  className="dropdown-item"
+                                  onClick={() => handleOpenModal('1')}
+                                  style={{ cursor: 'pointer' }}
+                              >
+                                Thông tin cá nhân
+                              </a>
+                            </li>
+                            <li>
+                              <a
+                                  className="dropdown-item"
+                                  onClick={() => handleOpenModal('3')}
+                                  style={{ cursor: 'pointer' }}
+                              >
+                                Đổi mật khẩu
+                              </a>
+                            </li>
+                            <li>
+                              <a
+                                  className="dropdown-item"
+                                  onClick={handleLogout}
+                                  style={{ cursor: 'pointer' }}
+                              >
+                                Logout
+                              </a>
+                            </li>
+
+                          </>
+
                       ) : (
                         <>
                           <li>
@@ -156,6 +179,11 @@ const Header: React.FC<Props> = (props) => {
                           </li>
                         </>
                       )}
+                      <ProfileModal
+                          visible={isModalVisible}
+                          onClose={handleCloseModal}
+                          defaultActiveKey={activeTab}
+                      />
                     </ul>
                   </li>
                 </ul>
@@ -164,7 +192,6 @@ const Header: React.FC<Props> = (props) => {
                   <span>Wishlist</span>
                 </a>
                 <a
-                  href="#"
                   className="cr-right-bar-item Shopping-toggle"
                   onClick={props.onOpenCart}
                 >
@@ -499,8 +526,8 @@ const Header: React.FC<Props> = (props) => {
                       Category
                     </a>
                     <ul className="dropdown-menu">
-                      {categories.map((category: ICategoryModel) => (
-                        <li>
+                      {categories.map((category: ICategoryModel, index) => (
+                        <li key={index}>
                           <a className="dropdown-item" href="shop-left-sidebar.html">
                             {category.name}
                           </a>
@@ -649,9 +676,30 @@ const Header: React.FC<Props> = (props) => {
                 </ul>
               </div>
             </nav>
-            <div className="cr-calling">
-              <i className="ri-phone-line"></i>
-              <a href="javascript:void(0)">+123 ( 456 ) ( 7890 )</a>
+            <div className="cr-location-block">
+              <div className="cr-location-menu">
+                <div className="cr-location-toggle">
+                  <i className="ri-map-pin-line"></i>
+                  <span className="cr-location-title d-1199 cr-location">Hà Nội</span>
+                  <i className="ri-arrow-down-s-line d-1199 cr-angle"></i>
+                </div>
+                <div className="cr-location-content">
+                  <div className="cr-location-dropdown">
+                    <div className="row cr-location-wrapper">
+                      <ul className="loc-grid">
+                        <li className="loc-list">
+                          <i className="ri-map-pin-line"></i>
+                          <span className="cr-detail">Hà Nội</span>
+                        </li>
+                        <li className="loc-list">
+                          <i className="ri-map-pin-line"></i>
+                          <span className="cr-detail">Hồ Chí Minh</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

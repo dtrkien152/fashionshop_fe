@@ -638,7 +638,7 @@
     $(".c4").on("click", function () {
         $("#add_class").remove();
         $("head").append(
-            '<link rel="stylesheet" href="assets/css/color-3.css" id="add_class">'
+            '<link rel="stylesheet" href="assets/css/color-blue.css" id="add_class">'
         );
     });
     $(".c5").on("click", function () {

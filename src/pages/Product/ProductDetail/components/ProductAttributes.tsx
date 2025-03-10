@@ -1,42 +1,51 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { IProductSubDetailResponse } from '~/shared/model/product.model.ts';
 
 export interface Props {
   productSubDetails: IProductSubDetailResponse[];
-  onSelect: (selectedProduct: IProductSubDetailResponse | null) => void;
+  onSelect: (selectedProduct?: IProductSubDetailResponse) => void;
 }
 
 const ProductAttributes = (props: Props) => {
-  const [selectedColor, setSelectedColor] = useState(null);
-  const [selectedSize, setSelectedSize] = useState(null);
-  const [quantity, setQuantity] = useState(0);
-  const [maxQuantity, setMaxQuantity] = useState(0);
+  const [colorSelected, setColorSelected] = useState<string>();
+  const [sizeSelected, setSizeSelected] = useState<string>();
+  const [maxUnit, setMaxUnit] = useState(0);
 
-  const colors = [...new Set(props.productSubDetails?.map((item) => item.color))];
-  const sizes = [...new Set(props.productSubDetails?.map((item) => item.size))];
+  const colors = useMemo(
+    () => [...new Set(props.productSubDetails?.map((item) => item.color))],
+    [props.productSubDetails]
+  );
+
+  const sizes = useMemo(
+    () => [...new Set(props.productSubDetails?.map((item) => item.size))],
+    [props.productSubDetails]
+  );
 
   useEffect(() => {
-    if (selectedColor && selectedSize) {
+    if (colorSelected && sizeSelected) {
       const selectedProduct = props.productSubDetails.find(
-        (item) => item.color === selectedColor && item.size === selectedSize
+        (item) => item.color === colorSelected && item.size === sizeSelected
       );
       if (selectedProduct) {
         props.onSelect(selectedProduct);
+      } else {
+        props.onSelect();
       }
-      setMaxQuantity(selectedProduct?.totalQuantity || 0);
-    } else {
-      props.onSelect(null);
-      setQuantity(0);
+      setMaxUnit(selectedProduct?.totalQuantity || 0);
     }
-  }, [selectedColor, selectedSize, props.productSubDetails, props.onSelect]);
+  }, [colorSelected, sizeSelected, props.productSubDetails]);
 
-  const handleColorSelect = (color) => {
-    setSelectedColor(color);
-    setSelectedSize(null);
+  const handleColorSelect = (color: string) => {
+    if (color === colorSelected) {
+      setColorSelected(undefined);
+    } else {
+      setColorSelected(color);
+    }
+    setSizeSelected(undefined);
   };
 
-  const handleSizeSelect = (size) => {
-    setSelectedSize(size);
+  const handleSizeSelect = (size: string) => {
+    setSizeSelected(size);
   };
 
   return (
@@ -50,7 +59,7 @@ const ProductAttributes = (props: Props) => {
             {colors.map((color, index) => (
               <li
                 key={index}
-                className={selectedColor === color ? 'active-color' : ''}
+                className={colorSelected === color ? 'active-color' : ''}
                 onClick={() => handleColorSelect(color)}
               >
                 {color}
@@ -67,12 +76,14 @@ const ProductAttributes = (props: Props) => {
           <ul>
             {sizes.map((size, index) => {
               const isDisabled = !props.productSubDetails.some(
-                (item) => item.color === selectedColor && item.size === size
+                (item) => item.color === colorSelected && item.size === size
               );
               return (
                 <li
                   key={index}
-                  className={(selectedSize === size ? 'active-color' : '') + (isDisabled ? 'disabled' : '')}
+                  className={
+                    (sizeSelected === size ? 'active-color' : '') + (isDisabled ? 'disabled' : '')
+                  }
                   onClick={() => handleSizeSelect(size)}
                 >
                   {size}
@@ -82,12 +93,12 @@ const ProductAttributes = (props: Props) => {
           </ul>
         </div>
       </div>
-      {selectedColor && selectedSize && (
+      {colorSelected && sizeSelected && (
         <div className="cr-size-weight">
           <h5>
             <span>Số lượng còn lại</span> :
           </h5>
-          <div className="cr-kg">{'  ' + maxQuantity}</div>
+          <div className="cr-kg">{'  ' + maxUnit}</div>
         </div>
       )}
     </div>

@@ -1,35 +1,63 @@
 import { useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Thumbs } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/thumbs';
 import TabComponent from '~/pages/Product/ProductDetail/components/TabComponent.tsx';
 import { IProductDetailResponse, IProductSubDetailResponse } from '~/shared/model/product.model.ts';
 import ProductAttributes from '~/pages/Product/ProductDetail/components/ProductAttributes.tsx';
+import { CartDetailRequest, CartProduct } from '~/dto';
+import { addToCart } from '~/shared/reducers/cartReducer.ts';
+import { useDispatch, useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
+import { RootState } from '~/redux/store.ts';
+import { cartService } from '~/services';
 
 interface Props {
-  products: IProductDetailResponse | null;
+  products?: IProductDetailResponse;
 }
 
 const ProductSection = (props: Props) => {
-  // const images = [
-  //   IMAGES.product.image9,
-  //   IMAGES.product.image10,
-  //   IMAGES.product.image11,
-  //   IMAGES.product.image12,
-  //   IMAGES.product.image13,
-  //   IMAGES.product.image14,
-  //   IMAGES.product.image16,
-  // ];
+  const dispatch = useDispatch();
+  const { cartCode } = useSelector((state: RootState) => state.cart);
+  const [productSubDetailSelected, setProductSubDetailSelected] =
+    useState<IProductSubDetailResponse>();
+  const [unit, setUnit] = useState(1);
 
   const [zoomStyle, setZoomStyle] = useState({});
-  const imageContainerRef = useRef(null);
+  const imageContainerRef = useRef<any>(null);
 
-  const [selectedProduct, setSelectedProduct] = useState<IProductSubDetailResponse | null>(null);
+  const onClickAddToCard = () => {
+    if (!productSubDetailSelected) return;
+    if (!props.products) return;
+    console.log(cartCode);
+    const payload = {
+      products: [
+        {
+          productId: props.products.product_id,
+          color: productSubDetailSelected.color,
+          size: productSubDetailSelected.size,
+          unit
+        },
+      ],
+      cartCode: cartCode,
+    } as CartDetailRequest;
+    cartService.addToCartDetails(payload).then((res) => {
+      console.log(res);
+      const cartProduct: CartProduct = {
+        productId: props.products?.product_id as number,
+        productName: props.products?.productName as string,
+        thumbnailUrl: props.products?.thumbnailUrl as string,
+        salePrice: 0,
+        originalPrice: 0,
+        unit,
+        color: productSubDetailSelected.color,
+        size: productSubDetailSelected.size,
+      };
+      dispatch(addToCart(cartProduct));
+      toast.success('Add product in cart successfully!');
+    });
+  };
 
-  const handleMouseMove = (e) => {
-    // @ts-ignore
+  const handleMouseMove = (e: any) => {
     const { left, top, width, height } = imageContainerRef.current.getBoundingClientRect();
     const x = ((e.pageX - left) / width) * 100;
     const y = ((e.pageY - top) / height) * 100;
@@ -39,8 +67,8 @@ const ProductSection = (props: Props) => {
     });
   };
 
-  const handleProductSelect = (product: IProductSubDetailResponse | null) => {
-    setSelectedProduct(product);
+  const handleProductSelected = (product?: IProductSubDetailResponse) => {
+    setProductSubDetailSelected(product);
     console.log('Sản phẩm được chọn:', product);
   };
 
@@ -66,7 +94,7 @@ const ProductSection = (props: Props) => {
                 modules={[Thumbs]}
                 spaceBetween={10}
                 thumbs={{ autoScrollOffset: 1 }}
-                className="banner-slider"
+                className="banner-slider swiper-container"
               >
                 {props.products?.imageUrls?.map((image, index) => (
                   <SwiperSlide className="slider slider-for" key={index}>
@@ -172,27 +200,32 @@ const ProductSection = (props: Props) => {
               </div>
               <ProductAttributes
                 productSubDetails={props.products?.productSubDetails || []}
-                onSelect={handleProductSelect}
+                onSelect={handleProductSelected}
               />
               <div className="cr-add-card">
                 <div className="cr-qty-main">
                   <input
                     type="text"
                     placeholder="."
-                    value="1"
+                    value={unit}
                     minLength={1}
                     maxLength={20}
                     className="quantity"
                   />
-                  <button type="button" className="plus">
+                  <button type="button" className="plus" onClick={() => setUnit(unit + 1)}>
                     +
                   </button>
-                  <button type="button" className="minus">
+                  <button type="button" className="minus" onClick={() => setUnit(unit - 1)}>
                     -
                   </button>
                 </div>
                 <div className="cr-add-button">
-                  <button type="button" className="cr-button cr-shopping-bag">
+                  <button
+                    type="button"
+                    className="cr-button cr-shopping-bag"
+                    disabled={!productSubDetailSelected}
+                    onClick={onClickAddToCard}
+                  >
                     Add to cart
                   </button>
                 </div>

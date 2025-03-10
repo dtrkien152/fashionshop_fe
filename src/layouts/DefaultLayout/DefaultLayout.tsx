@@ -1,26 +1,51 @@
 import * as React from 'react';
-import { useState } from 'react';
 import { Footer, Header } from '~/layouts';
 import { Outlet } from 'react-router-dom';
 import { Cart } from '~/components';
 import { OutletWrapper } from '~/layouts/DefaultLayout/styles.ts';
+import { Toaster } from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '~/redux/store.ts';
+import { setCartCode, setOpenCart, setProducts } from '~/shared/reducers/cartReducer.ts';
+import { useFingerprints } from '~/hooks';
+import { useEffect } from 'react';
+import { cartService } from '~/services';
 
 interface DefaultLayoutProps {}
 
 const DefaultLayout: React.FC<DefaultLayoutProps> = () => {
-  const [state, setState] = useState({
-    openCart: false,
-  });
+  const dispatch = useDispatch();
+  const { isLoggedIn } = useSelector((state: RootState) => state.auth);
+  const { fingerprint } = useFingerprints();
+  const { openCart, cartCode } = useSelector((state: RootState) => state.cart);
+
+  useEffect(() => {
+    if (!fingerprint) return;
+    const getCartRequest = isLoggedIn
+      ? cartService.getCart(fingerprint)
+      : cartService.getCartForGuest(fingerprint);
+    getCartRequest.then(async (res) => {
+      dispatch(setCartCode(res.data.code));
+    });
+  }, [isLoggedIn, fingerprint]);
+
+  useEffect(() => {
+    if (!cartCode) return;
+    cartService.getCartDetails(cartCode).then((res) => {
+      dispatch(setProducts(res.data));
+    })
+  }, [cartCode]);
 
   return (
     <>
       {/*<Loader/>*/}
-      <Header onOpenCart={() => setState({ ...state, openCart: true })} />
+      <Toaster position={'top-right'} />
+      <Header onOpenCart={() => dispatch(setOpenCart(true))} />
       <OutletWrapper className={'next'}>
         <Outlet />
       </OutletWrapper>
       <Footer />
-      <Cart open={state.openCart} onClose={() => setState({ ...state, openCart: false })} />
+      <Cart open={openCart} onClose={() => dispatch(setOpenCart(false))} />
     </>
   );
 };

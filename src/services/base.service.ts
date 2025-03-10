@@ -52,13 +52,27 @@ class Services {
     }
   }
 
+  attachTokenToHeaderCustom(token) {
+    if (token) {
+      this.interceptors = this.axios.interceptors.request.use(
+          function (config: any) {
+            config.headers.Authorization = `Bearer ${token}`;
+            return config;
+          },
+          function (error: any) {
+            return Promise.reject(error);
+          }
+      );
+    }
+  }
+
   removeInterceptors() {
     this.axios.interceptors.request.eject(this.interceptors);
   }
 
-  handleResponse(response: AxiosResponse, error: AxiosError, isSuccess: boolean) {
+  handleResponse(response: AxiosResponse, error: AxiosError, isSuccess: boolean): Promise<AxiosResponse> {
     if (isSuccess) {
-      return response;
+      return Promise.resolve(response);
     } else {
       return Promise.reject(error.response);
     }
