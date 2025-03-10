@@ -22,7 +22,6 @@ export const ProductList = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
-
   React.useEffect(() => {
     fetchProducts().then();
   }, []);
@@ -30,7 +29,6 @@ export const ProductList = () => {
   React.useEffect(() => {
     fetchProducts().then();
   }, [searchParams]); // Theo dõi sự thay đổi của query param
-
   const buildSearchParams = (): IProductSearchParam => {
     return {
       keyword: searchParams.get('keyword') ?? DEFAULT_SEARCH_PARAMS.keyword,
@@ -72,7 +70,6 @@ export const ProductList = () => {
       page: String(page),
     });
   };
-
   return (
     <div>
       <section className="section-shop padding-tb-100">
