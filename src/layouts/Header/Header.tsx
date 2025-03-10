@@ -2,6 +2,8 @@ import { IMAGES } from '~/images';
 import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import $ from "jquery";
+import { ICategory } from '~/interfaces/ICategory.ts';
+import { getAllCategories } from '~/components/CategorySwiper/api/category.api.ts';
 
 interface Props {
   onOpenCart: () => void;
@@ -11,7 +13,19 @@ const Header: React.FC<Props> = (props) => {
   const menuRef = useRef<any>(null);
   const [prevScroll, setPrevScroll] = useState(window.scrollY);
   const [prevDirection, setPrevDirection] = useState(0);
+  const [categories, setCategories] = React.useState<ICategory[]>([]);
 
+  React.useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await getAllCategories();
+        setCategories(response.data);
+      } catch (error) {
+        console.error('Failed to fetch categories', error);
+      }
+    };
+    fetchCategories();
+  }, []);
   useEffect(() => {
     const checkScroll = () => {
       const curScroll = window.scrollY;
@@ -65,9 +79,9 @@ const Header: React.FC<Props> = (props) => {
                 <input className="search-input" type="text" placeholder="Search For items..." />
                 <select className="form-select" aria-label="Default select example">
                   <option selected>All Categories</option>
-                  <option value="1">Mens</option>
-                  <option value="2">Womens</option>
-                  <option value="3">Electronics</option>
+                  {categories.map((category: ICategory) => (
+                    <option value={category.id}>{category.name}</option>
+                  ))}
                 </select>
                 <a href="javascript:void(0)" className="search-btn">
                   <i className="ri-search-line"></i>
@@ -442,21 +456,13 @@ const Header: React.FC<Props> = (props) => {
                       Category
                     </a>
                     <ul className="dropdown-menu">
-                      <li>
-                        <a className="dropdown-item" href="shop-left-sidebar.html">
-                          Shop Left sidebar
-                        </a>
-                      </li>
-                      <li>
-                        <a className="dropdown-item" href="shop-right-sidebar.html">
-                          Shop Right sidebar
-                        </a>
-                      </li>
-                      <li>
-                        <a className="dropdown-item" href="shop-full-width.html">
-                          Full Width
-                        </a>
-                      </li>
+                      {categories.map((category: ICategory) => (
+                        <li>
+                          <a className="dropdown-item" href="shop-left-sidebar.html">
+                            {category.name}
+                          </a>
+                        </li>
+                      ))}
                     </ul>
                   </li>
                   <li className="nav-item dropdown">

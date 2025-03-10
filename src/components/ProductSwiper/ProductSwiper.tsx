@@ -6,9 +6,35 @@ import ProductCard from '../ProductCard/ProductCard.tsx';
 import { useCountDown } from '~/hooks';
 
 interface Props {}
+export interface IProductItemResponse {
+  id: number;
+  category: string;
+  productName: string;
+  salePrice: number;
+  originalPrice: number;
+  flag: {
+    type: 'sale' | 'new' | 'hot';
+    value: string;
+  };
+  images: [string, string]; // Ảnh đầu là thumbnailUrl của product, ảnh sau là 1 ảnh của subproduct
+  colors: string[]; // Các thuộc tính của subproduct
+  size: string[]; // Các thuộc tính của subproduct
+}
 
 const ProductSwiper: React.FC<Props> = () => {
   const { days, hours, minutes, seconds } = useCountDown(7 * 24 * 60 * 60 * 1000);
+  // const [products, setProducts] = React.useState<ICategory[]>([]);
+  // React.useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     try {
+  //       const response = await getAllCategories();
+  //       // setProducts(response.data);
+  //     } catch (error) {
+  //       console.error('Failed to fetch categories', error);
+  //     }
+  //   };
+  //   fetchProducts();
+  // }, []);
   const products = [
     {
       id: 1,

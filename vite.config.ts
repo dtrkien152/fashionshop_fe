@@ -20,21 +20,16 @@ export default defineConfig(({ mode }) => {
       include: ['@ckeditor/ckeditor5-react'],
     },
     build: {
-      plugins: [],
       rollupOptions: {},
-      commonjsOptions: {
-        exclude: [/./],
-      },
     },
     server: {
       port: 3000,
       proxy: {
-        // Tất cả request bắt đầu bằng /api sẽ được chuyển tiếp tới backend
         '/api': {
           target: 'http://localhost:5000',
           changeOrigin: true,
-          secure: false, // Nếu backend dùng HTTPS không có chứng chỉ hợp lệ
-          rewrite: (path) => path.replace(/^\/api/, '/api'), // Giữ nguyên đường dẫn
+          secure: false,
+          rewrite: (path) => path,
         },
       },
     },
@@ -42,6 +37,9 @@ export default defineConfig(({ mode }) => {
       alias: {
         '~': path.resolve(__dirname, './src'),
       },
+    },
+    define: {
+      'process.env': env,
     },
   };
 });
