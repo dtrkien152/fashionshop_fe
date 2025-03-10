@@ -37,14 +37,15 @@ const ProductCard: React.FC<Props> = ({ product }: Props) => {
     cartService.addToCartDetails(payload).then(() => {
       const cartProduct: CartProduct = {
         productId: product.id,
-        productName: product.productName as string,
-        thumbnailUrl: product.thumbnailUrl as string,
-        salePrice: 0,
-        originalPrice: 0,
+        productName: product.productName,
+        thumbnailUrl: product.thumbnailUrl,
+        salePrice: product.salePrice,
+        originalPrice: product.originalPrice,
         unit: 1,
         color: colorSelected,
         size: sizeSelected,
       };
+      console.log(cartProduct);
       dispatch(addToCart(cartProduct));
       toast.success('Add product in cart successfully!');
     });

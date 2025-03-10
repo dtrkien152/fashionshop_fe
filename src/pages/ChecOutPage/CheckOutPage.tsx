@@ -15,9 +15,12 @@ import { OrderCreateRequest, OrderProduct } from '~/dto';
 import { PAYMENT_STATUS, PAYMENT_TYPE } from '~/constants';
 import toast from 'react-hot-toast';
 import { resetCart } from '~/shared/reducers/cartReducer.ts';
+import { useNavigate } from 'react-router-dom';
+import { ROUTER_PATH } from '~/routes';
 
 const CheckOutPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [error, setError] = useState<any>({});
   const [accountInfo, setAccountInfo] = useState<{
     accountType: 'USER' | 'GUEST';
@@ -29,6 +32,7 @@ const CheckOutPage = () => {
     address?: string;
   }>({});
   const { isLoggedIn } = useSelector((state: RootState) => state.auth);
+  const { cartCode } = useSelector((state: RootState) => state.cart);
   const { products } = useSelector((state: RootState) => state.cart);
 
   const totalPrice = useMemo(
@@ -65,6 +69,7 @@ const CheckOutPage = () => {
         phone: customerInfo.phone as string,
       },
       siteId: 1,
+      cartCode
     };
     const orderRequest =
       accountInfo.accountType === 'USER'
@@ -76,6 +81,7 @@ const CheckOutPage = () => {
       toast.success(
         `Đơn hàng ${code} của bạn đã được đặt thành công!`
       );
+      navigate(ROUTER_PATH.home.extract)
     });
   };
 
