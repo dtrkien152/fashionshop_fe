@@ -6,9 +6,6 @@ import { RootState } from '~/redux/store.ts';
 import { removeFromCart, setOpenCart, updateUnit } from '~/shared/reducers/cartReducer.ts';
 import { useMemo } from 'react';
 import { formatCurrencyVND } from '~/shared/utils/stringformat.ts';
-import { cartService } from '~/services';
-import toast from 'react-hot-toast';
-import { CartDetailRequest } from '~/dto';
 
 interface Props {
   open: boolean;
@@ -19,35 +16,18 @@ const Cart: React.FC<Props> = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { products } = useSelector((state: RootState) => state.cart);
-  const { cartCode } = useSelector((state: RootState) => state.cart);
 
   const totalPrice = useMemo(
-    () => products.reduce((acc, current) => acc + current.salePrice * current.unit, 0),
+    () => products.reduce((acc, current) => acc + current.salePrice, 0),
     [products]
   );
 
   const onUpdateUnit = (productId: number, color: string, size: string, unit: number) => {
-    if (!cartCode) return;
-    const payload: CartDetailRequest = {
-      products: [{
-        productId: productId,
-        color: color,
-        size: size,
-        unit: unit
-      }],
-      cartCode: cartCode
-    }
-    cartService.updateToCartDetails(payload).then(() => {
-      dispatch(updateUnit({ productId, color, size, unit }));
-    })
+    dispatch(updateUnit({ productId, color, size, unit }));
   };
 
   const onRemoveFromCart = (productId: number, color: string, size: string) => {
-    if (!cartCode) return;
-    cartService.removeCartDetail(cartCode, productId, color, size).then(() => {
-      toast.success("Remove product in cart successfully!")
-      dispatch(removeFromCart({ productId, color, size }));
-    });
+    dispatch(removeFromCart({ productId, color, size }));
   };
 
   return (
@@ -146,7 +126,7 @@ const Cart: React.FC<Props> = (props) => {
                 <tbody>
                   <tr>
                     <td className="text-left">Sub-Total :</td>
-                    <td className="text-right">{formatCurrencyVND(totalPrice * 0.9)}</td>
+                    <td className="text-right">{formatCurrencyVND(totalPrice * 90)}</td>
                   </tr>
                   <tr>
                     <td className="text-left">VAT (10%) :</td>

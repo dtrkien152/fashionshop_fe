@@ -23,7 +23,7 @@ const PaymentMethod: React.FC<Props> = () => {
               </span>
               <span className="cr-pay-option">
                 <span>
-                  <input type="radio" id="pay2" name="payment-options" disabled />
+                  <input type="radio" id="pay2" name="payment-options" />
                   <label htmlFor="pay2">VN-PAY</label>
                 </span>
               </span>

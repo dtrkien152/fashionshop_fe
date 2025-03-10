@@ -1,14 +1,14 @@
 export interface CartDetailRequest {
-  cartCode: string;
+  fingerprint: string;
   products: CartProduct[];
 }
 
 export interface CartProduct {
   productId: number;
-  productName?: string | any;
-  thumbnailUrl?:string | any;
-  originalPrice?: number | any;
-  salePrice?: number | any;
+  productName: string;
+  thumbnailUrl:string;
+  originalPrice: number;
+  salePrice: number;
   color: string;
   size: string;
   unit: number;

@@ -1,7 +1,7 @@
 import {
-  AccountInfo,
+  AddressDetails,
   BillingSummary,
-  CustomerDetails,
+  CustomerInfo,
   DeliveryMethod,
   OrderSummary,
   PaymentMethod,
@@ -18,34 +18,22 @@ import { resetCart } from '~/shared/reducers/cartReducer.ts';
 
 const CheckOutPage = () => {
   const dispatch = useDispatch();
-  const [error, setError] = useState<any>({});
-  const [accountInfo, setAccountInfo] = useState<{
-    accountType: 'USER' | 'GUEST';
-    email?: string;
-  }>({ accountType: 'USER' });
-  const [customerInfo, setCustomerInfo] = useState<{
-    fullName?: string;
-    phone?: string;
-    address?: string;
-  }>({});
-  const { isLoggedIn } = useSelector((state: RootState) => state.auth);
   const { products } = useSelector((state: RootState) => state.cart);
 
   const totalPrice = useMemo(
-    () => products.reduce((acc, cur) => acc + (cur.salePrice * cur.unit), 0),
+    () => products.reduce((acc, cur) => acc + cur.salePrice, 0),
     [products]
   );
 
   const [shipFee, setShipFee] = useState<IShipFee>();
 
   useEffect(() => {
-    shipFeeService.getFee(totalPrice).then((response) => {
+    shipFeeService.getFee(1500000).then((response) => {
       setShipFee(response.data);
     });
   }, [totalPrice]);
 
   const onCreateOrder = () => {
-    if (!validateOrder()) return;
     const payload: OrderCreateRequest = {
       products: products.map((p0) => {
         return {
@@ -60,94 +48,19 @@ const CheckOutPage = () => {
         status: PAYMENT_STATUS.PENDING,
       },
       customer: {
-        name: customerInfo.fullName as string,
-        address: customerInfo.address as string,
-        phone: customerInfo.phone as string,
+        name: 'Nguyen Van Long',
+        address: 'Số nhà 9b Ngõ 21 Nguyễn Văn Huyên',
+        phone: '0942934219',
       },
       siteId: 1,
     };
-    const orderRequest =
-      accountInfo.accountType === 'USER'
-        ? orderService.createMyOrder(payload)
-        : orderService.createOrder(payload, accountInfo?.email as string);
-    orderRequest.then((response) => {
+    orderService.createOrder(payload, 'longnv.2502.work@gmail.com').then((response) => {
       const code = response.data.code;
       dispatch(resetCart());
       toast.success(
-        `Đơn hàng ${code} của bạn đã được đặt thành công!`
+        `Đơn hàng ${code} của bạn đã được đặt thành công! Cảm ơn bạn đã mua sắm cùng chúng tôi. 😊`
       );
     });
-  };
-
-  const validateOrder = () => {
-    setError({});
-    const validAccount = validateAccount();
-    const validCustomer = validateCustomer();
-    return validAccount && validCustomer;
-  };
-
-  const validateAccount = () => {
-    let invalid = true;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (accountInfo.accountType === 'USER' && !isLoggedIn) {
-      invalid = false;
-      setError((error: any) => ({
-        ...error,
-        account: 'Vui lòng đăng nhập để tạo đơn hàng với tư cách người dùng.',
-      }));
-    }
-    if (accountInfo.accountType === 'GUEST') {
-      if (!accountInfo.email) {
-        invalid = false;
-        setError((error: any) => ({
-          ...error,
-          account: 'Vui lòng nhập email để có thể tạo đơn hàng',
-        }));
-      }
-      if (accountInfo.email && !emailRegex.test(accountInfo.email)) {
-        invalid = false;
-        setError((error: any) => ({
-          ...error,
-          account: 'Sai định dạng email, vui lòng nhập lại',
-        }));
-      }
-    }
-    return invalid;
-  };
-
-  const validateCustomer = () => {
-    console.log(customerInfo);
-    let invalid = true;
-    const phoneRegex = /^(?:\+84|0)(3[2-9]|5[2689]|7[0-9]|8[1-9]|9[0-9])\d{6,7}$/;
-    if (!customerInfo.fullName) {
-      invalid = false;
-      setError((error: any) => ({
-        ...error,
-        fullName: 'Vui lòng nhập họ và tên',
-      }));
-    }
-    if (!customerInfo.phone) {
-      invalid = false;
-      setError((error: any) => ({
-        ...error,
-        phone: 'Vui lòng nhập số điện thoại',
-      }));
-    }
-    if (customerInfo.phone && !phoneRegex.test(customerInfo.phone)) {
-      invalid = false;
-      setError((error: any) => ({
-        ...error,
-        phone: 'Sai định dạng số điện thoại, vui lòng nhập lại',
-      }));
-    }
-    if (!customerInfo.address) {
-      invalid = false;
-      setError((error: any) => ({
-        ...error,
-        address: 'Vui lòng nhập địa chỉ',
-      }));
-    }
-    return invalid;
   };
 
   return (
@@ -167,8 +80,8 @@ const CheckOutPage = () => {
           <div className="cr-checkout-leftside col-lg-8 col-md-12 m-t-991">
             <div className="cr-checkout-content">
               <div className="cr-checkout-inner">
-                <AccountInfo error={error} setError={setError} onBinding={setAccountInfo} />
-                <CustomerDetails error={error} setError={setError} onBinding={setCustomerInfo} />
+                <CustomerInfo />
+                <AddressDetails />
                 <span className="cr-check-order-btn">
                   <a className="cr-button mt-30" onClick={onCreateOrder}>
                     Place Order

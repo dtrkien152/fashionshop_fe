@@ -48,8 +48,8 @@ const CategorySwiper: React.FC = () => {
             }}
             className="category-slider swiper-container"
           >
-            {categories.map((category: ICategoryModel, index) => (
-              <SwiperSlide key={index}>
+            {categories.map((category: ICategoryModel) => (
+              <SwiperSlide key={category.id}>
                 <div className="category-block">
                   <div className="category-icon">
                     <img src={category.thumbnailUrl} alt={category.name} className="img-fluid" />

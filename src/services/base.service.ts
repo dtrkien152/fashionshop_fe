@@ -52,6 +52,20 @@ class Services {
     }
   }
 
+  attachTokenToHeaderCustom(token) {
+    if (token) {
+      this.interceptors = this.axios.interceptors.request.use(
+          function (config: any) {
+            config.headers.Authorization = `Bearer ${token}`;
+            return config;
+          },
+          function (error: any) {
+            return Promise.reject(error);
+          }
+      );
+    }
+  }
+
   removeInterceptors() {
     this.axios.interceptors.request.eject(this.interceptors);
   }

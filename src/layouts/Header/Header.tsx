@@ -89,8 +89,8 @@ const Header: React.FC<Props> = (props) => {
                 <input className="search-input" type="text" placeholder="Search For items..." />
                 <select className="form-select" aria-label="Default select example">
                   <option selected>All Categories</option>
-                  {categories.map((category: ICategoryModel, index: number) => (
-                    <option key={index} value={category.id}>{category.name}</option>
+                  {categories.map((category: ICategoryModel) => (
+                    <option value={category.id}>{category.name}</option>
                   ))}
                 </select>
                 <a href="javascript:void(0)" className="search-btn">
@@ -498,8 +498,8 @@ const Header: React.FC<Props> = (props) => {
                       Category
                     </a>
                     <ul className="dropdown-menu">
-                      {categories.map((category: ICategoryModel, index) => (
-                        <li key={index}>
+                      {categories.map((category: ICategoryModel) => (
+                        <li>
                           <a className="dropdown-item" href="shop-left-sidebar.html">
                             {category.name}
                           </a>

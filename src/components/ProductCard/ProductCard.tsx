@@ -2,14 +2,12 @@ import * as React from 'react';
 import { useState } from 'react';
 import { IProductItemResponse } from '~/shared/model/product.model';
 import { useNavigate } from 'react-router-dom';
-import { CartDetailRequest, CartProduct } from '~/dto';
-import { useDispatch, useSelector } from 'react-redux';
+import { CartProduct } from '~/dto';
+import { useDispatch } from 'react-redux';
 import { addToCart } from '~/shared/reducers/cartReducer.ts';
 import { ROUTER_PATH } from '~/routes';
 import toast from 'react-hot-toast';
 import { formatCurrencyVND } from '~/shared/utils/stringformat.ts';
-import { cartService } from '~/services';
-import { RootState } from '~/redux/store.ts';
 
 interface Props {
   product: IProductItemResponse;
@@ -18,36 +16,22 @@ interface Props {
 const ProductCard: React.FC<Props> = ({ product }: Props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { cartCode } = useSelector((state: RootState) => state.cart);
   const [colorSelected, setColorSelected] = useState<string>(product.colors[0]);
   const [sizeSelected, setSizeSelected] = useState<string>(product.size[0]);
 
   const onClickAddToCard = () => {
-    const payload = {
-      products: [
-        {
-          productId: product.id,
-          color: colorSelected,
-          size: sizeSelected,
-          unit: 1
-        },
-      ],
-      cartCode: cartCode,
-    } as CartDetailRequest;
-    cartService.addToCartDetails(payload).then(() => {
-      const cartProduct: CartProduct = {
-        productId: product.id,
-        productName: product.productName as string,
-        thumbnailUrl: product.thumbnailUrl as string,
-        salePrice: 0,
-        originalPrice: 0,
-        unit: 1,
-        color: colorSelected,
-        size: sizeSelected,
-      };
-      dispatch(addToCart(cartProduct));
-      toast.success('Add product in cart successfully!');
-    });
+    const cartProduct: CartProduct = {
+      productId: product.id,
+      productName: product.productName,
+      thumbnailUrl: product.thumbnailUrl,
+      salePrice: product.salePrice,
+      originalPrice: product.originalPrice,
+      unit: 1,
+      color: colorSelected,
+      size: sizeSelected,
+    };
+    dispatch(addToCart(cartProduct));
+    toast.success('Add product in cart successfully!')
   };
 
   const handleNavigate = () => {

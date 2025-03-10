@@ -2,27 +2,35 @@ import { BASE_URL, httpService } from '~/services/index.ts';
 import { CartDetailRequest } from '~/dto';
 
 export const cartService = {
-  getCart: (fingerprint: string) => {
-    httpService.attachTokenToHeader();
-    return httpService.get(BASE_URL + '/api/carts/info', { params: { fingerprint } });
-  },
-  getCartForGuest: (fingerprint: string) => {
-    return httpService.get(BASE_URL + '/api/carts/info/guest', { params: { fingerprint } });
-  },
-  getCartDetails: (cartCode: string) => {
-    return httpService.get(BASE_URL + '/api/carts', {params: { cartCode } });
-  },
   addToCartDetails: (payload: CartDetailRequest) => {
+    httpService.attachTokenToHeader();
     return httpService.post(BASE_URL + '/api/carts', payload);
   },
-  updateToCartDetails: (payload: CartDetailRequest) => {
+  addToCartDetailsForGuest: (payload: CartDetailRequest) => {
+    return httpService.post(BASE_URL + '/api/carts/guest', payload);
+  },
+  updateCartDetails: (payload: CartDetailRequest) => {
+    httpService.attachTokenToHeader();
     return httpService.put(BASE_URL + '/api/carts', payload);
   },
-  syncCartDetails: (payload: CartDetailRequest) => {
-    return httpService.post(BASE_URL + '/api/carts', payload);
+  updateCartDetailsForGuest: (payload: CartDetailRequest) => {
+    return httpService.put(BASE_URL + '/api/carts/guest', payload);
   },
-  removeCartDetail: (cartCode: string, productId: number, color: string, size: string) => {
-    return httpService.delete(BASE_URL + '/api/carts', { params: { cartCode, productId, color, size } });
+  syncCartDetails: (payload: CartDetailRequest) => {
+    httpService.attachTokenToHeader();
+    return httpService.put(BASE_URL + '/api/carts', payload);
+  },
+  syncCartDetailsForGuest: (payload: CartDetailRequest) => {
+    return httpService.put(BASE_URL + '/api/carts/guest', payload);
+  },
+  removeCartDetail: (productSubDetailId: number) => {
+    httpService.attachTokenToHeader();
+    return httpService.delete(BASE_URL + '/api/carts', { params: { productSubDetailId } });
+  },
+  removeCartDetailForGuest: (fingerprint: string, productSubDetailId: number) => {
+    return httpService.delete(BASE_URL + '/api/carts/guest', {
+      params: { fingerprint, productSubDetailId },
+    });
   },
 };
 export default cartService;

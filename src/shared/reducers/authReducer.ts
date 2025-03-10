@@ -1,34 +1,23 @@
 // src/shared/reducer/authReducer.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getUserFromStorage, saveUserToStorage, clearUserStorage } from '../utils/localStorageUtil';
+import { UserState } from '~/shared/model/user.model.ts';
 
-export interface IUserState {
-    id?: number | null;
-    email?: string | null;
-    role?: string | null;
-    token?: string | null;
-    avatar?:string | null;
-    fullName?:string | null;
-    isLoggedIn?:boolean;
-}
-
-const initialState: IUserState = getUserFromStorage() || {
+const initialState: UserState = getUserFromStorage() || {
     id: null,
     email: null,
     fullName: null,
     role: null,
     avatar: null,
-    token: null,
-    isLoggedIn: false,
+    token: null
 };
 
 const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        login: (state: IUserState, action: PayloadAction<IUserState>) => {
+        login: (state: UserState, action: PayloadAction<UserState>) => {
             Object.assign(state, action.payload);
-            state.isLoggedIn = true;
             saveUserToStorage(state);
         },
         logout: (state) => {
@@ -40,7 +29,6 @@ const authSlice = createSlice({
                 avatar: null,
                 fullName:null
             });
-            state.isLoggedIn = false;
             clearUserStorage();
         },
     },
