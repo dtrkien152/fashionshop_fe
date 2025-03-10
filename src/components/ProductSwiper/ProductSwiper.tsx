@@ -194,8 +194,8 @@ const ProductSwiper: React.FC<Props> = () => {
           }}
           className={'new-product-slider swiper-container mb-minus-24'}
         >
-          {products.map((product) => (
-            <SwiperSlide key={product.id}>
+          {products.map((product, index) => (
+            <SwiperSlide key={index}>
               <ProductCard {...product} />
             </SwiperSlide>
           ))}

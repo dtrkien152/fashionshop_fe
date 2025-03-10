@@ -5,7 +5,7 @@ import { Autoplay, Pagination } from 'swiper/modules';
 interface Props {}
 const HeroSwiper: React.FC<Props> = () => {
   return (
-    <section className="section-hero hero-2 padding-b-100 next">
+    <section className="section-hero hero-2 padding-b-100">
       <div className="container-fluid p-0">
         <Swiper
           modules={[Pagination, Autoplay]}
