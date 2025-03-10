@@ -3,7 +3,6 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import inject from '@rollup/plugin-inject';
 
-// https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
 
@@ -29,6 +28,15 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       port: 3000,
+      proxy: {
+        // Tất cả request bắt đầu bằng /api sẽ được chuyển tiếp tới backend
+        '/api': {
+          target: 'http://localhost:5000',
+          changeOrigin: true,
+          secure: false, // Nếu backend dùng HTTPS không có chứng chỉ hợp lệ
+          rewrite: (path) => path.replace(/^\/api/, '/api'), // Giữ nguyên đường dẫn
+        },
+      },
     },
     resolve: {
       alias: {

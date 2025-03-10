@@ -95,7 +95,7 @@ const Header: React.FC<Props> = (props) => {
                         </a>
                       </li>
                       <li>
-                        <a className="dropdown-item" href="login.html">
+                        <a className="dropdown-item" href="/login">
                           Login
                         </a>
                       </li>

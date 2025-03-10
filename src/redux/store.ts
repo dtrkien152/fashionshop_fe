@@ -2,19 +2,17 @@ import {combineReducers, configureStore} from '@reduxjs/toolkit'
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux'
 import {persistReducer, persistStore} from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-import { authReducer } from '~/redux/slices';
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from 'redux-persist/es/constants';
-
+import {default as rootReducer} from '../shared/reducers/index.ts'
 const persistConfig = {
     key: 'root',
     storage,
     whitelist: ['auth'],
 }
 
-const rootReducer = combineReducers({
-    auth: authReducer,
-})
-
+// const rootReducer = combineReducers({
+//     auth: authReducer,
+// })
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 const store = configureStore({
