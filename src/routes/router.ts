@@ -7,6 +7,9 @@ import {
   NotFoundPage,
   RegisterPage,
 } from '~/pages';
+import ProductDetail from '~/pages/Product/ProductDetail/ProductDetail.tsx';
+import { ProductList } from '~/pages/Product/ProductList/ProductList.tsx';
+import {GoogleCallback} from "~/pages/AuthPage/SSO/GoogleCallback.tsx";
 
 export interface RouteItem {
   path: string;
@@ -17,8 +20,8 @@ export interface RouteItem {
 
 export const ROUTER_PATH = {
   home: {
-    relative: '',
-    extract: '',
+    relative: '/',
+    extract: '/',
   },
   cart: {
     relative: 'cart',
@@ -36,9 +39,21 @@ export const ROUTER_PATH = {
     relative: 'register',
     extract: '/register',
   },
+  productList: {
+    relative: 'product',
+    extract: '/product',
+  },
+  productDetail: {
+    relative: 'product/:id',
+    extract: '/product/:id',
+  },
   notFound: {
     relative: 'error/not-found',
     extract: '/error/not-found',
+  },
+  googleCallback: {
+    relative: 'callback',
+    extract: '/callback',
   },
 };
 
@@ -70,6 +85,17 @@ export const PUBLIC_ROUTERS: RouteItem[] = [
       {
         path: ROUTER_PATH.notFound.relative,
         component: NotFoundPage,
+      },
+      {
+        path: ROUTER_PATH.productList.relative,
+        component: ProductList,
+      },
+      {
+        path: ROUTER_PATH.productDetail.relative,
+        component: ProductDetail,
+      }, {
+        path: ROUTER_PATH.googleCallback.relative,
+        component: GoogleCallback,
       },
     ],
   },

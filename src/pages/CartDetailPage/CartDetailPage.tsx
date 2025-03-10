@@ -1,70 +1,42 @@
-import { IMAGES } from '~/images';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '~/redux/store.ts';
+import { removeFromCart, updateUnit } from '~/shared/reducers/cartReducer.ts';
+import { Link } from 'react-router-dom';
+import { ROUTER_PATH } from '~/routes';
+import { formatCurrencyVND } from '~/shared/utils/stringformat.ts';
+import { cartService } from '~/services';
+import toast from 'react-hot-toast';
+import { CartDetailRequest } from '~/dto';
 
 const CartDetailPage = () => {
-  const products = [
-    {
-      id: 1,
-      category: 'Women Tops',
-      title: 'Colorful top for women',
-      price: '$6.00',
-      oldPrice: '$9.00',
-      flag: {
-        type: 'sale',
-        value: '50% Sale',
-      },
-      images: [IMAGES.product.image18, IMAGES.product.image19],
-      colors: ['#74c7ff', '#f39fab'],
-      size: ['M', 'L', 'XL'],
-    },
-    {
-      id: 2,
-      category: 'Men T-shirt',
-      title: 'Blue T-shirt for men',
-      price: '$11.00',
-      oldPrice: '$22.00',
-      flag: {
-        type: 'trending',
-        value: 'Trending',
-      },
-      images: [IMAGES.product.image30, IMAGES.product.image29],
-      colors: ['#74c7ff'],
-      size: ['M', 'XL'],
-    },
-    {
-      id: 3,
-      category: 'Kids',
-      title: 'Pink T-shirt for girl',
-      price: '$29.00',
-      oldPrice: '$39.00',
-      images: [IMAGES.product.image24, IMAGES.product.image25],
-      colors: ['#74c7ff', '#f2f05f'],
-      size: ['S', 'M'],
-    },
-    {
-      id: 4,
-      category: 'Shorts',
-      title: 'Girl nightdress shorts',
-      price: '$57.00',
-      oldPrice: '$62.00',
-      flag: {
-        type: 'new',
-        value: 'New',
-      },
-      images: [IMAGES.product.image20, IMAGES.product.image21],
-      colors: ['#50aae7', '#f2f05f'],
-      size: ['S', 'M'],
-    },
-    {
-      id: 5,
-      category: 'T-shirt',
-      title: 'Black T-shirt for women',
-      price: '$35.00',
-      oldPrice: '$42.00',
-      images: [IMAGES.product.image22, IMAGES.product.image23],
-      colors: ['#000000', '#837aff'],
-      size: ['S', 'M'],
-    },
-  ];
+  const dispatch = useDispatch();
+  const { products } = useSelector((state: RootState) => state.cart);
+  const { cartCode } = useSelector((state: RootState) => state.cart);
+
+  const onUpdateUnit = (productId: number, color: string, size: string, unit: number) => {
+    if (unit === 0) return onRemoveFromCart(productId, color, size);
+    if (!cartCode) return;
+    const payload: CartDetailRequest = {
+      products: [{
+        productId: productId,
+        color: color,
+        size: size,
+        unit: unit
+      }],
+      cartCode: cartCode
+    }
+    cartService.updateToCartDetails(payload).then(() => {
+      dispatch(updateUnit({ productId, color, size, unit }));
+    })
+  };
+
+  const onRemoveFromCart = (productId: number, color: string, size: string) => {
+    if (!cartCode) return;
+    cartService.removeCartDetail(cartCode, productId, color, size).then(() => {
+      toast.success("Remove product in cart successfully!")
+      dispatch(removeFromCart({ productId, color, size }));
+    });
+  };
 
   return (
     <section className="section-cart padding-tb-100">
@@ -78,7 +50,7 @@ const CartDetailPage = () => {
               <div className="cr-banner-sub-title">
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                  incididunt ut labore lacus vel facilisis.{' '}
+                  incididunt ut labore lacus vel facilisis.
                 </p>
               </div>
             </div>
@@ -109,17 +81,22 @@ const CartDetailPage = () => {
                         {products.map((product, index) => (
                           <tr key={index}>
                             <td className="cr-cart-name">
-                              <a href="javascript:void(0)">
+                              <Link
+                                to={ROUTER_PATH.productDetail.extract.replace(
+                                  ':id',
+                                  product.productId.toString()
+                                )}
+                              >
                                 <img
-                                  src={product.images[0]}
+                                  src={product.thumbnailUrl}
                                   alt="product-1"
                                   className="cr-cart-img"
                                 />
-                                {product.title}
-                              </a>
+                                {product.productName}
+                              </Link>
                             </td>
                             <td className="cr-cart-price">
-                              <span className="amount">{product.price}</span>
+                              <span className="amount">{formatCurrencyVND(product.salePrice)}</span>
                             </td>
                             <td className="cr-cart-qty">
                               <div className="cart-qty-plus-minus">
@@ -129,19 +106,31 @@ const CartDetailPage = () => {
                                 <input
                                   type="text"
                                   placeholder="."
-                                  value="1"
+                                  value={product.unit}
                                   minLength={1}
                                   maxLength={20}
                                   className="quantity"
+                                  onChange={(e) =>
+                                    onUpdateUnit(
+                                      product.productId,
+                                      product.color,
+                                      product.size,
+                                      parseInt(e.target.value)
+                                    )
+                                  }
                                 />
                                 <button type="button" className="minus">
                                   -
                                 </button>
                               </div>
                             </td>
-                            <td className="cr-cart-subtotal">{product.price}</td>
+                            <td className="cr-cart-subtotal">{product.salePrice * product.unit}</td>
                             <td className="cr-cart-remove">
-                              <a href="javascript:void(0)">
+                              <a
+                                onClick={() =>
+                                  onRemoveFromCart(product.productId, product.color, product.size)
+                                }
+                              >
                                 <i className="ri-delete-bin-line"></i>
                               </a>
                             </td>
@@ -153,12 +142,12 @@ const CartDetailPage = () => {
                   <div className="row">
                     <div className="col-lg-12">
                       <div className="cr-cart-update-bottom">
-                        <a href="javascript:void(0)" className="cr-links">
+                        <Link to={ROUTER_PATH.home.extract} className="cr-links">
                           Continue Shopping
-                        </a>
-                        <a href="cart.html" className="cr-button">
+                        </Link>
+                        <Link to={ROUTER_PATH.checkout.extract} className="cr-button">
                           Check Out
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>

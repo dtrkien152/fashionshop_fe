@@ -3,7 +3,6 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import inject from '@rollup/plugin-inject';
 
-// https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
 
@@ -18,22 +17,30 @@ export default defineConfig(({ mode }) => {
       }),
     ],
     optimizeDeps: {
-      include: ['@ckeditor/ckeditor5-react'],
+      include: ['@ckeditor/ckeditor5-react','@react-oauth/google'],
+
     },
     build: {
-      plugins: [],
       rollupOptions: {},
-      commonjsOptions: {
-        exclude: [/./],
-      },
     },
     server: {
       port: 3000,
+      proxy: {
+        '/api': {
+          target: 'http://localhost:5000',
+          changeOrigin: true,
+          secure: false,
+          rewrite: (path) => path,
+        },
+      },
     },
     resolve: {
       alias: {
         '~': path.resolve(__dirname, './src'),
       },
+    },
+    define: {
+      'process.env': env,
     },
   };
 });

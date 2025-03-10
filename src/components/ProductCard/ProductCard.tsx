@@ -1,54 +1,98 @@
 import * as React from 'react';
+import { useState } from 'react';
+import { IProductItemResponse } from '~/shared/model/product.model';
+import { useNavigate } from 'react-router-dom';
+import { CartDetailRequest, CartProduct } from '~/dto';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart } from '~/shared/reducers/cartReducer.ts';
+import { ROUTER_PATH } from '~/routes';
+import toast from 'react-hot-toast';
+import { formatCurrencyVND } from '~/shared/utils/stringformat.ts';
+import { cartService } from '~/services';
+import { RootState } from '~/redux/store.ts';
 
 interface Props {
-  category: string;
-  title: string;
-  price: string;
-  oldPrice: string;
-  flag?: {
-    type: string;
-    value: string;
-  };
-  images: string[];
-  colors: string[];
-  size: string[];
+  product: IProductItemResponse;
 }
 
-const ProductCard: React.FC<Props> = (props) => {
+const ProductCard: React.FC<Props> = ({ product }: Props) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { cartCode } = useSelector((state: RootState) => state.cart);
+  const [colorSelected, setColorSelected] = useState<string>(product.colors[0]);
+  const [sizeSelected, setSizeSelected] = useState<string>(product.size[0]);
+
+  const onClickAddToCard = () => {
+    const payload = {
+      products: [
+        {
+          productId: product.id,
+          color: colorSelected,
+          size: sizeSelected,
+          unit: 1
+        },
+      ],
+      cartCode: cartCode,
+    } as CartDetailRequest;
+    cartService.addToCartDetails(payload).then(() => {
+      const cartProduct: CartProduct = {
+        productId: product.id,
+        productName: product.productName as string,
+        thumbnailUrl: product.thumbnailUrl as string,
+        salePrice: product.salePrice,
+        originalPrice: product.originalPrice,
+        unit: 1,
+        color: colorSelected,
+        size: sizeSelected,
+      };
+      console.log(cartProduct);
+      dispatch(addToCart(cartProduct));
+      toast.success('Add product in cart successfully!');
+    });
+  };
+
+  const handleNavigate = () => {
+    navigate(ROUTER_PATH.productDetail.extract.replace(':id', product.id.toString()));
+  };
+
   return (
-    <div className="product-card-2">
+    <div className="product-card-2" onClick={handleNavigate} style={{ cursor: 'pointer' }}>
       <div className="cr-product-inner">
         <div className="cr-pro-image-outer">
           <div className="cr-pro-image">
-            <a href="product-left-sidebar.html" className="image">
-              <img className="main-image" src={props.images[0]} alt="Product" />
-              <img className="hover-image" src={props.images[1]} alt="Product" />
-            </a>
-            {props.flag && (
+            <div className="image">
+              <img className="main-image" src={product.thumbnailUrl} alt="Product" />
+              {/*<img className="hover-image" src={product?.images[1] || ''} alt="Product" />*/}
+            </div>
+            {product?.flag && (
               <span className="flags">
-                <span className={props.flag.type}>{props.flag.value}</span>
+                <span className={product.flag.type}>{product.flag.value}</span>
               </span>
             )}
             <div className="cr-pro-actions">
               <a
                 className="model-oraganic-product"
                 data-bs-toggle="modal"
-                href="#quickview"
                 role="button"
+                onClick={(e) => e.stopPropagation()}
               >
                 <i className="ri-eye-line"></i>
               </a>
-              <a href="compare.html" className="cr-btn-group compare" title="Compare">
-                <i className="mdi mdi-vector-arrange-below"></i>
-              </a>
               <a
-                href="javascript:void(0)"
                 title="Add To Cart"
                 className="add-to-cart cr-shopping-bag"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onClickAddToCard();
+                }}
               >
                 <i className="ri-shopping-cart-line"></i>
               </a>
-              <a href="javascript:void(0)" className="cr-btn-group wishlist" title="Wishlist">
+              <a
+                className="cr-btn-group wishlist"
+                title="Wishlist"
+                onClick={(e) => e.stopPropagation()}
+              >
                 <i className="ri-heart-line"></i>
               </a>
             </div>
@@ -56,38 +100,36 @@ const ProductCard: React.FC<Props> = (props) => {
         </div>
         <div className="cr-pro-content">
           <div className="cr-info">
-            <a href="shop-left-sidebar.html">{props.category}</a>
+            <span>{product?.category}</span>
           </div>
           <h5 className="cr-pro-title">
-            <a href="product-left-sidebar.html">{props.title}</a>
+            <span>{product?.productName}</span>
           </h5>
           <span className="cr-price">
-            <span className="new-price">{props.price}</span>
-            <span className="old-price">{props.oldPrice}</span>
+            <span className="new-price">{formatCurrencyVND(product?.salePrice)}</span>
+            <span className="old-price">{formatCurrencyVND(product?.originalPrice)}</span>
           </span>
           <div className="cr-pro-option">
             <div className="cr-pro-color">
               <ul className="cr-opt-swatch cr-change-img">
-                {props.colors &&
-                  props.colors.map((color, index) => (
-                    <li key={index} className={index === 0 ? 'active' : ''}>
-                      <a href="javascript:void(0)" className="cr-opt-clr-img">
-                        <span style={{ backgroundColor: color }}></span>
-                      </a>
-                    </li>
-                  ))}
+                {product?.colors?.map((color, index) => (
+                  <li key={index} className={color === colorSelected ? 'active' : ''}>
+                    <a onClick={() => setColorSelected(color)} className="cr-opt-clr-img">
+                      <span style={{ backgroundColor: color }}></span>
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
             <div className="cr-pro-size">
               <ul className="cr-opt-size">
-                {props.size &&
-                  props.size.map((size, index) => (
-                    <li key={index} className={index === 0 ? 'active' : ''}>
-                      <a href="#" className="cr-opt-sz">
-                        {size}
-                      </a>
-                    </li>
-                  ))}
+                {product?.size?.map((size, index) => (
+                  <li key={index} className={size === sizeSelected ? 'active' : ''}>
+                    <a onClick={() => setSizeSelected(size)} className="cr-opt-sz">
+                      {size}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
@@ -96,4 +138,5 @@ const ProductCard: React.FC<Props> = (props) => {
     </div>
   );
 };
+
 export default ProductCard;
