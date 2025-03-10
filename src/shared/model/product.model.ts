@@ -2,8 +2,8 @@ export interface IProductItemResponse {
     id: number;
     category: string;
     productName: string;
-    salePrice: number;
-    originalPrice: number;
+    salePrice: string;
+    originalPrice: string;
     flag: {
         type: 'sale' | 'new' | 'hot';
         value: string;
