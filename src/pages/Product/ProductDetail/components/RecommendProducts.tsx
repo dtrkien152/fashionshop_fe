@@ -3,6 +3,8 @@ import { IMAGES } from '~/images';
 import * as React from "react";
 import {IProductItemResponse} from "~/shared/model/product.model.ts";
 import {productService} from "~/services";
+import {ROUTER_PATH} from "~/routes";
+import {useNavigate} from "react-router-dom";
 
 // const products = [
 //   {
@@ -47,17 +49,26 @@ import {productService} from "~/services";
 //   },
 // ];
 
-export default function PopularProducts() {
+interface Props{
+  productId:number;
+}
+export default function RecommendProducts(props:Props) {
   const [products, setProducts] = React.useState<IProductItemResponse[]>([]);
+  const navigate = useNavigate();
+
   React.useEffect(() => {
     fetchProducts();
   }, []);
+  const handleNavigate = (productId) => {
+    navigate(ROUTER_PATH.productDetail.extract.replace(':id', productId.toString()));
+  };
 
   const fetchProducts = async () => {
     productService
-        .getTopSelling()
+        .getRecommendProduct(props.productId)
         .then((resp) => {
-          setProducts(resp.data.data);
+          console.log('cate ',resp.data)
+          setProducts(resp.data);
         })
         .catch((reason) => {
           console.log('error fetch product ', reason);
@@ -75,12 +86,11 @@ export default function PopularProducts() {
           <div className="col-lg-12">
             <div className="mb-30">
               <div className="cr-banner">
-                <h2>Popular Products</h2>
+                <h2>Sản phẩm liên quan</h2>
               </div>
               <div className="cr-banner-sub-title">
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                  incididunt ut labore et viverra maecenas accumsan lacus vel facilisis.
+                  Những sản phẩm bạn có thể thích
                 </p>
               </div>
             </div>
@@ -94,12 +104,12 @@ export default function PopularProducts() {
               slidesPerView={4}
               className="cr-popular-product swiper-container"
             >
-              {products.map((product, index) => (
+              {products?.map((product, index) => (
                 <SwiperSlide key={index}>
                   <div className="cr-product-card">
                     <div className="cr-product-image">
                       <div className="cr-image-inner zoom-image-hover">
-                        <img src={product.thumbnailUrl} alt={product.productName} />
+                        <img src={product.thumbnailUrl} alt={product.name} />
                       </div>
                       <div className="cr-side-view">
                         <a href="#" className="wishlist">
@@ -118,9 +128,9 @@ export default function PopularProducts() {
                         <i className="ri-shopping-bag-line"></i>
                       </a>
                     </div>
-                    <div className="cr-product-details">
+                    <div className="cr-product-details" onClick={()=>handleNavigate(product.id)} style={{cursor:"pointer"}}>
                       <div className="cr-brand">
-                        <a >{product.category}</a>
+                        <a >{product.name}</a>
                         {/*<div className="cr-star">*/}
                         {/*  {Array.from({ length: 5 }, (_, i) => (*/}
                         {/*    <i*/}
@@ -131,8 +141,8 @@ export default function PopularProducts() {
                         {/*  <p>({product.rating.toFixed(1)})</p>*/}
                         {/*</div>*/}
                       </div>
-                      <a href="product-left-sidebar.html" className="title">
-                        {product.productName}
+                      <a  className="title">
+                        {product.description}
                       </a>
                       <p className="cr-price">
                         <span className="new-price">{product.originalPrice}</span>{' '}

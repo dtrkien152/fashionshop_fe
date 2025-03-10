@@ -67,7 +67,7 @@ const Cart: React.FC<Props> = (props) => {
             </div>
             <ul className="crcart-pro-items">
               {products.map((product, index) => (
-                <li key={index}>
+                <li className="crcart-pro-item" key={index}>
                   <Link
                     to={ROUTER_PATH.productDetail.extract.replace(
                       ':id',
@@ -87,6 +87,25 @@ const Cart: React.FC<Props> = (props) => {
                     >
                       {product.productName}
                     </Link>
+                    <div className="cart_pro_desc">
+                      <div className="cr-pro-color">
+                        <ul className="cr-opt-swatch cr-change-img">
+                          <li className="active">
+                            <a className="cr-opt-clr-img">
+                              <span style={{ backgroundColor: product.color }}></span>
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                      <span>-</span>
+                      <div className="cr-pro-size">
+                        <ul className="cr-opt-size">
+                          <li className="active">
+                            <a className="cr-opt-sz">{product.size}</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
                     <span className="cart-price">
                       <span>{formatCurrencyVND(product.salePrice)}</span>
                     </span>

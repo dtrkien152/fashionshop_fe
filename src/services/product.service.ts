@@ -25,7 +25,13 @@ const productService = {
   getProductDetail: async (id:string) => {
     httpService.attachTokenToHeader();
   return await httpService.get(BASE_URL + `/api/products/detail?productId=${id}`);
-  }
+  },
+  getRecommendProduct: async (productId: number) => {
+    httpService.attachTokenToHeader();
+    return await httpService.get(`${BASE_URL}/api/products/recommended`, {
+      params: { productId }
+    });
+  },
 };
 
 

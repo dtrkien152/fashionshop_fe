@@ -45,12 +45,24 @@ const OrderSummary: React.FC<Props> = () => {
                         {product.productName}
                       </Link>
                     </h5>
-                    <div className="cr-pro-rating">
-                      <i className="ri-star-fill"></i>
-                      <i className="ri-star-fill"></i>
-                      <i className="ri-star-fill"></i>
-                      <i className="ri-star-fill"></i>
-                      <i className="ri-star-line"></i>
+                    <div className="cart-pro-desc">
+                      <div className="cr-pro-color">
+                        <ul className="cr-opt-swatch cr-change-img">
+                          <li className="active">
+                            <a className="cr-opt-clr-img">
+                              <span style={{ backgroundColor: product.color }}></span>
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                      <span>-</span>
+                      <div className="cr-pro-size">
+                        <ul className="cr-opt-size">
+                          <li className="active">
+                            <a className="cr-opt-sz">{product.size}</a>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                     <p className="cr-price">
                       <span className="new-price">{formatCurrencyVND(product.salePrice)}</span>{' '}

@@ -4,7 +4,7 @@ import {
   CheckOutPage,
   HomePage,
   LoginPage,
-  NotFoundPage,
+  NotFoundPage, OrderListPage, OrderTrackingPage,
   RegisterPage,
 } from '~/pages';
 import ProductDetail from '~/pages/Product/ProductDetail/ProductDetail.tsx';
@@ -30,6 +30,14 @@ export const ROUTER_PATH = {
   checkout: {
     relative: 'checkout',
     extract: '/checkout',
+  },
+  orderList: {
+    relative: 'order',
+    extract: '/order',
+  },
+  orderTracking: {
+    relative: 'order/tracking',
+    extract: '/order/tracking',
   },
   login: {
     relative: 'login',
@@ -73,6 +81,14 @@ export const PUBLIC_ROUTERS: RouteItem[] = [
       {
         path: ROUTER_PATH.checkout.relative,
         component: CheckOutPage,
+      },
+      {
+        path: ROUTER_PATH.orderList.relative,
+        component: OrderListPage,
+      },
+      {
+        path: ROUTER_PATH.orderTracking.relative,
+        component: OrderTrackingPage,
       },
       {
         path: ROUTER_PATH.login.relative,

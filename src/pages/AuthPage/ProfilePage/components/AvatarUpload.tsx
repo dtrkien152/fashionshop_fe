@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Upload, Avatar, message } from 'antd';
 import { UploadOutlined, UserOutlined } from '@ant-design/icons';
 import type { RcFile, UploadChangeParam } from 'antd/es/upload';
+import { AvatarUploadWrapper } from '~/pages/AuthPage/ProfilePage/components/style.ts';
 
 interface AvatarUploadProps {
     avatarUrl?: string | null;
@@ -34,7 +35,7 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({ avatarUrl, onAvatarChange }
     };
 
     return (
-        <div style={{ textAlign: 'center', marginBottom: 20 }}>
+        <AvatarUploadWrapper>
             <Avatar size={100} src={currentAvatarUrl} icon={<UserOutlined />} />
             <Upload
                 showUploadList={false}
@@ -45,7 +46,7 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({ avatarUrl, onAvatarChange }
                     Thay đổi Avatar
                 </Button>
             </Upload>
-        </div>
+        </AvatarUploadWrapper>
     );
 };
 
