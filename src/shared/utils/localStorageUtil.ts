@@ -1,6 +1,6 @@
 // src/shared/utils/localStorageUtil.ts
 
-import {UserState} from "~/shared/model/User.model.ts";
+import {UserState} from "~/shared/model/user.model.ts";
 
 const USER_KEY = 'user';
 const TOKEN_KEY = 'token';

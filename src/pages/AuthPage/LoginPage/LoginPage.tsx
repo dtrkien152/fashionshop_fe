@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { IMAGES } from '~/images';
-import {loginPage} from "~/pages/AuthPage/api/login.api.ts";
+import {loginPage} from "~/api/auth/login.api.ts";
 import { login } from '~/shared/reducers/authReducer';
 import { useDispatch } from 'react-redux';
 

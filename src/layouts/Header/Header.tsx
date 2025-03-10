@@ -3,7 +3,7 @@ import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import $ from "jquery";
 import { ICategory } from '~/interfaces/ICategory.ts';
-import { getAllCategories } from '~/components/CategorySwiper/api/category.api.ts';
+import { getAllCategories } from '~/api/category/category.api.ts';
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "~/redux/store.ts";
 import {logout} from "~/shared/reducers/authReducer.ts";
@@ -82,7 +82,7 @@ const Header: React.FC<Props> = (props) => {
         <div className="row">
           <div className="col-lg-12">
             <div className="top-header">
-              <a href="index.html" className="cr-logo">
+              <a href="/" className="cr-logo">
                 <img src={IMAGES.logo} alt="logo" className="logo" />
               </a>
               <form className="cr-search">

@@ -1,7 +1,7 @@
 // src/shared/reducer/authReducer.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getUserFromStorage, saveUserToStorage, clearUserStorage } from '../utils/localStorageUtil';
-import { UserState } from '~/shared/model/User.model';
+import { UserState } from '~/shared/model/user.model.ts';
 
 const initialState: UserState = getUserFromStorage() || {
     id: null,

@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import { ICategory } from '~/interfaces/ICategory.ts';
-import { getAllCategories } from '~/components/CategorySwiper/api/category.api.ts';
+import { getAllCategories } from '~/api/category/category.api.ts';
 
 
 const CategorySwiper: React.FC = () => {
