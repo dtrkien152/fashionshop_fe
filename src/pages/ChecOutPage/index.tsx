@@ -1,0 +1,6 @@
+export { default as CheckOutPage } from './CheckOutPage'
+export * from './OrderSummary'
+export * from './DeliveryMethod'
+export * from './PaymentMethod'
+export * from './CustomerInfo'
+export * from './BillingDetails'

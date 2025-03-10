@@ -1368,13 +1368,9 @@ header {
     transition: top 1s;
 }
 
-.cr-fix.menu_fixed .top-header {
-    display: none;
-}
-
 .cr-fix.menu_fixed_up {
     position: fixed;
-    top: -60px;
+    top: -200px;
     left: 0;
     width: 100%;
     z-index: 10;
@@ -1383,10 +1379,6 @@ header {
     background: #ffffff;
     -webkit-transition: top 1s;
     transition: top 1s;
-}
-
-.cr-fix.menu_fixed_up .top-header {
-    display: none;
 }
 
 .cr-menu-list {

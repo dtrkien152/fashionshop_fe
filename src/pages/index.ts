@@ -1,3 +1,5 @@
 export * from './AuthPage'
 export * from './ErrorPage'
 export * from './Home'
+export * from './CartDetailPage'
+export * from './ChecOutPage'
