@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { ROUTER_PATH } from '~/routes/router.ts';
+import { ROUTER_PATH } from '~/routes';
 
 interface AuthGuardProps {
 }

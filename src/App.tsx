@@ -3,7 +3,7 @@ import { useLayoutEffect, useState } from 'react';
 import './App.css';
 import { BrowserHistory, createBrowserHistory } from 'history';
 import { Navigate, Route, Router, Routes } from 'react-router-dom';
-import { PRIVATE_ROUTERS, PUBLIC_ROUTERS, RouteItem, ROUTER_PATH } from '~/routes/router.ts';
+import { PRIVATE_ROUTERS, PUBLIC_ROUTERS, RouteItem, ROUTER_PATH } from '~/routes';
 import { AuthGuard } from '~/guard';
 
 type Props = {
