@@ -1,12 +1,7 @@
-// GoogleSSOButton.tsx
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { Button } from 'antd';
-import React from "react";
-import {FcGoogle} from "react-icons/fc"; // Hoặc sử dụng button mặc định tùy giao diện bạn muốn giữ
+import { FcGoogle } from 'react-icons/fc'; // Hoặc sử dụng button mặc định tùy giao diện bạn muốn giữ
 
 const GoogleSSOButton = () => {
-    const navigate = useNavigate();
 
     const handleGoogleLogin = async () => {
         try {
