@@ -42,6 +42,20 @@ const AddressCreateModal: React.FC<AddressCreateModalProps> = ({ isOpen, onClose
                     <Input placeholder="Nhập tên địa chỉ" />
                 </Form.Item>
                 <Form.Item
+                  label="Tên người nhận"
+                  name="receiverName"
+                  rules={[{ required: true, message: 'Vui lòng nhập tên người nhận!' }]}
+                >
+                    <Input placeholder="Nhập tên người nhận" />
+                </Form.Item>
+                <Form.Item
+                  label="Số điện thoại người nhận"
+                  name="receiverPhone"
+                  rules={[{ required: true, message: 'Vui lòng nhập số điện thoại người nhận!' }]}
+                >
+                    <Input placeholder="Nhập số điện thoại người nhận" />
+                </Form.Item>
+                <Form.Item
                     label="Địa chỉ chi tiết"
                     name="fullAddress"
                     rules={[{ required: true, message: 'Vui lòng nhập địa chỉ chi tiết!' }]}

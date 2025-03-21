@@ -6,10 +6,10 @@ export interface IUserState {
     email?: string | null;
     role?: string | null;
     token?: string | null;
-    avatar?:string | null;
-    fullName?:string | null;
-    phone?:string | null;
-    isLoggedIn?:boolean;
+    avatar?: string | null;
+    fullName?: string | null;
+    phone?: string | null;
+    isLoggedIn?: boolean;
 }
 
 const initialState: IUserState = LocalStorageUtils.getUserFromStorage() || {
@@ -26,7 +26,7 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        login: (state: IUserState, action: PayloadAction<IUserState>) => {
+        login: (state, action: PayloadAction<IUserState>) => {
             Object.assign(state, action.payload);
             state.isLoggedIn = true;
             LocalStorageUtils.saveUserToStorage(state);
@@ -38,13 +38,17 @@ const authSlice = createSlice({
                 role: null,
                 token: null,
                 avatar: null,
-                fullName:null
+                fullName: null,
             });
             state.isLoggedIn = false;
             LocalStorageUtils.clearUserStorage();
         },
+        updateAvatar: (state, action: PayloadAction<string>) => {
+            state.avatar = action.payload;
+            LocalStorageUtils.saveUserToStorage(state);
+        },
     },
 });
 
-export const { login, logout } = authSlice.actions;
+export const { login, logout, updateAvatar } = authSlice.actions;
 export default authSlice.reducer;

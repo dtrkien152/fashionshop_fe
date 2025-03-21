@@ -36,8 +36,8 @@ export const ROUTER_PATH = {
     extract: '/order',
   },
   orderTracking: {
-    relative: 'order/tracking',
-    extract: '/order/tracking',
+    relative: 'order/tracking/:code',
+    extract: '/order/tracking/:code',
   },
   login: {
     relative: 'login',

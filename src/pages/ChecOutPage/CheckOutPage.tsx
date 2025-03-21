@@ -3,7 +3,7 @@ import {
   BillingSummary,
   CustomerDetails,
   DeliveryMethod,
-  OrderSummary,
+  OrderSummary, OrderVoucher,
   PaymentMethod,
 } from '~/pages';
 import { useDispatch, useSelector } from 'react-redux';
@@ -81,7 +81,7 @@ const CheckOutPage = () => {
       toast.success(
         `Đơn hàng ${code} của bạn đã được đặt thành công!`
       );
-      navigate(ROUTER_PATH.home.extract)
+      navigate(ROUTER_PATH.orderTracking.extract.replace(":code", code));
     });
   };
 
@@ -162,6 +162,7 @@ const CheckOutPage = () => {
         <div className="row">
           <div className="cr-checkout-rightside col-lg-4 col-md-12">
             <OrderSummary />
+            <OrderVoucher />
             <DeliveryMethod shipFee={shipFee} />
             <BillingSummary
               totalPrice={totalPrice}
