@@ -23,5 +23,8 @@ export const orderService = {
     httpService.attachTokenToHeader();
     return httpService.get(BASE_URL + '/api/orders', { params });
   },
+  getOrder(code: string) {
+    return httpService.get(BASE_URL + `/api/orders/tracking/${code}`);
+  },
 };
 export default orderService;

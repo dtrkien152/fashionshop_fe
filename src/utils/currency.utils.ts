@@ -5,7 +5,7 @@ export const CurrencyUtils = {
    * @param withSuffix Có hiển thị đuôi "₫" hay không (mặc định: true)
    * @returns Chuỗi định dạng tiền tệ VND
    */
-  formatCurrencyVND: (amount: number, withSuffix: boolean = true): string => {
+  formatCurrencyVND: (amount?: number, withSuffix: boolean = true): string => {
     if (!amount) return '0 ₫';
 
     const formattedAmount = amount.toLocaleString('vi-VN', {

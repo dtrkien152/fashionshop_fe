@@ -355,7 +355,24 @@ a.back-to-top .back-to-top-wrap svg path {
   color: #3f51b5;
 }
 
+.cr-status-tab.active {
+  border-color: #3f51b5;
+  color: #3f51b5;
+}
+
+.cr-order-list .cr-search .search-btn {
+  background-color: #3f51b5;
+}
+
+.cr-order-list .cr-search input, .top-header .cr-search select {
+  border-color: #3f51b5;
+}
+
 .cr-order-list .cr-sb-title .cr-order-code {
+  color: #3f51b5;
+}
+
+.cr-order-list .cr-sb-title .cr-order-status {
   color: #3f51b5;
 }
 /*# sourceMappingURL=color-blue.css.map */

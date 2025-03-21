@@ -1,4 +1,12 @@
-const TrackingSection = () => {
+import { OrderDto } from '~/dto';
+import * as React from 'react';
+import moment from 'moment'
+
+interface Props {
+  order?: OrderDto;
+}
+
+const TrackingSection: React.FC<Props> = (props) => {
   return (
     <section className="cr-track padding-t-100 padding-b-50">
       <div className="container">
@@ -7,16 +15,15 @@ const TrackingSection = () => {
             <div className="cr-track-box">
               <div className="row">
                 <div className="col-md-4 m-b-767">
-                  <div className="cr-track-card"><span className="cr-track-title">order</span><span>#9857</span>
+                  <div className="cr-track-card"><span className="cr-track-title">order</span><span>#{props.order?.code}</span>
                   </div>
                 </div>
                 <div className="col-md-4 m-b-767">
                   <div className="cr-track-card"><span
-                    className="cr-track-title">Grasshoppers</span><span>M254HT</span></div>
+                    className="cr-track-title">Delivery Code</span><span>M254HT</span></div>
                 </div>
                 <div className="col-md-4 m-b-767">
-                  <div className="cr-track-card"><span className="cr-track-title">Expected date</span><span>Feb
-                                        17, 2025</span></div>
+                  <div className="cr-track-card"><span className="cr-track-title">Order date</span><span>{moment(props.order?.createdAt).format("MMM Do YY")}</span></div>
                 </div>
               </div>
               <div className="cr-steps">

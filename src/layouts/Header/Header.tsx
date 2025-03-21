@@ -8,8 +8,9 @@ import { RootState } from '~/redux/store.ts';
 import { logout } from '~/redux';
 import { categoryService } from '~/services';
 import ProfileModal from "~/pages/AuthPage/ProfilePage/ProfileModal.tsx";
-import {useNavigate} from "react-router-dom";
+import { Link, useNavigate } from 'react-router-dom';
 import {SearchForm} from "~/layouts/Header/components/SearchForm.tsx";
+import { ROUTER_PATH } from '~/routes';
 
 interface Props {
   onOpenCart: () => void;
@@ -149,37 +150,35 @@ const Header: React.FC<Props> = (props) => {
                     </a>
                     <ul className="dropdown-menu">
                       {email ? (
-                          <>
-                            <li>
-                              <a
-                                  className="dropdown-item"
-                                  onClick={() => handleOpenModal('1')}
-                                  style={{ cursor: 'pointer' }}
-                              >
-                                Thông tin cá nhân
-                              </a>
-                            </li>
-                            <li>
-                              <a
-                                  className="dropdown-item"
-                                  onClick={() => handleOpenModal('3')}
-                                  style={{ cursor: 'pointer' }}
-                              >
-                                Đổi mật khẩu
-                              </a>
-                            </li>
-                            <li>
-                              <a
-                                  className="dropdown-item"
-                                  onClick={handleLogout}
-                                  style={{ cursor: 'pointer' }}
-                              >
-                                Logout
-                              </a>
-                            </li>
-
-                          </>
-
+                        <>
+                          <li>
+                            <a
+                              className="dropdown-item"
+                              onClick={() => handleOpenModal('1')}
+                              style={{ cursor: 'pointer' }}
+                            >
+                              Thông tin cá nhân
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              className="dropdown-item"
+                              onClick={() => handleOpenModal('3')}
+                              style={{ cursor: 'pointer' }}
+                            >
+                              Đổi mật khẩu
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              className="dropdown-item"
+                              onClick={handleLogout}
+                              style={{ cursor: 'pointer' }}
+                            >
+                              Logout
+                            </a>
+                          </li>
+                        </>
                       ) : (
                         <>
                           <li>
@@ -195,21 +194,18 @@ const Header: React.FC<Props> = (props) => {
                         </>
                       )}
                       <ProfileModal
-                          visible={isModalVisible}
-                          onClose={handleCloseModal}
-                          defaultActiveKey={activeTab}
+                        visible={isModalVisible}
+                        onClose={handleCloseModal}
+                        defaultActiveKey={activeTab}
                       />
                     </ul>
                   </li>
                 </ul>
-                <a href="/wishlist" className="cr-right-bar-item">
-                  <i className="ri-heart-3-line"></i>
-                  <span>Wishlist</span>
-                </a>
-                <a
-                  className="cr-right-bar-item Shopping-toggle"
-                  onClick={props.onOpenCart}
-                >
+                <Link to={ROUTER_PATH.orderList.extract} className="cr-right-bar-item">
+                  <i className="ri-shopping-bag-2-line"></i>
+                  <span>My Order</span>
+                </Link>
+                <a className="cr-right-bar-item Shopping-toggle" onClick={props.onOpenCart}>
                   <i className="ri-shopping-cart-line"></i>
                   <span>Cart</span>
                 </a>
@@ -542,17 +538,18 @@ const Header: React.FC<Props> = (props) => {
                     </a>
                     <ul className="dropdown-menu">
                       {categories.map((category: ICategoryModel, index) => (
-                          <li key={index}>
-                            <a
-                                className="dropdown-item"
-                                href={`/products?categoryId=${category.id}&page=0`}
-                                onClick={(e) => handleCategoryClick(e, category.id)}
-                            >
-                              {category.name}
-                            </a>
-                          </li>
+                        <li key={index}>
+                          <a
+                            className="dropdown-item"
+                            href={`/products?categoryId=${category.id}&page=0`}
+                            onClick={(e) => handleCategoryClick(e, category.id)}
+                          >
+                            {category.name}
+                          </a>
+                        </li>
                       ))}
-                    </ul>;
+                    </ul>
+                    ;
                   </li>
                   {/*<li className="nav-item dropdown">*/}
                   {/*  <a className="nav-link dropdown-toggle" href="javascript:void(0)">*/}
