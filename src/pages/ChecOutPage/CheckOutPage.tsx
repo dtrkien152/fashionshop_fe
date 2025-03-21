@@ -3,7 +3,8 @@ import {
   BillingSummary,
   CustomerDetails,
   DeliveryMethod,
-  OrderSummary, OrderVoucher,
+  OrderSummary,
+  OrderVoucher,
   PaymentMethod,
 } from '~/pages';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,12 +13,12 @@ import { useEffect, useMemo, useState } from 'react';
 import { orderService, shipFeeService } from '~/services';
 import { IShipFee } from '~/models';
 import { OrderCreateRequest, OrderProduct } from '~/dto';
-import { PAYMENT_STATUS, PAYMENT_TYPE } from '~/constants';
-import toast from 'react-hot-toast';
-import { resetCart } from '~/redux';
+import { PAYMENT_METHOD, PAYMENT_STATUS } from '~/constants';
 import { useNavigate } from 'react-router-dom';
-import { ROUTER_PATH } from '~/routes';
 import { ValidationUtils } from '~/utils/validation.utils.ts';
+import { ROUTER_PATH } from '~/routes';
+import { resetCart } from '~/redux';
+import toast from 'react-hot-toast';
 
 const CheckOutPage = () => {
   const dispatch = useDispatch();
@@ -32,12 +33,13 @@ const CheckOutPage = () => {
     phone?: string;
     address?: string;
   }>({});
+  const [paymentMethod, setPaymentMethod] = useState<PAYMENT_METHOD>(PAYMENT_METHOD.COD);
   const { isLoggedIn } = useSelector((state: RootState) => state.auth);
   const { cartCode } = useSelector((state: RootState) => state.cart);
   const { products } = useSelector((state: RootState) => state.cart);
 
   const totalPrice = useMemo(
-    () => products.reduce((acc, cur) => acc + (cur.salePrice * cur.unit), 0),
+    () => products.reduce((acc, cur) => acc + cur.salePrice * cur.unit, 0),
     [products]
   );
 
@@ -61,7 +63,7 @@ const CheckOutPage = () => {
         } as OrderProduct;
       }),
       payment: {
-        type: PAYMENT_TYPE.COD,
+        type: paymentMethod,
         status: PAYMENT_STATUS.PENDING,
       },
       customer: {
@@ -70,19 +72,25 @@ const CheckOutPage = () => {
         phone: customerInfo.phone as string,
       },
       siteId: 1,
-      cartCode
+      cartCode,
     };
     const orderRequest =
       accountInfo.accountType === 'USER'
         ? orderService.createMyOrder(payload)
         : orderService.createOrder(payload, accountInfo?.email as string);
     orderRequest.then((response) => {
-      const code = response.data.code;
-      dispatch(resetCart());
-      toast.success(
-        `Đơn hàng ${code} của bạn đã được đặt thành công!`
-      );
-      navigate(ROUTER_PATH.orderTracking.extract.replace(":code", code));
+      switch (paymentMethod) {
+        case PAYMENT_METHOD.VNPAY:
+          const paymentUrl = response.data.paymentUrl as string;
+          window.location.href = paymentUrl;
+          break;
+        case PAYMENT_METHOD.COD:
+          const code = response.data.order.code;
+          dispatch(resetCart());
+          toast.success(`Đơn hàng ${code} của bạn đã được đặt thành công!`);
+          navigate(ROUTER_PATH.orderTracking.extract.replace(':code', code));
+          break;
+      }
     });
   };
 
@@ -168,7 +176,7 @@ const CheckOutPage = () => {
               shipFeePrice={shipFee?.fee || 0}
               voucherDiscountPrice={0}
             />
-            <PaymentMethod />
+            <PaymentMethod paymentMethod={paymentMethod} onBinding={setPaymentMethod} />
           </div>
           <div className="cr-checkout-leftside col-lg-8 col-md-12 m-t-991">
             <div className="cr-checkout-content">
