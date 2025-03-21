@@ -1418,7 +1418,7 @@ p.news {
 
 /* Loader */
 header {
-    height: 152px;
+    height: 144px;
     background-color: #fff;
     border-bottom: 1px solid #e9e9e9;
 }
@@ -10676,6 +10676,11 @@ iframe {
     border-radius: 5px;
 }
 
+.cr-track .cr-track-note {
+    color: red;
+    text-align: center;
+}
+
 .cr-track .cr-track-card {
     height: 100%;
     padding: 30px;
@@ -11166,7 +11171,7 @@ iframe {
 /*-----  Checkout Page CSS  ------*/
 .cr-checkout-wrap .cr-check-bill-form .cr-bill-wrap {
     width: 100%;
-    padding: 0 15px;
+    /*padding: 0 15px;*/
 }
 
 .cr-checkout-wrap .cr-check-bill-form .cr-bill-wrap.cr-bill-half {
@@ -11215,6 +11220,18 @@ iframe {
     font-size: 14px;
     font-weight: 600;
     letter-spacing: 0px;
+}
+
+.cr-checkout-wrap .cr-check-bill-form .cr-address-select {
+    background: transparent;
+    border: 1px solid #e9e9e9;
+    color: #2b2b2d;
+    height: 50px;
+    width: 100%;
+    font-size: 14px;
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 16px;
 }
 
 .cr-checkout-wrap .cr-check-bill-form .cr-bl-select-inner {
@@ -11579,6 +11596,57 @@ iframe {
     font-size: 14px;
     display: block;
     border-radius: 5px;
+}
+
+.cr-sidebar-wrap .cr-sidebar-block .cr-sb-block-content .cr-voucher-option {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.cr-sidebar-wrap .cr-sidebar-block .cr-sb-block-content .cr-voucher-option > * {
+    width: 50%;
+}
+
+.cr-sidebar-wrap .cr-sidebar-block .cr-sb-block-content .cr-voucher-opt-head {
+    color: #2b2b2d;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 1;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.cr-sidebar-wrap .cr-sidebar-block .cr-sb-block-content .cr-voucher-desc {
+    color: #7a7a7a;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    margin-bottom: 15px;
+    display: block;
+    letter-spacing: 0;
+}
+
+.cr-sidebar-wrap.cr-checkout-voucher-wrap .cr-voucher-select {
+    background: transparent;
+    border: 1px solid #e9e9e9;
+    color: #2b2b2d;
+    height: 50px;
+    margin-bottom: 0;
+    width: 100%;
+    font-size: 14px;
+    display: block;
+    border-radius: 5px;
+}
+
+.cr-sidebar-wrap.cr-checkout-voucher-wrap .cr-voucher-select-wrapper {
+    margin-top: 12px;
+    display: block;
+}
+
+.cr-sidebar-wrap.cr-checkout-voucher-wrap .cr-voucher-select-wrapper .cr-voucher-opt-head {
+    margin-bottom: 8px;
 }
 
 .cr-sidebar-wrap.cr-checkout-pay-wrap h3 {

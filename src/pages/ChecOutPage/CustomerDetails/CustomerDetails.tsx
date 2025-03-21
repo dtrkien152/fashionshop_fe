@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
+import { Select } from 'antd';
 
 interface Props {
   error: any;
@@ -8,14 +9,14 @@ interface Props {
 }
 
 const CustomerDetails: React.FC<Props> = (props) => {
-  // const [addressType, setAddressType] = useState<'EXIST' | 'NEW'>('EXIST');
+  const [addressType, setAddressType] = useState<'EXIST' | 'NEW'>('EXIST');
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
 
   const onFullNameChange = (value: string) => {
     setFullName(value);
-    props.onBinding({fullName: value, phone, address});
+    props.onBinding({ fullName: value, phone, address });
     props.setError((error: any) => ({
       ...error,
       fullName: undefined,
@@ -24,7 +25,7 @@ const CustomerDetails: React.FC<Props> = (props) => {
 
   const onPhoneChange = (value: string) => {
     setPhone(value);
-    props.onBinding({phone: value, fullName, address});
+    props.onBinding({ phone: value, fullName, address });
     props.setError((error: any) => ({
       ...error,
       phone: undefined,
@@ -33,7 +34,7 @@ const CustomerDetails: React.FC<Props> = (props) => {
 
   const onAddressChange = (value: string) => {
     setAddress(value);
-    props.onBinding({address: value, fullName, phone});
+    props.onBinding({ address: value, fullName, phone });
     props.setError((error: any) => ({
       ...error,
       address: undefined,
@@ -45,30 +46,52 @@ const CustomerDetails: React.FC<Props> = (props) => {
       <div className="cr-checkout-block cr-check-bill">
         <h3 className="cr-checkout-title">Address Details</h3>
         <div className="cr-bl-block-content">
-          {/*<div className="cr-check-subtitle">Checkout Options</div>*/}
-          {/*<span className="cr-bill-option">*/}
-          {/*  <span>*/}
-          {/*    <input*/}
-          {/*      type="radio"*/}
-          {/*      id="exist-address"*/}
-          {/*      name="address-options"*/}
-          {/*      checked={addressType === 'EXIST'}*/}
-          {/*      onChange={() => setAddressType('EXIST')}*/}
-          {/*    />*/}
-          {/*    <label htmlFor="exist-address">I want to use an existing address</label>*/}
-          {/*  </span>*/}
-          {/*  <span>*/}
-          {/*    <input*/}
-          {/*      type="radio"*/}
-          {/*      id="new-address"*/}
-          {/*      name="address-options"*/}
-          {/*      checked={addressType === 'NEW'}*/}
-          {/*      onChange={() => setAddressType('NEW')}*/}
-          {/*    />*/}
-          {/*    <label htmlFor="new-address">I want to use new address</label>*/}
-          {/*  </span>*/}
-          {/*</span>*/}
+          <div className="cr-check-subtitle">Checkout Options</div>
+          <span className="cr-bill-option">
+            <span>
+              <input
+                type="radio"
+                id="exist-address"
+                name="address-options"
+                checked={addressType === 'EXIST'}
+                onChange={() => setAddressType('EXIST')}
+              />
+              <label htmlFor="exist-address">I want to use an existing address</label>
+            </span>
+            <span>
+              <input
+                type="radio"
+                id="new-address"
+                name="address-options"
+                checked={addressType === 'NEW'}
+                onChange={() => setAddressType('NEW')}
+              />
+              <label htmlFor="new-address">I want to use new address</label>
+            </span>
+          </span>
           <div className="cr-check-bill-form mb-minus-24">
+            <span className="cr-bill-wrap">
+              <label className="required">Chọn địa chỉ đã lưu</label>
+              <Select
+                showSearch
+                className="cr-address-select"
+                placeholder="Select address to fill"
+                optionFilterProp="label"
+                filterSort={(optionA, optionB) =>
+                  (optionA?.label ?? '')
+                    .toLowerCase()
+                    .localeCompare((optionB?.label ?? '').toLowerCase())
+                }
+                options={[
+                  {
+                    value: '1',
+                    label:
+                      'Nguyễn Văn Long - 0969975700 - Tổ dân phố văn trì, Minh Khai, Bắc Từ Liêm, Hà Nội',
+                    disabled: true,
+                  },
+                ]}
+              />
+            </span>
             <>
               <span className="cr-bill-wrap">
                 <label className="required">Họ và Tên</label>
