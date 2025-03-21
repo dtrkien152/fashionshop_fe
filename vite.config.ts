@@ -1,34 +1,46 @@
-import {defineConfig, loadEnv} from 'vite'
-import react from '@vitejs/plugin-react'
-import path from 'path'
+import { defineConfig, loadEnv } from 'vite';
+import react from '@vitejs/plugin-react';
+import path from 'path';
+import inject from '@rollup/plugin-inject';
 
-// https://vite.dev/config/
-export default defineConfig(({mode}) => {
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), '');
 
-    const env = loadEnv(mode, process.cwd(), '')
+  return {
+    base: env.VITE_BASE_PATH || '',
+    plugins: [
+      react(),
+      inject({
+        $: 'jquery',
+        jQuery: 'jquery',
+        'window.jQuery': 'jquery',
+      }),
+    ],
+    optimizeDeps: {
+      include: ['@ckeditor/ckeditor5-react','@react-oauth/google'],
 
-    return {
-        base: env.VITE_BASE_PATH || '',
-        plugins: [
-            react(),
-        ],
-        optimizeDeps: {
-            include: ['@ckeditor/ckeditor5-react']
+    },
+    build: {
+      rollupOptions: {},
+    },
+    server: {
+      port: 3000,
+      proxy: {
+        '/api': {
+          target: 'http://localhost:5000',
+          changeOrigin: true,
+          secure: false,
+          rewrite: (path) => path,
         },
-        build: {
-            plugins: [],
-            rollupOptions: {},
-            commonjsOptions: {
-                exclude: [/./]
-            }
-        },
-        server: {
-            port: 3000
-        },
-        resolve: {
-            alias: {
-                '~': path.resolve(__dirname, './src')
-            }
-        }
-    }
-})
+      },
+    },
+    resolve: {
+      alias: {
+        '~': path.resolve(__dirname, './src'),
+      },
+    },
+    define: {
+      'process.env': env,
+    },
+  };
+});

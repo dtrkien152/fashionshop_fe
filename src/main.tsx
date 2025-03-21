@@ -4,7 +4,7 @@ import './index.css'
 import App from './App.tsx'
 import {Provider} from "react-redux";
 import {PersistGate} from "redux-persist/integration/react";
-import store, {persistor} from "~/redux/store.ts";
+import store, {persist} from "~/redux/store.ts";
 
 function WrappedApp() {
     return (
@@ -16,7 +16,7 @@ function WrappedApp() {
 
 createRoot(document.getElementById('root')!).render(
     <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
+        <PersistGate loading={null} persistor={persist}>
             <WrappedApp></WrappedApp>
         </PersistGate>
     </Provider>
