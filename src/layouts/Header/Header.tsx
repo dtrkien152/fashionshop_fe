@@ -130,12 +130,12 @@ const Header: React.FC<Props> = (props) => {
                 {isLoggedIn && (
                   <Link to={ROUTER_PATH.orderList.extract} className="cr-right-bar-item">
                     <i className="ri-shopping-bag-2-line"></i>
-                    <span>My Order</span>
+                    <span>Đơn mua</span>
                   </Link>
                 )}
                 <a className="cr-right-bar-item Shopping-toggle" onClick={props.onOpenCart}>
                   <i className="ri-shopping-cart-line"></i>
-                  <span>Cart</span>
+                  <span>Giỏ hàng</span>
                 </a>
                 <ul className="navbar-nav">
                   <li className="nav-item dropdown">

@@ -60,7 +60,7 @@ const Cart: React.FC<Props> = (props) => {
         <div className="cr-cart-inner">
           <div className="cr-cart-top">
             <div className="cr-cart-title">
-              <h6>My Cart</h6>
+              <h6>Giỏ hàng</h6>
               <button type="button" className="close-cart" onClick={props.onClose}>
                 ×
               </button>
@@ -167,15 +167,15 @@ const Cart: React.FC<Props> = (props) => {
               <table className="table cart-table">
                 <tbody>
                   <tr>
-                    <td className="text-left">Sub-Total :</td>
+                    <td className="text-left">Giá sản phẩm :</td>
                     <td className="text-right">{CurrencyUtils.formatCurrencyVND(totalPrice * 0.9)}</td>
                   </tr>
                   <tr>
-                    <td className="text-left">VAT (10%) :</td>
+                    <td className="text-left">Thuế VAT (10%) :</td>
                     <td className="text-right">{CurrencyUtils.formatCurrencyVND(totalPrice * 0.1)}</td>
                   </tr>
                   <tr>
-                    <td className="text-left">Total :</td>
+                    <td className="text-left">Tổng tiền:</td>
                     <td className="text-right primary-color">{CurrencyUtils.formatCurrencyVND(totalPrice)}</td>
                   </tr>
                 </tbody>
@@ -189,7 +189,7 @@ const Cart: React.FC<Props> = (props) => {
                 }}
                 className="cr-button"
               >
-                View Cart
+                Xem giỏ hàng
               </a>
               <a
                 onClick={() => {
@@ -198,7 +198,7 @@ const Cart: React.FC<Props> = (props) => {
                 }}
                 className="cr-btn-secondary"
               >
-                Checkout
+                Thanh toán
               </a>
             </div>
           </div>

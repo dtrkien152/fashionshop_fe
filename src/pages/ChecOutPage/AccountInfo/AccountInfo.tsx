@@ -21,7 +21,6 @@ const AccountInfo: React.FC<Props> = (props) => {
   const { isLoggedIn } = useSelector((state: RootState) => state.auth);
 
   const onLogin = async () => {
-
     if (!email || !password) {
       props.setError((error: any) => ({
         ...error,
@@ -64,7 +63,7 @@ const AccountInfo: React.FC<Props> = (props) => {
       ...error,
       account: undefined,
     }));
-  }
+  };
 
   const onPasswordChange = (value: string) => {
     setPassword(value);
@@ -72,7 +71,7 @@ const AccountInfo: React.FC<Props> = (props) => {
       ...error,
       account: undefined,
     }));
-  }
+  };
 
   const onChangeActionType = (type: 'USER' | 'GUEST') => {
     props.onBinding({ accountType: type });
@@ -88,9 +87,9 @@ const AccountInfo: React.FC<Props> = (props) => {
   return (
     <div className="cr-checkout-wrap mb-30">
       <div className="cr-checkout-block cr-check-new">
-        <h3 className="cr-checkout-title">New Customer</h3>
+        <h3 className="cr-checkout-title">Tài khoản thanh toán</h3>
         <div className="cr-check-block-content">
-          <div className="cr-check-subtitle">Checkout Options</div>
+          <div className="cr-check-subtitle">Lựa chọn tài khoản thanh toán</div>
           <span className="cr-new-option">
             <span>
               <input
@@ -100,7 +99,7 @@ const AccountInfo: React.FC<Props> = (props) => {
                 checked={accountType === 'USER'}
                 onChange={() => onChangeActionType('USER')}
               />
-              <label htmlFor="user-account">User Account</label>
+              <label htmlFor="user-account">Tài khoản người dùng</label>
             </span>
             <span>
               <input
@@ -110,13 +109,15 @@ const AccountInfo: React.FC<Props> = (props) => {
                 checked={accountType === 'GUEST'}
                 onChange={() => onChangeActionType('GUEST')}
               />
-              <label htmlFor="guest-account">Guest Account</label>
+              <label htmlFor="guest-account">Tài khoản khách</label>
             </span>
           </span>
-          <div className="cr-new-desc">
-            By login an account you will be able to shop faster, be up to date on an order's status,
-            and keep track of the orders you have previously made.
-          </div>
+          {accountType === 'USER' && (
+            <div className="cr-new-desc">
+              Khi đăng nhập, bạn có thể mua sắm nhanh hơn, theo dõi trạng thái đơn hàng dễ dàng và
+              quản lý lịch sử mua hàng của mình một cách thuận tiện.
+            </div>
+          )}
         </div>
       </div>
       <div className="cr-checkout-block cr-check-login">
@@ -148,7 +149,9 @@ const AccountInfo: React.FC<Props> = (props) => {
                     />
                   </span>
 
-                  {props.error.account && <div className="error-message">{props.error.account}</div>}
+                  {props.error.account && (
+                    <div className="error-message">{props.error.account}</div>
+                  )}
 
                   <span className="cr-check-login-wrap cr-check-login-btn">
                     <button

@@ -50,19 +50,19 @@ const TrackingSection: React.FC<Props> = (props) => {
               <div className="row">
                 <div className="col-md-4 m-b-767">
                   <div className="cr-track-card">
-                    <span className="cr-track-title">order</span>
+                    <span className="cr-track-title">Mã đơn hàng</span>
                     <span>#{props.order?.code}</span>
                   </div>
                 </div>
                 <div className="col-md-4 m-b-767">
                   <div className="cr-track-card">
-                    <span className="cr-track-title">Delivery Code</span>
+                    <span className="cr-track-title">Mã vận chuyển</span>
                     <span>M254HT</span>
                   </div>
                 </div>
                 <div className="col-md-4 m-b-767">
                   <div className="cr-track-card">
-                    <span className="cr-track-title">Order date</span>
+                    <span className="cr-track-title">Ngày tạo đơn</span>
                     <span>{moment(props.order?.createdAt).format('MMM Do YY')}</span>
                   </div>
                 </div>

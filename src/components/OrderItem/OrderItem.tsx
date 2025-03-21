@@ -91,7 +91,7 @@ const OrderItem: React.FC<Props> = (props) => {
                   </table>
                 </div>
                 <div className="cr-checkout-summary-total">
-                  <span className="text-left">Total Amount</span>
+                  <span className="text-left">Tổng tiền</span>
                   <span className="text-right">
                     {CurrencyUtils.formatCurrencyVND(1000000 + 30000 - 20000)}
                   </span>

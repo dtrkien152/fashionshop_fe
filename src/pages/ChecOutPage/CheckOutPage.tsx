@@ -177,7 +177,7 @@ const CheckOutPage = () => {
                 <CustomerDetails error={error} setError={setError} onBinding={setCustomerInfo} />
                 <span className="cr-check-order-btn">
                   <a className="cr-button mt-30" onClick={onCreateOrder}>
-                    Place Order
+                    Đặt hàng
                   </a>
                 </span>
               </div>

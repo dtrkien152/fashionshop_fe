@@ -69,14 +69,14 @@ const CustomerDetails: React.FC<Props> = (props) => {
       phone: undefined,
       address: undefined,
     }));
-  }
+  };
 
   return (
     <div className="cr-checkout-wrap">
       <div className="cr-checkout-block cr-check-bill">
-        <h3 className="cr-checkout-title">Address Details</h3>
+        <h3 className="cr-checkout-title">Địa chỉ giao hàng</h3>
         <div className="cr-bl-block-content">
-          <div className="cr-check-subtitle">Checkout Options</div>
+          <div className="cr-check-subtitle">Lựa chọn địa chỉ giao hàng</div>
           <span className="cr-bill-option">
             <span>
               <input
@@ -86,7 +86,7 @@ const CustomerDetails: React.FC<Props> = (props) => {
                 checked={addressType === 'EXIST'}
                 onChange={() => onChangeAddressType('EXIST')}
               />
-              <label htmlFor="exist-address">I want to use an existing address</label>
+              <label htmlFor="exist-address">Sử dụng địa chỉ có sẵn</label>
             </span>
             <span>
               <input
@@ -96,7 +96,7 @@ const CustomerDetails: React.FC<Props> = (props) => {
                 checked={addressType === 'NEW'}
                 onChange={() => onChangeAddressType('NEW')}
               />
-              <label htmlFor="new-address">I want to use new address</label>
+              <label htmlFor="new-address">Sử dụng địa chỉ mới</label>
             </span>
           </span>
           <div className="cr-check-bill-form mb-minus-24">
@@ -105,7 +105,7 @@ const CustomerDetails: React.FC<Props> = (props) => {
                 <label className="required">Chọn địa chỉ đã lưu</label>
                 <Select
                   className="cr-address-select"
-                  placeholder="Select address to fill"
+                  placeholder="Chọn địa chỉ để giao hàng"
                   options={addressTemplates.map((addr) => ({
                     label: addr.addressName,
                     value: addr.id,
@@ -118,6 +118,11 @@ const CustomerDetails: React.FC<Props> = (props) => {
                     setFullName(option.receiverName);
                     setPhone(option.receiverPhone);
                     setAddress(option.fullAddress);
+                    props.onBinding({
+                      fullName: option.receiverName,
+                      phone: option.receiverPhone,
+                      address: option.fullAddress,
+                    });
                   }}
                 />
               </span>

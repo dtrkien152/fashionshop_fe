@@ -10,17 +10,17 @@ const OrderVoucher: React.FC<Props> = () => {
     <div className="cr-sidebar-wrap cr-checkout-voucher-wrap">
       <div className="cr-sidebar-block">
         <div className="cr-sb-title">
-          <h3 className="cr-sidebar-title">Voucher Code</h3>
+          <h3 className="cr-sidebar-title">Mã giảm giá</h3>
         </div>
         <div className="cr-sb-block-content">
           <div className="cr-checkout-voucher">
             <form action="#">
               <span className="cr-voucher-select-wrapper">
-                <span className="cr-voucher-opt-head">Nhập voucher</span>
+                <span className="cr-voucher-opt-head">Chọn mã giảm giá</span>
                 <Select
                   showSearch
                   className="cr-voucher-select"
-                  placeholder="Search to Select"
+                  placeholder="Tìm kiếm và chọn mã giảm giá"
                   // optionFilterProp="label"
                   // filterSort={(optionA, optionB) =>
                   //   (optionA?.label ?? '')

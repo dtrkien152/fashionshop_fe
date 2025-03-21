@@ -14,7 +14,7 @@ const OrderSummary: React.FC<Props> = () => {
     <div className="cr-sidebar-wrap">
       <div className="cr-sidebar-block">
         <div className="cr-sb-title">
-          <h3 className="cr-sidebar-title">Order List Product</h3>
+          <h3 className="cr-sidebar-title">Danh sách sản phẩm</h3>
         </div>
         <div className="cr-sb-block-content">
           <div className="cr-checkout-pro">

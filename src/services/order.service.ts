@@ -5,7 +5,7 @@ import { ORDER_STATUS } from '~/constants';
 export const orderService = {
   createMyOrder: (payload: OrderCreateRequest) => {
     httpService.attachTokenToHeader();
-    return httpService.post(BASE_URL + '/api/orders//my-orders', payload);
+    return httpService.post(BASE_URL + '/api/orders/my-orders', payload);
   },
   createOrder: (payload: OrderCreateRequest, email: string) => {
     httpService.attachTokenToHeader();

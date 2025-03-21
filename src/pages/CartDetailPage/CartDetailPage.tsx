@@ -59,11 +59,11 @@ const CartDetailPage = () => {
                           <table>
                             <thead>
                               <tr>
-                                <th>Product</th>
-                                <th>price</th>
-                                <th className="text-center">Quantity</th>
-                                <th>Total</th>
-                                <th>Action</th>
+                                <th>Sản phẩm</th>
+                                <th>Đơn giá</th>
+                                <th className="text-center">Số lượng</th>
+                                <th>Giá tiền</th>
+                                <th></th>
                               </tr>
                             </thead>
                             <tbody>
@@ -177,10 +177,10 @@ const CartDetailPage = () => {
                   <div className="col-lg-12">
                     <div className="cr-cart-update-bottom">
                       <Link to={ROUTER_PATH.home.extract} className="cr-links">
-                        Continue Shopping
+                        Tiếp tục mua sắm
                       </Link>
                       <Link to={ROUTER_PATH.checkout.extract} className="cr-button">
-                        Check Out
+                        Thanh toán
                       </Link>
                     </div>
                   </div>

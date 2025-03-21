@@ -107,7 +107,7 @@ const AddressManagementTab: React.FC = () => {
           </List.Item>
         )}
       />
-      <Flex align="center" justify="center">
+      <Flex align="center" justify="center" style={{ paddingBottom: '24px' }}>
         <Button type="dashed" onClick={handleCreateAddress}>
           Thêm địa chỉ mới
         </Button>

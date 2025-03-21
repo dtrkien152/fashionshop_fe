@@ -81,9 +81,8 @@ const ForgotPasswordPage = () => {
                       type="button"
                       className="cr-button"
                       onClick={handleSubmit}
-                      style={{ marginRight: 20, width: 120 }}
                     >
-                      Đăng nhập
+                      Gửi yêu cầu
                     </button>
                   </div>
                   <Link to={ROUTER_PATH.login.extract} className="link">
