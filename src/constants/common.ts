@@ -37,7 +37,7 @@ export const ORDER_STATUS_OPTIONS: { label: string; value: ORDER_STATUS }[] = [
   { label: 'Trả hàng', value: ORDER_STATUS.RETURN },
 ];
 
-export enum PAYMENT_TYPE {
+export enum PAYMENT_METHOD {
   VNPAY = 'VNPAY',
   COD = 'COD',
 }

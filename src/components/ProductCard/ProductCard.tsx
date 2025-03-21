@@ -1,15 +1,8 @@
 import * as React from 'react';
-import { useState } from 'react';
 import { IProductItemResponse } from '~/dto';
 import { useNavigate } from 'react-router-dom';
-import { CartDetailRequest, CartProduct } from '~/dto';
-import { useDispatch, useSelector } from 'react-redux';
-import { addToCart } from '~/redux';
 import { ROUTER_PATH } from '~/routes';
-import toast from 'react-hot-toast';
 import { CurrencyUtils } from '~/utils';
-import { cartService } from '~/services';
-import { RootState } from '~/redux/store.ts';
 
 interface Props {
   product: IProductItemResponse;
@@ -17,39 +10,39 @@ interface Props {
 
 const ProductCard: React.FC<Props> = ({ product }: Props) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { cartCode } = useSelector((state: RootState) => state.cart);
-  const [colorSelected, setColorSelected] = useState<string>(product.colors[0]);
-  const [sizeSelected, setSizeSelected] = useState<string>(product.size[0]);
-
-  const onClickAddToCard = () => {
-    const payload = {
-      products: [
-        {
-          productId: product.id,
-          color: colorSelected,
-          size: sizeSelected,
-          unit: 1
-        },
-      ],
-      cartCode: cartCode,
-    } as CartDetailRequest;
-    cartService.addToCartDetails(payload).then(() => {
-      const cartProduct: CartProduct = {
-        productId: product.id,
-        productName: product.productName,
-        thumbnailUrl: product.thumbnailUrl,
-        salePrice: product.salePrice,
-        originalPrice: product.originalPrice,
-        unit: 1,
-        color: colorSelected,
-        size: sizeSelected,
-      };
-      console.log(cartProduct);
-      dispatch(addToCart(cartProduct));
-      toast.success('Add product in cart successfully!');
-    });
-  };
+  // const dispatch = useDispatch();
+  // const { cartCode } = useSelector((state: RootState) => state.cart);
+  // const [colorSelected, setColorSelected] = useState<string>(product.colors[0]);
+  // const [sizeSelected, setSizeSelected] = useState<string>(product.size[0]);
+  //
+  // const onClickAddToCard = () => {
+  //   const payload = {
+  //     products: [
+  //       {
+  //         productId: product.id,
+  //         color: colorSelected,
+  //         size: sizeSelected,
+  //         unit: 1
+  //       },
+  //     ],
+  //     cartCode: cartCode,
+  //   } as CartDetailRequest;
+  //   cartService.addToCartDetails(payload).then(() => {
+  //     const cartProduct: CartProduct = {
+  //       productId: product.id,
+  //       productName: product.productName,
+  //       thumbnailUrl: product.thumbnailUrl,
+  //       salePrice: product.salePrice,
+  //       originalPrice: product.originalPrice,
+  //       unit: 1,
+  //       color: colorSelected,
+  //       size: sizeSelected,
+  //     };
+  //     console.log(cartProduct);
+  //     dispatch(addToCart(cartProduct));
+  //     toast.success('Add product in cart successfully!');
+  //   });
+  // };
 
   const handleNavigate = () => {
     navigate(ROUTER_PATH.productDetail.extract.replace(':id', product.id.toString()));
@@ -83,7 +76,7 @@ const ProductCard: React.FC<Props> = ({ product }: Props) => {
                 className="add-to-cart cr-shopping-bag"
                 onClick={(e) => {
                   e.stopPropagation();
-                  onClickAddToCard();
+                  handleNavigate();
                 }}
               >
                 <i className="ri-shopping-cart-line"></i>
@@ -107,32 +100,34 @@ const ProductCard: React.FC<Props> = ({ product }: Props) => {
           </h5>
           <span className="cr-price">
             <span className="new-price">{CurrencyUtils.formatCurrencyVND(product?.salePrice)}</span>
-            <span className="old-price">{CurrencyUtils.formatCurrencyVND(product?.originalPrice)}</span>
+            <span className="old-price">
+              {CurrencyUtils.formatCurrencyVND(product?.originalPrice)}
+            </span>
           </span>
-          <div className="cr-pro-option">
-            <div className="cr-pro-color">
-              <ul className="cr-opt-swatch cr-change-img">
-                {product?.colors?.map((color, index) => (
-                  <li key={index} className={color === colorSelected ? 'active' : ''}>
-                    <a onClick={() => setColorSelected(color)} className="cr-opt-clr-img">
-                      <span style={{ backgroundColor: color }}></span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="cr-pro-size">
-              <ul className="cr-opt-size">
-                {product?.size?.map((size, index) => (
-                  <li key={index} className={size === sizeSelected ? 'active' : ''}>
-                    <a onClick={() => setSizeSelected(size)} className="cr-opt-sz">
-                      {size}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
+          {/*<div className="cr-pro-option">*/}
+          {/*  <div className="cr-pro-color">*/}
+          {/*    <ul className="cr-opt-swatch cr-change-img">*/}
+          {/*      {product?.colors?.map((color, index) => (*/}
+          {/*        <li key={index} className={color === colorSelected ? 'active' : ''}>*/}
+          {/*          <a onClick={() => setColorSelected(color)} className="cr-opt-clr-img">*/}
+          {/*            <span style={{ backgroundColor: color }}></span>*/}
+          {/*          </a>*/}
+          {/*        </li>*/}
+          {/*      ))}*/}
+          {/*    </ul>*/}
+          {/*  </div>*/}
+          {/*  <div className="cr-pro-size">*/}
+          {/*    <ul className="cr-opt-size">*/}
+          {/*      {product?.size?.map((size, index) => (*/}
+          {/*        <li key={index} className={size === sizeSelected ? 'active' : ''}>*/}
+          {/*          <a onClick={() => setSizeSelected(size)} className="cr-opt-sz">*/}
+          {/*            {size}*/}
+          {/*          </a>*/}
+          {/*        </li>*/}
+          {/*      ))}*/}
+          {/*    </ul>*/}
+          {/*  </div>*/}
+          {/*</div>*/}
         </div>
       </div>
     </div>

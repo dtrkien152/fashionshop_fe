@@ -26,5 +26,11 @@ export const orderService = {
   getOrder(code: string) {
     return httpService.get(BASE_URL + `/api/orders/tracking/${code}`);
   },
+  buildUrlPayment(orderCode: string) {
+    return httpService.get(BASE_URL + `/api/orders/vnpay/build-url`, { params: { orderCode } });
+  },
+  verifyPayment(query: any) {
+    return httpService.get(BASE_URL + `/api/orders/vnpay/results`, { params: query });
+  },
 };
 export default orderService;

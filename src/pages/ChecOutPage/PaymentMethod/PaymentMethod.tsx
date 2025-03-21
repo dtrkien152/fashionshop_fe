@@ -1,8 +1,12 @@
 import * as React from 'react';
+import { PAYMENT_METHOD } from '~/constants';
 
-interface Props {}
+interface Props {
+  paymentMethod: PAYMENT_METHOD;
+  onBinding: (paymentMethod: PAYMENT_METHOD) => void;
+}
 
-const PaymentMethod: React.FC<Props> = () => {
+const PaymentMethod: React.FC<Props> = (props) => {
   return (
     <div className="cr-sidebar-wrap cr-checkout-pay-wrap">
       <div className="cr-sidebar-block">
@@ -17,13 +21,25 @@ const PaymentMethod: React.FC<Props> = () => {
             <form action="#" className="payment-options">
               <span className="cr-pay-option">
                 <span>
-                  <input type="radio" id="pay1" name="payment-options" checked />
+                  <input
+                    type="radio"
+                    id="pay1"
+                    name="payment-options"
+                    checked={props.paymentMethod === PAYMENT_METHOD.COD}
+                    onChange={() => props.onBinding(PAYMENT_METHOD.COD)}
+                  />
                   <label htmlFor="pay1">Thanh toán khi nhận hàng</label>
                 </span>
               </span>
               <span className="cr-pay-option">
                 <span>
-                  <input type="radio" id="pay2" name="payment-options" disabled />
+                  <input
+                    type="radio"
+                    id="pay2"
+                    name="payment-options"
+                    checked={props.paymentMethod === PAYMENT_METHOD.VNPAY}
+                    onChange={() => props.onBinding(PAYMENT_METHOD.VNPAY)}
+                  />
                   <label htmlFor="pay2">Chuyển khoản VN-PAY</label>
                 </span>
               </span>
