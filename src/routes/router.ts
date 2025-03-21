@@ -1,11 +1,12 @@
 import { DefaultLayout } from '~/layouts';
 import {
   CartDetailPage,
-  CheckOutPage,
+  CheckOutPage, ForgotPasswordPage,
   HomePage,
   LoginPage,
   NotFoundPage, OrderListPage, OrderTrackingPage,
   RegisterPage,
+  ForgotPasswordPageChangePassword,
 } from '~/pages';
 import ProductDetail from '~/pages/Product/ProductDetail/ProductDetail.tsx';
 import { ProductList } from '~/pages/Product/ProductList/ProductList.tsx';
@@ -43,6 +44,14 @@ export const ROUTER_PATH = {
   login: {
     relative: 'login',
     extract: '/login',
+  },
+  forgotPassword: {
+    relative: 'forgot-password',
+    extract: '/forgot-password',
+  },
+  forgotPasswordChangePassword: {
+    relative: 'forgot-password/change-password',
+    extract: '/forgot-password/change-password',
   },
   register: {
     relative: 'register',
@@ -100,6 +109,14 @@ export const PUBLIC_ROUTERS: RouteItem[] = [
         component: OrderTrackingPage,
       },
       {
+        path: ROUTER_PATH.forgotPassword.relative,
+        component: ForgotPasswordPage,
+      },
+      {
+        path: ROUTER_PATH.forgotPasswordChangePassword.relative,
+        component: ForgotPasswordPageChangePassword,
+      },
+      {
         path: ROUTER_PATH.login.relative,
         component: LoginPage,
       },
@@ -122,7 +139,6 @@ export const PUBLIC_ROUTERS: RouteItem[] = [
         path: ROUTER_PATH.googleCallback.relative,
         component: GoogleCallback,
       },
-
       {
         path: ROUTER_PATH.blogList.relative,
         component: BlogList,

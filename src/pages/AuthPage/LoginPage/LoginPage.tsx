@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { login, logout } from '~/redux';
 import { useDispatch } from 'react-redux';
 import { authService } from '~/services';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import GoogleSSOButton from '~/pages/AuthPage/SSO/GoogleSSOButton.tsx';
+import { ROUTER_PATH } from '~/routes';
+import { ValidationUtils } from '~/utils/validation.utils.ts';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -41,14 +43,13 @@ const LoginPage = () => {
   }, [dispatch, navigate]);
 
   const handleLogin = async () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!email || !password) {
       setError('Vui lòng nhập email và password');
       return;
     }
 
-    if (!emailRegex.test(email)) {
+    if (!ValidationUtils.isValidEmail(email)) {
       setError('Sai định dạng email,vui lòng nhập lại');
       return;
     }
@@ -97,7 +98,7 @@ const LoginPage = () => {
 
               <form className="cr-content-form" onSubmit={(e) => e.preventDefault()}>
                 <div className="form-group">
-                  <label>Email Address*</label>
+                  <label className="required">Email Address</label>
                   <input
                     type="email"
                     placeholder="Enter Your Email"
@@ -107,7 +108,7 @@ const LoginPage = () => {
                   />
                 </div>
                 <div className="form-group">
-                  <label>Password*</label>
+                  <label className="required">Password</label>
                   <input
                     type="password"
                     placeholder="Enter Your Password"
@@ -128,15 +129,15 @@ const LoginPage = () => {
                     <input type="checkbox" id="rememberMe" />
                     <label htmlFor="rememberMe">Remember Me</label>
                   </span>
-                  <a className="link" href="forgot.html">
+                  <Link className="link" to={ROUTER_PATH.forgotPassword.extract}>
                     Quên mật khẩu?
-                  </a>
+                  </Link>
                 </div>
 
                 <br />
 
                 <div className="login-buttons">
-                  <div style={{ display: 'flex' }}>
+                  <div style={{ display: 'flex', width: '100%' }}>
                     <button
                       type="button"
                       className="cr-button"

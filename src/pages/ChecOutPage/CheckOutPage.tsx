@@ -17,6 +17,7 @@ import toast from 'react-hot-toast';
 import { resetCart } from '~/redux';
 import { useNavigate } from 'react-router-dom';
 import { ROUTER_PATH } from '~/routes';
+import { ValidationUtils } from '~/utils/validation.utils.ts';
 
 const CheckOutPage = () => {
   const dispatch = useDispatch();
@@ -94,7 +95,6 @@ const CheckOutPage = () => {
 
   const validateAccount = () => {
     let invalid = true;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (accountInfo.accountType === 'USER' && !isLoggedIn) {
       invalid = false;
       setError((error: any) => ({
@@ -110,7 +110,7 @@ const CheckOutPage = () => {
           account: 'Vui lòng nhập email để có thể tạo đơn hàng',
         }));
       }
-      if (accountInfo.email && !emailRegex.test(accountInfo.email)) {
+      if (accountInfo.email && !ValidationUtils.isValidEmail(accountInfo.email)) {
         invalid = false;
         setError((error: any) => ({
           ...error,
@@ -124,7 +124,6 @@ const CheckOutPage = () => {
   const validateCustomer = () => {
     console.log(customerInfo);
     let invalid = true;
-    const phoneRegex = /^(?:\+84|0)(3[2-9]|5[2689]|7[0-9]|8[1-9]|9[0-9])\d{6,7}$/;
     if (!customerInfo.fullName) {
       invalid = false;
       setError((error: any) => ({
@@ -139,7 +138,7 @@ const CheckOutPage = () => {
         phone: 'Vui lòng nhập số điện thoại',
       }));
     }
-    if (customerInfo.phone && !phoneRegex.test(customerInfo.phone)) {
+    if (customerInfo.phone && !ValidationUtils.isValidPhoneNumber(customerInfo.phone)) {
       invalid = false;
       setError((error: any) => ({
         ...error,

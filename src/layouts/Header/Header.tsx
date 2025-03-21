@@ -172,15 +172,6 @@ const Header: React.FC<Props> = (props) => {
                           <li>
                             <a
                               className="dropdown-item"
-                              onClick={() => handleOpenModal('3')}
-                              style={{ cursor: 'pointer' }}
-                            >
-                              Đổi mật khẩu
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              className="dropdown-item"
                               onClick={handleLogout}
                               style={{ cursor: 'pointer' }}
                             >
@@ -191,13 +182,13 @@ const Header: React.FC<Props> = (props) => {
                       ) : (
                         <>
                           <li>
-                            <a className="dropdown-item" href="/register">
-                              Register
+                            <a className="dropdown-item" href="/login">
+                              Login
                             </a>
                           </li>
                           <li>
-                            <a className="dropdown-item" href="/login">
-                              Login
+                            <a className="dropdown-item" href="/register">
+                              Register
                             </a>
                           </li>
                         </>
@@ -631,7 +622,7 @@ const Header: React.FC<Props> = (props) => {
                   {/*  </ul>*/}
                   {/*</li>*/}
                   {/*blog*/}
-                 <BlogCategoryNav/>
+                  <BlogCategoryNav />
                   {/*<li className="nav-item dropdown">*/}
                   {/*  <a className="nav-link dropdown-toggle" href="javascript:void(0)">*/}
                   {/*    Elements*/}

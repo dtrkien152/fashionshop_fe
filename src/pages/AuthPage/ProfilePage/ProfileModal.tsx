@@ -82,13 +82,13 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
               },
               {
                 key: '2',
-                icon: <HomeOutlined />,
-                label: 'Quản lý địa chỉ',
+                icon: <LockOutlined />,
+                label: 'Đổi mật khẩu',
               },
               {
                 key: '3',
-                icon: <LockOutlined />,
-                label: 'Đổi mật khẩu',
+                icon: <HomeOutlined />,
+                label: 'Quản lý địa chỉ',
               },
             ]}
           />
@@ -99,8 +99,8 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
           style={{ padding: '0 24px', borderRadius: '12px' }}
         >
           {activeTab === '1' && <PersonalInfoTab />}
-          {activeTab === '2' && <AddressManagementTab />}
-          {activeTab === '3' && <ChangePasswordTab />}
+          {activeTab === '2' && <ChangePasswordTab />}
+          {activeTab === '3' && <AddressManagementTab />}
         </Content>
       </Layout>
     </Modal>

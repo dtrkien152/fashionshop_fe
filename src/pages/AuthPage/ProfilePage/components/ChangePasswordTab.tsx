@@ -1,13 +1,20 @@
 import React from 'react';
 import { Button, Form, Input } from 'antd';
 import { ChangePasswordWrapper } from '~/pages/AuthPage/ProfilePage/components/style.ts';
+import { authService } from '~/services';
+import toast from 'react-hot-toast';
 
 const ChangePasswordTab: React.FC = () => {
   const [form] = Form.useForm();
 
   const handleChangePassword = () => {
     form.validateFields().then((values) => {
-      console.log('Đổi mật khẩu:', values);
+      authService.changePassword(values.oldPassword, values.newPassword).then((res) => {
+        if (res.data.success) {
+          toast.success('Đổi mật khẩu thành công!');
+          form.resetFields();
+        }
+      });
     });
   };
 
@@ -31,7 +38,17 @@ const ChangePasswordTab: React.FC = () => {
         <Form.Item
           label="Xác nhận mật khẩu"
           name="confirmPassword"
-          rules={[{ required: true, message: 'Vui lòng xác nhận mật khẩu mới' }]}
+          rules={[
+            { required: true, message: 'Vui lòng xác nhận mật khẩu mới' },
+            {
+              validator: async (_, value) => {
+                if (value && value !== form.getFieldValue('newPassword')) {
+                  return Promise.reject(new Error('Vui lòng xác nhận mật khẩu mới chính xác'));
+                }
+                return Promise.resolve();
+              },
+            },
+          ]}
         >
           <Input.Password placeholder="Xác nhận mật khẩu mới" />
         </Form.Item>

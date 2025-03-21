@@ -37,8 +37,10 @@ class Services {
     );
   }
 
-  attachTokenToHeader() {
-    const token = localStorage.getItem('token');
+  attachTokenToHeader(token?: string) {
+    if (!token) {
+      token = localStorage.getItem('token') as string;
+    }
     if (token) {
       this.interceptors = this.axios.interceptors.request.use(
         function (config: any) {
@@ -48,20 +50,6 @@ class Services {
         function (error: any) {
           return Promise.reject(error);
         }
-      );
-    }
-  }
-
-  attachTokenToHeaderCustom(token) {
-    if (token) {
-      this.interceptors = this.axios.interceptors.request.use(
-          function (config: any) {
-            config.headers.Authorization = `Bearer ${token}`;
-            return config;
-          },
-          function (error: any) {
-            return Promise.reject(error);
-          }
       );
     }
   }

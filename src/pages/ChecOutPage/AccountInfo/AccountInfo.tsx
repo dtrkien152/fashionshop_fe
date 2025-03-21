@@ -5,6 +5,7 @@ import { login } from '~/redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '~/redux/store.ts';
 import toast from 'react-hot-toast';
+import { ValidationUtils } from '~/utils/validation.utils.ts';
 
 interface Props {
   error: any;
@@ -20,7 +21,6 @@ const AccountInfo: React.FC<Props> = (props) => {
   const { isLoggedIn } = useSelector((state: RootState) => state.auth);
 
   const onLogin = async () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!email || !password) {
       props.setError((error: any) => ({
@@ -30,7 +30,7 @@ const AccountInfo: React.FC<Props> = (props) => {
       return;
     }
 
-    if (!emailRegex.test(email)) {
+    if (!ValidationUtils.isValidEmail(email)) {
       props.setError((error: any) => ({
         ...error,
         account: 'Sai định dạng email, vui lòng nhập lại',
