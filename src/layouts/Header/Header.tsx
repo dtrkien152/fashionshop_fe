@@ -11,6 +11,7 @@ import ProfileModal from '~/pages/AuthPage/ProfilePage/ProfileModal.tsx';
 import { Link, useNavigate } from 'react-router-dom';
 import { SearchForm } from '~/layouts/Header/components/SearchForm.tsx';
 import { ROUTER_PATH } from '~/routes';
+import { BlogCategoryNav } from '~/layouts/Header/BlogCategoryNav.tsx';
 
 interface Props {
   onOpenCart: () => void;
@@ -629,43 +630,8 @@ const Header: React.FC<Props> = (props) => {
                   {/*    </li>*/}
                   {/*  </ul>*/}
                   {/*</li>*/}
-                  <li className="nav-item dropdown">
-                    <a className="nav-link dropdown-toggle" href="javascript:void(0)">
-                      Blog
-                    </a>
-                    <ul className="dropdown-menu">
-                      <li>
-                        <a className="dropdown-item" href="blog-left-sidebar.html">
-                          Left Sidebar
-                        </a>
-                      </li>
-                      <li>
-                        <a className="dropdown-item" href="blog-right-sidebar.html">
-                          Right Sidebar
-                        </a>
-                      </li>
-                      <li>
-                        <a className="dropdown-item" href="blog-full-width.html">
-                          Full Width
-                        </a>
-                      </li>
-                      <li>
-                        <a className="dropdown-item" href="blog-detail-left-sidebar.html">
-                          Detail Left Sidebar
-                        </a>
-                      </li>
-                      <li>
-                        <a className="dropdown-item" href="blog-detail-right-sidebar.html">
-                          Detail Right Sidebar
-                        </a>
-                      </li>
-                      <li>
-                        <a className="dropdown-item" href="blog-detail-full-width.html">
-                          Detail Full Width
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
+                  {/*blog*/}
+                 <BlogCategoryNav/>
                   {/*<li className="nav-item dropdown">*/}
                   {/*  <a className="nav-link dropdown-toggle" href="javascript:void(0)">*/}
                   {/*    Elements*/}

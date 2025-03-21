@@ -10,6 +10,7 @@ import {
 import ProductDetail from '~/pages/Product/ProductDetail/ProductDetail.tsx';
 import { ProductList } from '~/pages/Product/ProductList/ProductList.tsx';
 import {GoogleCallback} from "~/pages/AuthPage/SSO/GoogleCallback.tsx";
+import { BlogDetail, BlogList } from '~/pages/Blog';
 
 export interface RouteItem {
   path: string;
@@ -63,6 +64,14 @@ export const ROUTER_PATH = {
     relative: 'callback',
     extract: '/callback',
   },
+  blogList: {
+    relative: 'blogs',
+    extract: '/blogs',
+  },
+  blogDetail: {
+    relative: 'blogs/:code',
+    extract: '/blogs/:code',
+  }
 };
 
 export const PUBLIC_ROUTERS: RouteItem[] = [
@@ -112,6 +121,15 @@ export const PUBLIC_ROUTERS: RouteItem[] = [
       }, {
         path: ROUTER_PATH.googleCallback.relative,
         component: GoogleCallback,
+      },
+
+      {
+        path: ROUTER_PATH.blogList.relative,
+        component: BlogList,
+      },
+      {
+        path: ROUTER_PATH.blogDetail.relative,
+        component: BlogDetail,
       },
     ],
   },

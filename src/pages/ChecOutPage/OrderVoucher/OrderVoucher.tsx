@@ -1,13 +1,11 @@
 import * as React from 'react';
-import { IShipFee } from '~/models';
-import { CurrencyUtils } from '~/utils';
 import { Select } from 'antd';
 
 interface Props {
-  shipFee?: IShipFee;
+  // onSelectVoucher: (voucher: IVoucher) => void;
 }
 
-const OrderVoucher: React.FC<Props> = (props) => {
+const OrderVoucher: React.FC<Props> = () => {
   return (
     <div className="cr-sidebar-wrap cr-checkout-voucher-wrap">
       <div className="cr-sidebar-block">
@@ -16,13 +14,6 @@ const OrderVoucher: React.FC<Props> = (props) => {
         </div>
         <div className="cr-sb-block-content">
           <div className="cr-checkout-voucher">
-            {props.shipFee && props.shipFee?.triggerPrice > 0 && (
-              <div className="cr-voucher-desc">
-                Congratulations! Your order meets the criteria for {props.shipFee?.name} (applies to
-                orders over {CurrencyUtils.formatCurrencyVND(props.shipFee?.triggerPrice)}). Enjoy
-                your delivery! 🚚🎉
-              </div>
-            )}
             <form action="#">
               <span className="cr-voucher-select-wrapper">
                 <span className="cr-voucher-opt-head">Nhập voucher</span>
@@ -30,19 +21,13 @@ const OrderVoucher: React.FC<Props> = (props) => {
                   showSearch
                   className="cr-voucher-select"
                   placeholder="Search to Select"
-                  optionFilterProp="label"
-                  filterSort={(optionA, optionB) =>
-                    (optionA?.label ?? '')
-                      .toLowerCase()
-                      .localeCompare((optionB?.label ?? '').toLowerCase())
-                  }
-                  options={[
-                    {
-                      value: '1',
-                      label: 'VOUEQlk32KEWq3 - Discount 30% - Max 200.000đ',
-                      disabled: true,
-                    },
-                  ]}
+                  // optionFilterProp="label"
+                  // filterSort={(optionA, optionB) =>
+                  //   (optionA?.label ?? '')
+                  //     .toLowerCase()
+                  //     .localeCompare((optionB?.label ?? '').toLowerCase())
+                  // }
+                  options={[]}
                 />
               </span>
             </form>
