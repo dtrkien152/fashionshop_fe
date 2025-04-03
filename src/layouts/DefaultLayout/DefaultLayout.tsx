@@ -1,14 +1,14 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import { Footer, Header } from '~/layouts';
 import { Outlet } from 'react-router-dom';
-import { Cart } from '~/components';
+import { Cart, FacebookMessage } from '~/components';
 import { OutletWrapper } from '~/layouts/DefaultLayout/styles.ts';
 import { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '~/redux/store.ts';
 import { setCartCode, setOpenCart, setProducts } from '~/redux';
 import { useFingerprints } from '~/hooks';
-import { useEffect } from 'react';
 import { cartService } from '~/services';
 
 interface DefaultLayoutProps {}
@@ -33,7 +33,7 @@ const DefaultLayout: React.FC<DefaultLayoutProps> = () => {
     if (!cartCode) return;
     cartService.getCartDetails(cartCode).then((res) => {
       dispatch(setProducts(res.data));
-    })
+    });
   }, [cartCode]);
 
   return (
@@ -45,6 +45,7 @@ const DefaultLayout: React.FC<DefaultLayoutProps> = () => {
         <Outlet />
       </OutletWrapper>
       <Footer />
+      <FacebookMessage pageId={'608768082319549'} />
       <Cart open={openCart} onClose={() => dispatch(setOpenCart(false))} />
     </>
   );

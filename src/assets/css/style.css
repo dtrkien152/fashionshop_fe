@@ -743,9 +743,8 @@ textarea[readonly] {
 
 /* Tab to top */
 a.back-to-top {
-    width: 38px;
-    height: 38px;
-    display: none;
+    width: 40px;
+    height: 40px;
     position: fixed;
     right: 15px;
     bottom: 15px;
@@ -758,10 +757,7 @@ a.back-to-top {
     text-align: center;
     font-size: 22px;
     line-height: 1.6;
-}
-
-a.back-to-top i {
-    font-size: 20px;
+    display: block;
 }
 
 a.back-to-top:hover {
