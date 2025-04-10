@@ -45,7 +45,7 @@ const DefaultLayout: React.FC<DefaultLayoutProps> = () => {
         <Outlet />
       </OutletWrapper>
       <Footer />
-      <FacebookMessage pageId={'608768082319549'} />
+      <FacebookMessage pageId={'61574962320482'} />
       <Cart open={openCart} onClose={() => dispatch(setOpenCart(false))} />
     </>
   );

@@ -8,7 +8,7 @@ const FacebookMessage: React.FC<Props> = (props) => {
   const messengerLink = `https://m.me/${props.pageId}`;
 
   return (
-    <a href={messengerLink} className="back-to-top result-placeholder">
+    <a href={messengerLink} target={"_blank"} className="back-to-top result-placeholder">
       <i className="ri-messenger-line"></i>
       <div className="back-to-top-wrap">
       </div>

@@ -1,11 +1,12 @@
 import { Button } from 'antd';
-import { FcGoogle } from 'react-icons/fc'; // Hoặc sử dụng button mặc định tùy giao diện bạn muốn giữ
+import { FcGoogle } from 'react-icons/fc';
+import { BASE_URL } from '~/services'; // Hoặc sử dụng button mặc định tùy giao diện bạn muốn giữ
 
 const GoogleSSOButton = () => {
   const handleGoogleLogin = async () => {
     try {
       // Gọi trực tiếp API Google SSO của backend
-      window.location.href = 'http://localhost:5000/api/auth/google';
+      window.location.href = `${BASE_URL}/api/auth/google`;
     } catch (error) {
       console.error('Lỗi đăng nhập Google:', error);
     }

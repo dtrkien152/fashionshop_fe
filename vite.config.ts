@@ -17,22 +17,13 @@ export default defineConfig(({ mode }) => {
       }),
     ],
     optimizeDeps: {
-      include: ['@ckeditor/ckeditor5-react','@react-oauth/google'],
-
+      include: ['@ckeditor/ckeditor5-react', '@react-oauth/google'],
     },
     build: {
       rollupOptions: {},
     },
     server: {
       port: 3000,
-      proxy: {
-        '/api': {
-          target: 'http://localhost:5000',
-          changeOrigin: true,
-          secure: false,
-          rewrite: (path) => path,
-        },
-      },
     },
     resolve: {
       alias: {
