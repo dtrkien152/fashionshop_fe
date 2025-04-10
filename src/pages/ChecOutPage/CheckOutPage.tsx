@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '~/redux/store.ts';
 import { useEffect, useMemo, useState } from 'react';
 import { orderService, shipFeeService } from '~/services';
-import { IShipFee } from '~/models';
+import { IShipFee, IVoucher } from '~/models';
 import { OrderCreateRequest, OrderProduct } from '~/dto';
 import { PAYMENT_METHOD, PAYMENT_STATUS } from '~/constants';
 import { useNavigate } from 'react-router-dom';
@@ -33,6 +33,7 @@ const CheckOutPage = () => {
     phone?: string;
     address?: string;
   }>({});
+  const [voucherSelected, setVoucherSelected] = useState<IVoucher | undefined>();
   const [paymentMethod, setPaymentMethod] = useState<PAYMENT_METHOD>(PAYMENT_METHOD.COD);
   const { isLoggedIn } = useSelector((state: RootState) => state.auth);
   const { cartCode } = useSelector((state: RootState) => state.cart);
@@ -71,8 +72,9 @@ const CheckOutPage = () => {
         address: customerInfo.address as string,
         phone: customerInfo.phone as string,
       },
-      siteId: 1,
+      siteId: 0,
       cartCode,
+      voucherCode: voucherSelected?.code
     };
     const orderRequest =
       accountInfo.accountType === 'USER'
@@ -169,12 +171,19 @@ const CheckOutPage = () => {
         <div className="row">
           <div className="cr-checkout-rightside col-lg-4 col-md-12">
             <OrderSummary />
-            <OrderVoucher />
+            <OrderVoucher totalPrice={totalPrice} onSelectVoucher={setVoucherSelected} />
             <DeliveryMethod shipFee={shipFee} />
             <BillingSummary
               totalPrice={totalPrice}
               shipFeePrice={shipFee?.fee || 0}
-              voucherDiscountPrice={0}
+              voucherDiscountPrice={
+                voucherSelected
+                  ? Math.min(
+                      totalPrice * (voucherSelected.discountPercent / 100),
+                      voucherSelected.maxDiscountPrice
+                    )
+                  : 0
+              }
             />
             <PaymentMethod paymentMethod={paymentMethod} onBinding={setPaymentMethod} />
           </div>

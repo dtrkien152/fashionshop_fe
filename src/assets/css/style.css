@@ -11672,6 +11672,12 @@ iframe {
     display: block;
 }
 
+.cr-sidebar-wrap .cr-sidebar-block .cr-sb-block-content .cr-voucher-opt-invalid {
+    margin-top: 8px;
+    color: red;
+    font-size: 13px;
+}
+
 .cr-sidebar-wrap .cr-sidebar-block .cr-sb-block-content .cr-voucher-desc {
     color: #7a7a7a;
     font-size: 14px;

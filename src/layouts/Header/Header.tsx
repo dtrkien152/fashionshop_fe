@@ -5,14 +5,13 @@ import $ from 'jquery';
 import { ICategoryModel } from '../../dto';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '~/redux/store.ts';
-import { logout, setSiteSelected } from '~/redux';
+import { logout } from '~/redux';
 import { categoryService } from '~/services';
 import ProfileModal from '~/pages/AuthPage/ProfilePage/ProfileModal.tsx';
 import { Link, useNavigate } from 'react-router-dom';
 import { SearchForm } from '~/layouts/Header/components/SearchForm.tsx';
 import { ROUTER_PATH } from '~/routes';
 import { BlogCategoryNav } from '~/layouts/Header/BlogCategoryNav.tsx';
-import { ISite } from '~/models';
 
 interface Props {
   onOpenCart: () => void;
@@ -24,7 +23,6 @@ const Header: React.FC<Props> = (props) => {
   const [prevScroll, setPrevScroll] = useState(window.scrollY);
   const [prevDirection, setPrevDirection] = useState(0);
   const [categories, setCategories] = React.useState<ICategoryModel[]>([]);
-  const { sites, siteSelected } = useSelector((state: RootState) => state.site);
   const { email, avatar, fullName, isLoggedIn } = useSelector((state: RootState) => state.auth);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -651,31 +649,31 @@ const Header: React.FC<Props> = (props) => {
               </div>
             </nav>
             <div className="cr-location-block">
-              <div className="cr-location-menu">
-                <div className="cr-location-toggle">
-                  <i className="ri-map-pin-line"></i>
-                  <span className="cr-location-title d-1199 cr-location">{siteSelected?.name}</span>
-                  <i className="ri-arrow-down-s-line d-1199 cr-angle"></i>
-                </div>
-                <div className="cr-location-content">
-                  <div className="cr-location-dropdown">
-                    <div className="row cr-location-wrapper">
-                      <ul className="loc-grid">
-                        {sites.map((site: ISite, index: number) => (
-                          <li
-                            className="loc-list"
-                            key={index}
-                            onClick={() => dispatch(setSiteSelected(site))}
-                          >
-                            <i className="ri-map-pin-line"></i>
-                            <span className="cr-detail">{site.name}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              {/*<div className="cr-location-menu">*/}
+              {/*  <div className="cr-location-toggle">*/}
+              {/*    <i className="ri-map-pin-line"></i>*/}
+              {/*    <span className="cr-location-title d-1199 cr-location">{siteSelected?.name}</span>*/}
+              {/*    <i className="ri-arrow-down-s-line d-1199 cr-angle"></i>*/}
+              {/*  </div>*/}
+              {/*  <div className="cr-location-content">*/}
+              {/*    <div className="cr-location-dropdown">*/}
+              {/*      <div className="row cr-location-wrapper">*/}
+              {/*        <ul className="loc-grid">*/}
+              {/*          {sites.map((site: ISite, index: number) => (*/}
+              {/*            <li*/}
+              {/*              className="loc-list"*/}
+              {/*              key={index}*/}
+              {/*              onClick={() => dispatch(setSiteSelected(site))}*/}
+              {/*            >*/}
+              {/*              <i className="ri-map-pin-line"></i>*/}
+              {/*              <span className="cr-detail">{site.name}</span>*/}
+              {/*            </li>*/}
+              {/*          ))}*/}
+              {/*        </ul>*/}
+              {/*      </div>*/}
+              {/*    </div>*/}
+              {/*  </div>*/}
+              {/*</div>*/}
             </div>
           </div>
         </div>
