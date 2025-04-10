@@ -41,6 +41,7 @@ export const ProductList = () => {
 
   const fetchProducts = async () => {
     const params = buildSearchParams();
+    // @ts-ignore
     const model = { ...params, page: params.page + 1 };
     productService
       .search(model)

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { Button, Upload, Avatar } from "antd";
-import { UploadOutlined, UserOutlined, SaveOutlined, CloseOutlined } from "@ant-design/icons";
-import type { RcFile, UploadChangeParam } from "antd/es/upload";
-import { useDispatch } from "react-redux";
-import { AvatarUploadWrapper } from "~/pages/AuthPage/ProfilePage/components/style.ts";
-import { updateAvatar } from "~/redux";
+import React, {useEffect, useState} from "react";
+import {Avatar, Button, Upload} from "antd";
+import {CloseOutlined, SaveOutlined, UploadOutlined, UserOutlined} from "@ant-design/icons";
+import type {RcFile, UploadChangeParam} from "antd/es/upload";
+import {useDispatch} from "react-redux";
+import {AvatarUploadWrapper} from "~/pages/AuthPage/ProfilePage/components/style.ts";
+import {updateAvatar} from "~/redux";
 import toast from "react-hot-toast";
 import axios from "axios";
 
@@ -13,7 +13,7 @@ interface AvatarUploadProps {
     onAvatarChange: (url: string | null) => void;
 }
 
-const AvatarUpload: React.FC<AvatarUploadProps> = ({ userId, avatarUrl, onAvatarChange }) => {
+const AvatarUpload: React.FC<AvatarUploadProps> = ({  avatarUrl, onAvatarChange }) => {
     const [currentAvatarUrl, setCurrentAvatarUrl] = useState<string | null>(avatarUrl || null);
     const [previewFile, setPreviewFile] = useState<RcFile | null>(null);
     const dispatch = useDispatch();

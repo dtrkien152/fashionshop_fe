@@ -23,7 +23,7 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {},
     },
     server: {
-      port: 3000,
+      port: 3100,
     },
     resolve: {
       alias: {

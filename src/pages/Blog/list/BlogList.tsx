@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { Select, Spin } from 'antd';
+import React, {useEffect, useState} from 'react';
+import {useSearchParams} from 'react-router-dom';
+import {Select, Spin} from 'antd';
 import postService from '~/services/post.service.ts';
 import toast from 'react-hot-toast';
 
-import { BlogPostProps } from '~/dto/post.dto.ts';
-import { BreadcrumbComponent } from '~/pages/Blog/list/components/BreadcrumbComponent.tsx';
-import { BlogSidebar } from '~/pages/Blog/list/components/BlogSidebar.tsx';
-import { BlogListComponent } from '~/pages/Blog/list/components/BlogListComponent.tsx';
+import {BlogPostProps} from '~/dto/post.dto.ts';
+import {BreadcrumbComponent} from '~/pages/Blog/list/components/BreadcrumbComponent.tsx';
+import {BlogSidebar} from '~/pages/Blog/list/components/BlogSidebar.tsx';
+import {BlogListComponent} from '~/pages/Blog/list/components/BlogListComponent.tsx';
 
-const { Option } = Select;
 
 interface IPost {
   id: number;
@@ -71,9 +70,6 @@ const BlogList: React.FC = () => {
     }
   };
 
-  const handleSortChange = (value: string) => {
-    setSearchParams({ ...Object.fromEntries(searchParams.entries()), sortBy: value, page: '1' });
-  };
 
   const handlePageChange = (page: number) => {
     setSearchParams({ ...Object.fromEntries(searchParams.entries()), page: String(page) });
