@@ -7,3 +7,4 @@ export { default as cartService } from './cart.service.ts';
 export { default as orderService } from './order.service.ts';
 export { default as voucherService } from './voucher.service.ts';
 export { default as shipFeeService } from './ship_fee.service.ts';
+export { default as siteService } from './site.service.ts';

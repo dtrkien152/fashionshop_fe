@@ -7,9 +7,9 @@ import { OutletWrapper } from '~/layouts/DefaultLayout/styles.ts';
 import { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '~/redux/store.ts';
-import { setCartCode, setOpenCart, setProducts } from '~/redux';
+import { setCartCode, setOpenCart, setProducts, setSites } from '~/redux';
 import { useFingerprints } from '~/hooks';
-import { cartService } from '~/services';
+import { cartService, siteService } from '~/services';
 
 interface DefaultLayoutProps {}
 
@@ -35,6 +35,16 @@ const DefaultLayout: React.FC<DefaultLayoutProps> = () => {
       dispatch(setProducts(res.data));
     });
   }, [cartCode]);
+
+  useEffect(() => {
+    fetchSites();
+  }, []);
+
+  const fetchSites = () => {
+    siteService.getAllSite().then((res) => {
+      dispatch(setSites(res.data));
+    });
+  };
 
   return (
     <>
