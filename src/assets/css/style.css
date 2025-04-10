@@ -6504,6 +6504,13 @@ ul.navbar-nav .dropdown:hover .dropdown-menu {
     padding-top: 20px;
 }
 
+.cr-size-and-weight .cr-unit-stock {
+    padding-left: 0;
+    list-style: none;
+    padding-top: 20px;
+}
+
+.cr-size-and-weight .cr-unit-stock h5,
 .cr-size-and-weight .cr-size-weight h5 {
     margin-bottom: 0;
     font-family: "Poppins, sans-serif";

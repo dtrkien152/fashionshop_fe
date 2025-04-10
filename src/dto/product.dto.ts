@@ -29,7 +29,7 @@ export interface IProductSubDetailResponse {
   size: string;
   color: string;
   isActive: boolean;
-  totalQuantity: number;
+  unitInStocks: any;
 }
 
 export interface IProductDetailResponse {
