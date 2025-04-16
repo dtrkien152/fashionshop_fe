@@ -25,7 +25,7 @@ export default function RecommendProducts(props: Props) {
       .getRecommendProduct(props.productId)
       .then((resp) => {
         console.log('cate ', resp.data);
-        setProducts(resp.data);
+        setProducts(resp.data.map((product) => ({...product, productName: product.name })));
       })
       .catch((reason) => {
         console.log('error fetch product ', reason);
@@ -89,22 +89,10 @@ export default function RecommendProducts(props: Props) {
                       style={{ cursor: 'pointer' }}
                     >
                       <div className="cr-brand">
-                        <a>{product.productName}</a>
-                        {/*<div className="cr-star">*/}
-                        {/*  {Array.from({ length: 5 }, (_, i) => (*/}
-                        {/*    <i*/}
-                        {/*      key={i}*/}
-                        {/*      className={i < product.rating ? 'ri-star-fill' : 'ri-star-line'}*/}
-                        {/*    ></i>*/}
-                        {/*  ))}*/}
-                        {/*  <p>({product.rating.toFixed(1)})</p>*/}
-                        {/*</div>*/}
+                        <a>{product.branch}</a>
                       </div>
-                      <a className="title">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                        consequat
+                      <a className="title max-2line">
+                        {product.productName}
                       </a>
                       <p className="cr-price">
                         <span className="new-price">{product.originalPrice}</span>{' '}

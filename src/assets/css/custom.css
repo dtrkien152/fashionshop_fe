@@ -98,3 +98,11 @@
     text-overflow: ellipsis;
     max-height: 6rem; /* Tuỳ chỉnh chiều cao tối đa */
 }
+
+.max-2line {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* Giới hạn 2 dòng */
+    overflow: hidden; /* Ẩn phần vượt quá */
+    text-overflow: ellipsis; /* Thêm dấu '...' */
+}

@@ -155,7 +155,7 @@ const Header: React.FC<Props> = (props) => {
                       ) : (
                         <i className="ri-user-3-line"></i>
                       )}
-                      <span>{fullName || 'Account'}</span>
+                      <span>{fullName || 'Tài khoản'}</span>
                     </a>
                     <ul className="dropdown-menu">
                       {email ? (

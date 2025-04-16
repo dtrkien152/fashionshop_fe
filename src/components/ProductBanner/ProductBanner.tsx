@@ -10,41 +10,42 @@ const ProductBanner: React.FC<Props> = () => {
   const banners = [
     {
       img: IMAGES.productBanner.image4,
-      title: 'Womens Summer Fashion',
+      title: 'Thời Trang Mùa Hè Dành Cho Nữ',
       discount: '25%',
-      text: 'on first order',
+      text: 'cho đơn hàng đầu tiên',
     },
     {
       img: IMAGES.productBanner.image5,
-      title: 'Cotton Jacket for mens',
+      title: 'Áo Khoác Cotton Dành Cho Nam',
       discount: '33%',
-      text: 'on first order',
+      text: 'cho đơn hàng đầu tiên',
     },
     {
       img: IMAGES.productBanner.image6,
-      title: 'Children Latest Fashion',
+      title: 'Thời Trang Mới Nhất Dành Cho Trẻ Em',
       discount: '15%',
-      text: 'on first order',
+      text: 'cho đơn hàng đầu tiên',
     },
     {
       img: IMAGES.productBanner.image4,
-      title: 'Womens Summer Fashion',
+      title: 'Thời Trang Mùa Hè Dành Cho Nữ',
       discount: '25%',
-      text: 'on first order',
+      text: 'cho đơn hàng đầu tiên',
     },
     {
       img: IMAGES.productBanner.image5,
-      title: 'Cotton Jacket for mens',
+      title: 'Áo Khoác Cotton Dành Cho Nam',
       discount: '33%',
-      text: 'on first order',
+      text: 'cho đơn hàng đầu tiên',
     },
     {
       img: IMAGES.productBanner.image6,
-      title: 'Children Latest Fashion',
+      title: 'Thời Trang Mới Nhất Dành Cho Trẻ Em',
       discount: '15%',
-      text: 'on first order',
+      text: 'cho đơn hàng đầu tiên',
     },
   ];
+
   return (
     <section className="section-product-banner padding-b-100">
       <div className="container">
@@ -72,7 +73,7 @@ const ProductBanner: React.FC<Props> = () => {
                         dangerouslySetInnerHTML={{ __html: banner.title.replace(' ', '<br />') }}
                       />
                       <p>
-                        <span className="percent">{banner.discount}</span> Off
+                        <span className="percent">{banner.discount}</span> Sale
                         <span className="text"> {banner.text}</span>
                       </p>
                       <div className="cr-product-banner-buttons">

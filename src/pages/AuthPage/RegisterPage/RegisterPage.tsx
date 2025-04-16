@@ -64,7 +64,7 @@ const RegisterPage: React.FC = () => {
         e.preventDefault(); // Chặn reload trang khi submit form
         if (!validateForm()) return;
         authService.register(formData.email, formData.password).then(() => {
-            alert('Đăng ký thành công! Mã kích hoạt sẽ được gửi đến account');
+            alert('Đăng ký thành công! Mã kích hoạt sẽ được gửi đến tài khoản');
             navigate('/login');
         }).catch((error) => {
         console.log('error', error);

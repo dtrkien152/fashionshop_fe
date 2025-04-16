@@ -16,28 +16,27 @@ const DealBanner: React.FC<Props> = () => {
                   <span>
                     <code>40%</code> OFF
                   </span>
-                  <h4 className="cr-deal-title">Great deal on Womens Fashion.</h4>
+                  <h4 className="cr-deal-title">Ưu Đãi Tuyệt Vời Cho Thời Trang Nữ.</h4>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do maecenas
-                    accumsan lacus vel facilisis.
+                    Khám phá các bộ sưu tập thời trang nữ chất lượng, giúp bạn tự tin và nổi bật trong mọi dịp.
                   </p>
                   <div className="cr-counter">
                     <div className="cr-counter-inner">
                       <h4>
                         <span id="days">{days}</span>
-                        Days
+                        Ngày
                       </h4>
                       <h4>
                         <span id="hours">{hours}</span>
-                        Hrs
+                        Giờ
                       </h4>
                       <h4>
                         <span id="minutes">{minutes}</span>
-                        Min
+                        Phút
                       </h4>
                       <h4>
                         <span id="seconds">{seconds}</span>
-                        Sec
+                        Giây
                       </h4>
                     </div>
                   </div>

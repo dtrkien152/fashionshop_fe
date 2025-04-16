@@ -98,20 +98,20 @@ const LoginPage = () => {
 
               <form className="cr-content-form" onSubmit={(e) => e.preventDefault()}>
                 <div className="form-group">
-                  <label className="required">Email Address</label>
+                  <label className="required">Địa chỉ email</label>
                   <input
                     type="email"
-                    placeholder="Enter Your Email"
+                    placeholder="Nhập email"
                     className="cr-form-control"
                     value={email}
                     onChange={handleInputChange(setEmail)}
                   />
                 </div>
                 <div className="form-group">
-                  <label className="required">Password</label>
+                  <label className="required">Mật khẩu</label>
                   <input
                     type="password"
-                    placeholder="Enter Your Password"
+                    placeholder="Nhập mật khẩu"
                     className="cr-form-control"
                     value={password}
                     onChange={handleInputChange(setPassword)}
@@ -127,7 +127,7 @@ const LoginPage = () => {
                 <div className="remember">
                   <span className="form-group custom">
                     <input type="checkbox" id="rememberMe" />
-                    <label htmlFor="rememberMe">Remember Me</label>
+                    <label htmlFor="rememberMe">Ghi nhớ phiên đăng nhập</label>
                   </span>
                   <Link className="link" to={ROUTER_PATH.forgotPassword.extract}>
                     Quên mật khẩu?

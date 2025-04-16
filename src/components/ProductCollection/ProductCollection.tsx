@@ -30,32 +30,32 @@ const ProductCollection: React.FC<Props> = () => {
             <div className="title-2 mb-30">
               <div className="title-box">
                 <div className="cr-banner">
-                  <h2>Top Collection</h2>
+                  <h2>Bộ sưu tập tốt nhất</h2>
                 </div>
                 <div className="cr-banner-sub-title">
-                  <p>Shop online for top collection and get free shipping!</p>
+                  <p>Mua sắm online bộ sưu tập top và nhận miễn phí vận chuyển!</p>
                 </div>
               </div>
               <div className="cr-pro-tab">
                 <ul className="cr-pro-tab-nav nav">
                   <li className="nav-item">
                     <a className="nav-link active" data-bs-toggle="tab" href="#all">
-                      All
+                      Tất cả
                     </a>
                   </li>
                   <li className="nav-item">
                     <a className="nav-link" data-bs-toggle="tab" href="#womens">
-                      Womens
+                      Phụ nữ
                     </a>
                   </li>
                   <li className="nav-item">
                     <a className="nav-link" data-bs-toggle="tab" href="#mens">
-                      Mens
+                      Đàn ông
                     </a>
                   </li>
                   <li className="nav-item">
                     <a className="nav-link" data-bs-toggle="tab" href="#kids">
-                      Kids
+                      Trẻ em
                     </a>
                   </li>
                 </ul>

@@ -8,25 +8,26 @@ const ServiceBox: React.FC<Props> = () => {
   const services = [
     {
       icon: 'ri-red-packet-line',
-      title: 'Product Packing',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing.',
+      title: 'Đóng Gói Sản Phẩm',
+      description: 'Sản phẩm được đóng gói cẩn thận, đảm bảo an toàn khi vận chuyển.',
     },
     {
       icon: 'ri-customer-service-2-line',
-      title: '24X7 Support',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing.',
+      title: 'Hỗ Trợ 24/7',
+      description: 'Đội ngũ chăm sóc khách hàng luôn sẵn sàng hỗ trợ bạn mọi lúc.',
     },
     {
       icon: 'ri-truck-line',
-      title: 'Delivery in 5 Days',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing.',
+      title: 'Giao Hàng Trong 5 Ngày',
+      description: 'Nhanh chóng – đúng hẹn – tiện lợi trên toàn quốc.',
     },
     {
       icon: 'ri-money-dollar-box-line',
-      title: 'Payment Secure',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing.',
+      title: 'Thanh Toán An Toàn',
+      description: 'Bảo mật tuyệt đối, đa dạng hình thức thanh toán tiện lợi.',
     },
   ];
+
 
   return (
     <section className="section-services padding-b-100">

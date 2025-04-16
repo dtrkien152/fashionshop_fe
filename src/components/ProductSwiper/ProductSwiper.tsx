@@ -32,17 +32,17 @@ const ProductSwiper: React.FC<Props> = () => {
             <div className="title-2 mb-30">
               <div className="title-box">
                 <div className="cr-banner">
-                  <h2>New Arrivals</h2>
+                  <h2>Sản Phẩm mới </h2>
                 </div>
                 <div className="cr-banner-sub-title">
-                  <p>Browse The Collection of Top Products.</p>
+                  <p>Top sản phẩm mới ra mắt.</p>
                 </div>
               </div>
               <div className="dealend-timer">
                 <div className="dealend-timer">
                   <div className="time-block">
                     <div className="time">{days}</div>
-                    <span className="day">Days</span>
+                    <span className="day">Ngày</span>
                   </div>
                   <div className="time-block">
                     <div className="time">{hours}</div>

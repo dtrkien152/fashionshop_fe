@@ -231,7 +231,7 @@ const ProductSection = (props: Props) => {
                     disabled={!productSubDetailSelected}
                     onClick={onClickAddToCard}
                   >
-                    Add to cart
+                    Thêm vào giỏ
                   </button>
                 </div>
                 <div className="cr-card-icon">
