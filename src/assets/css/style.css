@@ -6754,6 +6754,9 @@ ul.navbar-nav .dropdown:hover .dropdown-menu {
 .cr-product-card .cr-product-image .cr-image-inner img {
     width: 100%;
     border-radius: 5px;
+    height: 260px;
+    object-fit: cover;
+    cursor: pointer;
 }
 
 .cr-product-card .cr-product-image .cr-shopping-bag {

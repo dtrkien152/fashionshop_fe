@@ -2,6 +2,8 @@ import * as React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import { IMAGES } from '~/images';
+import { ROUTER_PATH } from '~/routes';
+import { Link } from 'react-router-dom';
 
 interface Props {}
 const ProductBanner: React.FC<Props> = () => {
@@ -74,9 +76,9 @@ const ProductBanner: React.FC<Props> = () => {
                         <span className="text"> {banner.text}</span>
                       </p>
                       <div className="cr-product-banner-buttons">
-                        <a href="shop-left-sidebar.html" className="cr-button">
+                        <Link to={ROUTER_PATH.productList.extract} className="cr-button">
                           shop now
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>

@@ -1,6 +1,34 @@
 import { IMAGES } from '~/images';
+import { categoryService } from '~/services';
+import * as React from 'react';
+import { useEffect, useState } from 'react';
+import { ICategoryModel } from '~/dto';
+import { useNavigate } from 'react-router-dom';
 
 const FooterTop = () => {
+  const [categories, setCategories] = useState<ICategoryModel[]>([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await categoryService.getAll();
+        setCategories(response.data);
+      } catch (error) {
+        console.error('Failed to fetch categories', error);
+      }
+    };
+    fetchCategories();
+  }, []);
+
+  const handleCategoryClick = (e: React.MouseEvent<HTMLAnchorElement>, categoryId: number) => {
+    e.preventDefault(); // Ngăn hành động mặc định của thẻ <a>
+    const searchParams = new URLSearchParams();
+    searchParams.set('categoryId', categoryId.toString());
+    searchParams.set('page', '0'); // Reset về trang đầu tiên
+    navigate(`/product?${searchParams.toString()}`);
+  };
+
   return (
     <div className="row footer-top padding-b-100">
       <div className="col-xl-4 col-lg-6 col-sm-12 col-12 cr-footer-border">
@@ -65,24 +93,16 @@ const FooterTop = () => {
             <span className="cr-heading-res"></span>
           </h4>
           <ul className="cr-footer-links cr-footer-dropdown">
-            <li>
-              <a href="shop-left-sidebar.html">Fashion & Clothes</a>
-            </li>
-            <li>
-              <a href="shop-left-sidebar.html">Dairy & Bakery</a>
-            </li>
-            <li>
-              <a href="shop-left-sidebar.html">Fruits & Vegetable</a>
-            </li>
-            <li>
-              <a href="shop-left-sidebar.html">Snack & Spice</a>
-            </li>
-            <li>
-              <a href="shop-left-sidebar.html">Juice & Drinks</a>
-            </li>
-            <li>
-              <a href="shop-left-sidebar.html">Fast Food</a>
-            </li>
+            {categories.map((category: ICategoryModel, index) => (
+              <li key={index}>
+                <a
+                  href={`/products?categoryId=${category.id}&page=0`}
+                  onClick={(e) => handleCategoryClick(e, category.id)}
+                >
+                  {category.name}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

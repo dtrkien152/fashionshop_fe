@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
+import { Link } from 'react-router-dom';
+import { ROUTER_PATH } from '~/routes';
 
 interface Props {}
 const HeroSwiper: React.FC<Props> = () => {
@@ -36,9 +38,9 @@ const HeroSwiper: React.FC<Props> = () => {
                         beatae consequuntur.
                       </p>
                       <div className="cr-last-buttons">
-                        <a href="shop-left-sidebar.html" className="cr-button">
+                        <Link to={ROUTER_PATH.productList.extract} className="cr-button">
                           shop now
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -62,9 +64,9 @@ const HeroSwiper: React.FC<Props> = () => {
                         beatae consequuntur.
                       </p>
                       <div className="cr-last-buttons">
-                        <a href="shop-left-sidebar.html" className="cr-button">
+                        <Link to={ROUTER_PATH.productList.extract} className="cr-button">
                           shop now
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
