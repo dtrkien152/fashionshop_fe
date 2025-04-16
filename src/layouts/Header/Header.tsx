@@ -175,7 +175,7 @@ const Header: React.FC<Props> = (props) => {
                               onClick={handleLogout}
                               style={{ cursor: 'pointer' }}
                             >
-                              Logout
+                              Đăng xuất
                             </a>
                           </li>
                         </>
@@ -183,12 +183,12 @@ const Header: React.FC<Props> = (props) => {
                         <>
                           <li>
                             <a className="dropdown-item" href="/login">
-                              Login
+                              Đăng nhập
                             </a>
                           </li>
                           <li>
                             <a className="dropdown-item" href="/register">
-                              Register
+                              Đăng Ký
                             </a>
                           </li>
                         </>
