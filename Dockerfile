@@ -1,3 +1,6 @@
+#docker build -t vebo/fashionshop_fe:latest .
+#docker tag vebo/fashionshop_fe:latest dungsharker/fashionshop_fe:latest
+    #docker push dungsharker/fashionshop_fe:latest
 # Bước 1: Sử dụng Node.js làm base image
 FROM node:18-alpine AS build
 
