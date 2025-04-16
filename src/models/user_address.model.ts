@@ -10,5 +10,8 @@ export interface IUserAddress {
   isActive?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
+  provinceId?: number;
+  districtId?: number;
+  wardCode?: number;
 }
 
