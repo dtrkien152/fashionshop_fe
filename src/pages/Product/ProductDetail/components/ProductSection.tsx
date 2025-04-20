@@ -2,9 +2,13 @@ import { useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Thumbs } from 'swiper/modules';
 import TabComponent from '~/pages/Product/ProductDetail/components/TabComponent.tsx';
-import { IProductDetailResponse, IProductSubDetailResponse } from '~/dto';
+import {
+  CartDetailRequest,
+  CartProduct,
+  IProductDetailResponse,
+  IProductSubDetailResponse,
+} from '~/dto';
 import ProductAttributes from '~/pages/Product/ProductDetail/components/ProductAttributes.tsx';
-import { CartDetailRequest, CartProduct } from '~/dto';
 import { addToCart } from '~/redux';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';

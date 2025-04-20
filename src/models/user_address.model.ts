@@ -12,6 +12,6 @@ export interface IUserAddress {
   updatedAt?: Date;
   provinceId?: number;
   districtId?: number;
-  wardCode?: number;
+  wardCode?: number|string;
 }
 

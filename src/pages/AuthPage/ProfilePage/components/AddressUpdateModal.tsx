@@ -87,7 +87,7 @@ const AddressUpdateModal: React.FC<AddressUpdateModalProps> = ({
                 form.setFieldsValue({
                   provinceId: address.provinceId,
                   districtId: address.districtId,
-                  wardCode: address.wardCode,
+                  wardCode: address.wardCode+'',
                 });
               });
             }

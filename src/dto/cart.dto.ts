@@ -6,15 +6,15 @@ export interface CartDetailRequest {
 }
 
 export interface CartProduct {
-  productId: number;
-  productSubDetailId: number;
+  productId?: number;
+  productSubDetailId?: number;
   productName?: string | any;
   thumbnailUrl?:string | any;
   originalPrice?: number | any;
   salePrice?: number | any;
   totalPrice?: number | any;
-  color: string;
-  size: string;
-  unit: number;
+  color?: string;
+  size?: string;
+  unit?: number;
   review?: IProductSubDetailReview
 }

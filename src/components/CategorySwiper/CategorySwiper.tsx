@@ -4,9 +4,13 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import { ICategoryModel } from '../../dto';
 import { categoryService } from '~/services';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const CategorySwiper: React.FC = () => {
   const [categories, setCategories] = React.useState<ICategoryModel[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     const fetchCategories = async () => {
@@ -20,6 +24,19 @@ const CategorySwiper: React.FC = () => {
     fetchCategories();
   }, []);
 
+  const handleSearchByCategory=(catId:any)=>{
+    const searchParams = new URLSearchParams(window.location.search);
+    if (searchTerm) {
+      searchParams.set('keyword', searchTerm);
+    } else {
+      searchParams.delete('keyword');
+    }
+    if(catId){
+      searchParams.set('categoryId', catId);
+      searchParams.set('page', '0'); // Reset về trang đầu tiên
+    }
+    navigate(`/product?${searchParams.toString()}`);
+  }
   return (
     <section className="section-popular margin-b-100" data-aos="fade-up" data-aos-duration="2000">
       <div className="container">
@@ -54,9 +71,9 @@ const CategorySwiper: React.FC = () => {
                   <div className="category-icon">
                     <img src={category.thumbnailUrl} alt={category.name} className="img-fluid" />
                   </div>
-                  <div className="category-title">
+                  <div className="category-title" style={{cursor:'pointer'}}>
                     <h4>
-                      <a href="shop-left-sidebar.html">{category.name}</a>
+                      <a onClick={()=>handleSearchByCategory(category.id)}>{category.name}</a>
                     </h4>
                     <p>{category.code}</p>
                   </div>
