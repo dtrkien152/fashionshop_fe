@@ -1,4 +1,5 @@
 import { SORT_BY_ENUM } from '~/constants';
+import { IProductSubDetailReview } from '~/models';
 
 export interface IProductItemResponse {
   id: number;
@@ -47,4 +48,8 @@ export interface IProductDetailResponse {
   categoryName: string;
   unitOnOrder: number;
   productSubDetails: IProductSubDetailResponse[] | [];
+}
+
+export interface IProductSubDetailReviewDto extends IProductSubDetailReview{
+  customerName?: number;
 }

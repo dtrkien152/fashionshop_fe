@@ -57,7 +57,7 @@ const TrackingSection: React.FC<Props> = (props) => {
                 <div className="col-md-3 m-b-767">
                   <div className="cr-track-card">
                     <span className="cr-track-title">Mã vận chuyển</span>
-                    <span>M254HT</span>
+                    <span>{props.order?.shipCode}</span>
                   </div>
                 </div>
                 <div className="col-md-3 m-b-767">

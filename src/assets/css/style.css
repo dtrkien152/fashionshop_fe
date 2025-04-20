@@ -4376,6 +4376,8 @@ ul.navbar-nav .dropdown:hover .dropdown-menu {
     justify-content: space-between;
 }
 
+
+
 .cart-qty-plus-minus input {
     width: 30px;
     margin: 0;
@@ -6492,6 +6494,16 @@ ul.navbar-nav .dropdown:hover .dropdown-menu {
 .cr-size-and-weight .cr-review-star .cr-star i {
     font-size: 16px;
     color: #f5885f;
+}
+
+.cr-review-link {
+    color: #0d6efd;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.cr-review-link.mute {
+    color: #777;
+    pointer-events: none;
 }
 
 .cr-size-and-weight .cr-size-weight {
@@ -10901,9 +10913,6 @@ iframe {
     line-height: 23px;
 }
 
-.cr-track .cr-table-content table tbody tr .cr-cart-name {
-    width: 80%;
-}
 
 /* Responsive */
 @media only screen and (max-width: 767px) {
