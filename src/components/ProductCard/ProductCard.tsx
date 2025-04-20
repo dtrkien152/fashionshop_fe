@@ -47,7 +47,7 @@ const ProductCard: React.FC<Props> = ({ product }: Props) => {
           <div className="cr-brand">
             <a href="#">{product.category}</a>
           </div>
-          <a href="#" className="title" onClick={(e) => e.preventDefault()}>
+          <a style={{minHeight:48}} href="#" className="title max-2line" onClick={(e) => e.preventDefault()}>
             {product.productName}
           </a>
           <p className="text">{product.productName}</p>

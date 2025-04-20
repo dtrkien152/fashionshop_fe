@@ -106,3 +106,16 @@
     overflow: hidden; /* Ẩn phần vượt quá */
     text-overflow: ellipsis; /* Thêm dấu '...' */
 }
+.max-1line {
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical !important;
+    -webkit-line-clamp: 2 !important; /* Giới hạn 1 dòng */
+    overflow: hidden ; /* Ẩn phần vượt quá */
+    text-overflow: ellipsis !important; /* Thêm dấu '...' */
+}
+.cursor-pointer{
+    cursor: pointer;
+}
+.cursor-pointer :hover{
+    opacity: 0.8;
+}

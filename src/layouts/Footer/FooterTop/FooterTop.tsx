@@ -37,7 +37,7 @@ const FooterTop = () => {
               <img src={IMAGES.logo} alt="logo" className="logo"/>
             </div>
             <p>
-              Carrot là thị trường lớn nhất cho các sản phẩm tạp hóa. Hãy mua sắm những nhu cầu hàng ngày của bạn từ cửa
+              Vebo là một trong những shop thời trang uy ti trên thị trường. Hãy mua sắm những nhu cầu hàng ngày của bạn từ cửa
               hàng của chúng tôi.
             </p>
           </div>
@@ -48,13 +48,13 @@ const FooterTop = () => {
             </h4>
             <ul className="cr-footer-links cr-footer-dropdown">
               <li className="location-icon">
-                51 Green St. Huntington Ohio Beach Ontario, NY 11746 KY 4783, USA.
+
               </li>
               <li className="mail-icon">
-                <a href="javascript:void(0)">example@email.com</a>
+                <a href="javascript:void(0)">veboshop@gmail.com</a>
               </li>
               <li className="phone-icon">
-                <a href="javascript:void(0)"> +91 123 4567890</a>
+                <a href="javascript:void(0)"> +0 123 4567890</a>
               </li>
             </ul>
           </div>

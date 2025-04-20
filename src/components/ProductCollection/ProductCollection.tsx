@@ -30,7 +30,7 @@ const ProductCollection: React.FC<Props> = () => {
             <div className="title-2 mb-30">
               <div className="title-box">
                 <div className="cr-banner">
-                  <h2>Bộ sưu tập tốt nhất</h2>
+                  <h2>Top Sản phẩm bán chạy nhất</h2>
                 </div>
                 <div className="cr-banner-sub-title">
                   <p>Mua sắm online bộ sưu tập top và nhận miễn phí vận chuyển!</p>

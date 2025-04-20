@@ -43,6 +43,18 @@ const productService = {
   editReviewProduct(payload: IProductSearchParam) {
     return httpService.put(BASE_URL + `/api/products/review`, payload);
   },
+
+  getArrivalByCategory: (categoryId:any) => {
+    httpService.attachTokenToHeader();
+    const model = {
+      keyword: null,
+      categoryId,
+      sortBy: SORT_BY_ENUM.NEWEST,
+      limit: 6,
+      page: 0,
+    };
+    return httpService.post(BASE_URL + '/api/products/search', model);
+  },
 };
 
 export default productService;
