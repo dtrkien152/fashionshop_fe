@@ -7,7 +7,7 @@ import { CurrencyUtils } from '~/utils';
 import { useEffect, useState } from 'react';
 
 interface Props {
-  totalPrice: number;
+  originTotalPrice: number;
   onSelectVoucher: (voucher?: IVoucher) => void;
 }
 
@@ -20,7 +20,7 @@ const OrderVoucher: React.FC<Props> = (props) => {
       props.onSelectVoucher();
       return;
     }
-    if (voucherSelected.triggerPrice > props.totalPrice) {
+    if (voucherSelected.triggerPrice > props.originTotalPrice) {
       props.onSelectVoucher();
       return;
     }
@@ -83,7 +83,7 @@ const OrderVoucher: React.FC<Props> = (props) => {
                     </Select.Option>
                   ))}
                 </Select>
-                {voucherSelected && voucherSelected.triggerPrice > props.totalPrice && (
+                {voucherSelected && voucherSelected.triggerPrice > props.originTotalPrice && (
                   <span className="cr-voucher-opt-invalid">
                     Giá trị đơn hàng chưa đủ điều kiện kích hoạt (Giá trị tối thiểu{' '}
                     {CurrencyUtils.formatCurrencyVND(voucherSelected.triggerPrice)})

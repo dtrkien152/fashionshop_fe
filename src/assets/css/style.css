@@ -11300,6 +11300,10 @@ iframe {
     margin-bottom: 16px;
 }
 
+.cr-checkout-wrap .cr-check-bill-form .cr-address-select.readOnly {
+    pointer-events: none;
+}
+
 .cr-checkout-wrap .cr-check-bill-form .cr-bl-select-inner {
     position: relative;
     display: -webkit-box;

@@ -1,7 +1,7 @@
 import { TrackingSection } from '~/pages/Order/OrderTrackingPage/TrackingSection';
 import { OrderProductSection } from '~/pages/Order/OrderTrackingPage/OrderProductSection';
 import { useParams } from 'react-router-dom';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { orderService, productService } from '~/services';
 import { OrderDto } from '~/dto';
 import toast from 'react-hot-toast';
@@ -10,7 +10,7 @@ const OrderTrackingPage = () => {
   const [order, setOrder] = useState<OrderDto>();
   const { code } = useParams<{ code: string }>();
   useEffect(() => {
-    fetchOrder()
+    fetchOrder();
   }, [code]);
 
   const fetchOrder = () => {
@@ -18,9 +18,9 @@ const OrderTrackingPage = () => {
     orderService.getOrder(code).then((res) => {
       setOrder(res.data);
     });
-  }
+  };
 
-  const handleAddReview = useCallback((values: any) => {
+  const handleAddReview = (values: any) => {
     return productService
       .addReviewProduct({
         ...values,
@@ -28,16 +28,16 @@ const OrderTrackingPage = () => {
       })
       .then((res) => {
         toast.success('Đánh giá thành công');
-        fetchOrder()
+        fetchOrder();
       });
-  }, []);
+  };
 
-  const handleEditReview = useCallback((values: any) => {
+  const handleEditReview = (values: any) => {
     return productService.editReviewProduct(values).then((res) => {
       toast.success('Sửa đánh giá thành công');
-      fetchOrder()
+      fetchOrder();
     });
-  }, []);
+  };
 
   return (
     <>

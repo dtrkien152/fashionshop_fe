@@ -249,13 +249,19 @@ const OrderProductSection: React.FC<Props> = (props) => {
                     {props.order?.voucherCode && (
                       <div>
                         <span className="text-left">Voucher Charges</span>
-                        <span className="text-right">{CurrencyUtils.formatCurrencyVND(20000)}</span>
+                        <span className="text-right">
+                          {CurrencyUtils.formatCurrencyVND(props.order.voucherDiscountPrice)}
+                        </span>
                       </div>
                     )}
                     <div className="cr-checkout-summary-total">
                       <span className="text-left">Tổng tiền</span>
                       <span className="text-right">
-                        {CurrencyUtils.formatCurrencyVND(props.order?.totalPrice)}
+                        {CurrencyUtils.formatCurrencyVND(
+                          props.order?.originTotalPrice +
+                            props.order?.shipFee -
+                            props.order?.voucherDiscountPrice
+                        )}
                       </span>
                     </div>
                   </div>

@@ -32,6 +32,9 @@ const CheckOutPage = () => {
     fullName?: string;
     phone?: string;
     address?: string;
+    provinceId?: number;
+    districtId?: number;
+    wardCode?: string;
   }>({});
   const [voucherSelected, setVoucherSelected] = useState<IVoucher | undefined>();
   const [paymentMethod, setPaymentMethod] = useState<PAYMENT_METHOD>(PAYMENT_METHOD.COD);
@@ -39,7 +42,7 @@ const CheckOutPage = () => {
   const { cartCode } = useSelector((state: RootState) => state.cart);
   const { products } = useSelector((state: RootState) => state.cart);
 
-  const totalPrice = useMemo(
+  const originTotalPrice = useMemo(
     () => products.reduce((acc, cur) => acc + cur.salePrice * cur.unit, 0),
     [products]
   );
@@ -47,10 +50,10 @@ const CheckOutPage = () => {
   const [shipFee, setShipFee] = useState<IShipFee>();
 
   useEffect(() => {
-    shipFeeService.getFee(totalPrice).then((response) => {
+    shipFeeService.getFee(originTotalPrice).then((response) => {
       setShipFee(response.data);
     });
-  }, [totalPrice]);
+  }, [originTotalPrice]);
 
   const onCreateOrder = () => {
     if (!validateOrder()) return;
@@ -71,6 +74,8 @@ const CheckOutPage = () => {
         name: customerInfo.fullName as string,
         address: customerInfo.address as string,
         phone: customerInfo.phone as string,
+        districtId: customerInfo.districtId as number,
+        wardCode: customerInfo.wardCode as string,
       },
       siteId: 0,
       cartCode,
@@ -171,15 +176,15 @@ const CheckOutPage = () => {
         <div className="row">
           <div className="cr-checkout-rightside col-lg-4 col-md-12">
             <OrderSummary />
-            <OrderVoucher totalPrice={totalPrice} onSelectVoucher={setVoucherSelected} />
+            <OrderVoucher originTotalPrice={originTotalPrice} onSelectVoucher={setVoucherSelected} />
             <DeliveryMethod shipFee={shipFee} />
             <BillingSummary
-              totalPrice={totalPrice}
+              originTotalPrice={originTotalPrice}
               shipFeePrice={shipFee?.fee || 0}
               voucherDiscountPrice={
                 voucherSelected
                   ? Math.min(
-                      totalPrice * (voucherSelected.discountPercent / 100),
+                      originTotalPrice * (voucherSelected.discountPercent / 100),
                       voucherSelected.maxDiscountPrice
                     )
                   : 0

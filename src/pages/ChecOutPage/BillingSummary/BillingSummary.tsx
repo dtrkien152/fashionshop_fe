@@ -2,7 +2,7 @@ import * as React from 'react';
 import { CurrencyUtils } from '~/utils';
 
 interface Props {
-  totalPrice: number;
+  originTotalPrice: number;
   shipFeePrice: number;
   voucherDiscountPrice: number;
 }
@@ -18,11 +18,11 @@ const BillingSummary: React.FC<Props> = (props) => {
           <div className="cr-checkout-summary">
             <div>
               <span className="text-left">Giá sản phẩm</span>
-              <span className="text-right">{CurrencyUtils.formatCurrencyVND(props.totalPrice * 0.9)}</span>
+              <span className="text-right">{CurrencyUtils.formatCurrencyVND(props.originTotalPrice * 0.9)}</span>
             </div>
             <div>
               <span className="text-left">Thuế VAT (10%) </span>
-              <span className="text-right">{CurrencyUtils.formatCurrencyVND(props.totalPrice * 0.1)}</span>
+              <span className="text-right">{CurrencyUtils.formatCurrencyVND(props.originTotalPrice * 0.1)}</span>
             </div>
             <div>
               <span className="text-left">Phí vận chuyển</span>
@@ -34,7 +34,7 @@ const BillingSummary: React.FC<Props> = (props) => {
             </div>
             <div className="cr-checkout-summary-total">
               <span className="text-left">Tổng tiền</span>
-              <span className="text-right">{CurrencyUtils.formatCurrencyVND(props.totalPrice + props.shipFeePrice - props.voucherDiscountPrice)}</span>
+              <span className="text-right">{CurrencyUtils.formatCurrencyVND(props.originTotalPrice + props.shipFeePrice - props.voucherDiscountPrice)}</span>
             </div>
           </div>
         </div>
