@@ -10,6 +10,7 @@ export interface IProductItemResponse {
   description: string;
   unitOnOrder: string;
   branch: string;
+  avgRating: number;
   flag: {
     type: 'sale' | 'new' | 'hot';
     value: string;
@@ -44,9 +45,16 @@ export interface IProductDetailResponse {
   imageUrls?: string[];
   categoryId: number;
   salePrice: number;
+  brand?: string;
+  gender?: string;
+  weight?: string;
+  other_info?: string;
+  totalAvailable?: number;
   originalPrice: number;
   categoryName: string;
   unitOnOrder: number;
+  averageRating?: number;
+  category_name?: string;
   productSubDetails: IProductSubDetailResponse[] | [];
 }
 

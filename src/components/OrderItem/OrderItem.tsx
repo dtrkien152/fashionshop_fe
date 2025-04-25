@@ -38,58 +38,48 @@ const OrderItem: React.FC<Props> = (props) => {
                 <div className="cr-table-content">
                   <table>
                     <tbody>
-                      {props.order.products.map((product, index) => (
-                        <tr key={index}>
-                          <td className="cr-cart-name">
-                            <div className="cr-cart-name-wrapper">
+                    {props.order.products.map((product, index) => (
+                      <tr key={index}>
+                        <td className="cr-cart-name">
+                          <div className="cr-cart-name-wrapper">
+                            <Link
+                              to={ROUTER_PATH.productDetail.extract.replace(
+                                ':id',
+                                product.productId?.toString(),
+                              )}
+                            >
+                              <img
+                                src={product.thumbnailUrl}
+                                alt="product-1"
+                                className="cr-cart-img"
+                              />
+                            </Link>
+                            <div>
                               <Link
                                 to={ROUTER_PATH.productDetail.extract.replace(
                                   ':id',
-                                  product.productId?.toString()
+                                  product.productId?.toString(),
                                 )}
                               >
-                                <img
-                                  src={product.thumbnailUrl}
-                                  alt="product-1"
-                                  className="cr-cart-img"
-                                />
+                                <span>{product.productName}</span>
+                                <span>x</span>
+                                <span>{product.unit}</span>
                               </Link>
-                              <div>
-                                <Link
-                                  to={ROUTER_PATH.productDetail.extract.replace(
-                                    ':id',
-                                    product.productId?.toString()
-                                  )}
-                                >
-                                  <span>{product.productName}</span>
-                                  <span>x</span>
-                                  <span>{product.unit}</span>
-                                </Link>
-                                <div className="cr-cart-desc">
-                                  Màu sắc:
-                                  <div className="cr-pro-color">
-                                    <ul className="cr-opt-swatch cr-change-img">
-                                      <li className="active">
-                                        <a className="cr-opt-clr-img">
-                                          <span style={{ backgroundColor: product.color }}></span>
-                                        </a>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                  Kích thước:
-                                  <div className="cr-pro-size">
-                                    <ul className="cr-opt-size">
-                                      <li className="active">
-                                        <a className="cr-opt-sz">{product.size}</a>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                </div>
+                              <div className="cr-cart-desc">
+                                Màu sắc:
+                                <ul className="cr-opt-color">
+                                  <li className="active">{product.color}</li>
+                                </ul>
+                                Kích thước:
+                                <ul className="cr-opt-size">
+                                  <li className="active">{product.size}</li>
+                                </ul>
                               </div>
                             </div>
-                          </td>
-                        </tr>
-                      ))}
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
                     </tbody>
                   </table>
                 </div>
@@ -98,8 +88,8 @@ const OrderItem: React.FC<Props> = (props) => {
                   <span className="text-right">
                     {CurrencyUtils.formatCurrencyVND(
                       props.order.originTotalPrice +
-                        props.order.shipFee -
-                        props.order.voucherDiscountPrice
+                      props.order.shipFee -
+                      props.order.voucherDiscountPrice,
                     )}
                   </span>
                 </div>

@@ -25,20 +25,20 @@ const ProductCard: React.FC<Props> = ({ product }: Props) => {
           <div className="cr-image-inner zoom-image-hover">
             <img src={product.thumbnailUrl} alt={product.productName} />
           </div>
-          <div className="cr-side-view">
-            <a href="#" className="wishlist" onClick={(e) => e.preventDefault()}>
-              <i className="ri-heart-line"></i>
-            </a>
-            <a
-              className="model-oraganic-product"
-              data-bs-toggle="modal"
-              href="#quickview"
-              role="button"
-              onClick={(e) => e.preventDefault()}
-            >
-              <i className="ri-eye-line"></i>
-            </a>
-          </div>
+          {/*<div className="cr-side-view">*/}
+          {/*  <a href="#" className="wishlist" onClick={(e) => e.preventDefault()}>*/}
+          {/*    <i className="ri-heart-line"></i>*/}
+          {/*  </a>*/}
+          {/*  <a*/}
+          {/*    className="model-oraganic-product"*/}
+          {/*    data-bs-toggle="modal"*/}
+          {/*    href="#quickview"*/}
+          {/*    role="button"*/}
+          {/*    onClick={(e) => e.preventDefault()}*/}
+          {/*  >*/}
+          {/*    <i className="ri-eye-line"></i>*/}
+          {/*  </a>*/}
+          {/*</div>*/}
           <a className="cr-shopping-bag" href="#" onClick={(e) => e.preventDefault()}>
             <i className="ri-shopping-bag-line"></i>
           </a>

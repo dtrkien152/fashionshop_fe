@@ -32,7 +32,10 @@ const ProductDetail = () => {
     productService
       .getProductDetail(id)
       .then((res) => {
-        setProduct(res.data);
+        const totalAvailable = res.data.productSubDetails.reduce((total:any, subDetail:any) => {
+          return total + (subDetail.unitInStocks[0] || 0);
+        }, 0);
+        setProduct({...res.data,totalAvailable:totalAvailable});
       })
       .catch((err) => {
         console.error(err);
@@ -62,49 +65,49 @@ const ProductDetail = () => {
   return (
     <>
       <ProductSection products={product} />
-      <section className="section-product padding-t-100">
-        <div className="container">
-          <div className="cr-blog-comments mt-4">
-            <h3>{reviews.totalItems} Đánh giá</h3>
+      {/*<section className="section-product padding-t-100">*/}
+      {/*  <div className="container">*/}
+      {/*    <div className="cr-blog-comments mt-4">*/}
+      {/*      <h3>{reviews.totalItems} Đánh giá</h3>*/}
 
-            {reviews.data.length > 0 ? (
-              reviews.data.map((review) => (
-                <div key={review.id} className="cr-blog-details-message">
-                  <p>
-                    {review.comment}
-                    <Rate
-                      style={{ float: 'right' }}
-                      tooltips={voteDesc}
-                      value={review.rating}
-                      disabled={true}
-                    />
-                  </p>
-                  <h5 className="title">
-                    {/*<img src={comment.avatar || "/default-avatar.png"} alt="avatar" className="comment-avatar" />*/}
-                    {review.customerName} -{' '}
-                    {new Date(review.createdAt as Date).toLocaleDateString()}
-                  </h5>
-                </div>
-              ))
-            ) : (
-              <p>Chưa có đánh giá nào.</p>
-            )}
+      {/*      {reviews.data.length > 0 ? (*/}
+      {/*        reviews.data.map((review) => (*/}
+      {/*          <div key={review.id} className="cr-blog-details-message">*/}
+      {/*            <p>*/}
+      {/*              {review.comment}*/}
+      {/*              <Rate*/}
+      {/*                style={{ float: 'right' }}*/}
+      {/*                tooltips={voteDesc}*/}
+      {/*                value={review.rating}*/}
+      {/*                disabled={true}*/}
+      {/*              />*/}
+      {/*            </p>*/}
+      {/*            <h5 className="title">*/}
+      {/*              /!*<img src={comment.avatar || "/default-avatar.png"} alt="avatar" className="comment-avatar" />*!/*/}
+      {/*              {review.customerName} -{' '}*/}
+      {/*              {new Date(review.createdAt as Date).toLocaleDateString()}*/}
+      {/*            </h5>*/}
+      {/*          </div>*/}
+      {/*        ))*/}
+      {/*      ) : (*/}
+      {/*        <p>Chưa có đánh giá nào.</p>*/}
+      {/*      )}*/}
 
-            {/* Phân trang bình luận */}
-            {reviews.totalPages > 1 && (
-              <nav aria-label="Comment Pagination" className="cr-pagination">
-                <Pagination
-                  current={pagingParams.page}
-                  pageSize={pagingParams.limit}
-                  total={reviews.totalItems}
-                  onChange={(page) => setPagingParams((params) => ({ ...params, page }))}
-                  style={{ marginTop: 20, textAlign: 'center' }}
-                />
-              </nav>
-            )}
-          </div>
-        </div>
-      </section>
+      {/*      /!* Phân trang bình luận *!/*/}
+      {/*      {reviews.totalPages > 1 && (*/}
+      {/*        <nav aria-label="Comment Pagination" className="cr-pagination">*/}
+      {/*          <Pagination*/}
+      {/*            current={pagingParams.page}*/}
+      {/*            pageSize={pagingParams.limit}*/}
+      {/*            total={reviews.totalItems}*/}
+      {/*            onChange={(page) => setPagingParams((params) => ({ ...params, page }))}*/}
+      {/*            style={{ marginTop: 20, textAlign: 'center' }}*/}
+      {/*          />*/}
+      {/*        </nav>*/}
+      {/*      )}*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*</section>*/}
       {id && <RecommendProducts productId={Number(id)} />}
     </>
   );

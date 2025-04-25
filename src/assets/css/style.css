@@ -4282,6 +4282,25 @@ ul.navbar-nav .dropdown:hover .dropdown-menu {
     margin-top: 5px;
 }
 
+.cr-cart-view .cr-cart-inner .cr-cart-top ul.crcart-pro-items .crcart-pro-item .cr-pro-content .cart_pro_desc ul {
+    padding-left: 0;
+    list-style: none;
+}
+
+.cr-cart-view .cr-cart-inner .cr-cart-top ul.crcart-pro-items .crcart-pro-item .cr-pro-content .cart_pro_desc ul li {
+    margin: 2px;
+    padding: 5px 10px;
+    font-family: "Poppins, sans-serif";
+    font-size: 12px;
+    line-height: 1;
+    background-color: rgba(63, 81, 181, 0.8);
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    -webkit-transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
+}
+
 .cr-cart-view .cr-cart-inner .cr-cart-top ul.crcart-pro-items .crcart-pro-item .cr-pro-content .cr-cart-qty {
     margin-top: 5px;
 }
@@ -9330,7 +9349,23 @@ iframe {
     display: flex;
     gap: 8px;
     font-size: 13px;
-    color: #8e8d8d;
+}
+
+.cr-table-content table tbody tr .cr-cart-name .cr-cart-desc ul {
+    padding-left: 0;
+    list-style: none;
+}
+
+.cr-table-content table tbody tr .cr-cart-name .cr-cart-desc ul li {
+    margin: 2px;
+    padding: 4px 10px;
+    font-family: "Poppins, sans-serif";
+    font-size: 12px;
+    line-height: 1;
+    border-radius: 5px;
+    cursor: pointer;
+    -webkit-transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
 }
 
 .cr-table-content table tbody tr .cr-cart-name .cr-cart-name-wrapper {
@@ -11558,6 +11593,25 @@ iframe {
     display: flex;
     gap: 5px;
     margin: 5px 0;
+}
+
+.cr-sidebar-wrap .cr-sidebar-block .cr-sb-block-content .cr-checkout-pro .cr-product-inner .cr-pro-content.cr-product-details .cart-pro-desc  ul {
+    padding-left: 0;
+    list-style: none;
+}
+
+.cr-sidebar-wrap .cr-sidebar-block .cr-sb-block-content .cr-checkout-pro .cr-product-inner .cr-pro-content.cr-product-details .cart-pro-desc  ul li {
+    margin: 2px;
+    padding: 5px 10px;
+    font-family: "Poppins, sans-serif";
+    font-size: 12px;
+    line-height: 1;
+    background-color: rgba(63, 81, 181, 0.8);
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    -webkit-transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
 }
 
 .cr-sidebar-wrap .cr-sidebar-block .cr-sb-block-content .cr-checkout-pro .cr-product-inner .cr-pro-content.cr-product-details .cr-pro-rating {

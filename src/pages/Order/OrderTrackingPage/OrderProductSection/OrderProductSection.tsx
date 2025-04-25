@@ -106,23 +106,13 @@ const OrderProductSection: React.FC<Props> = (props) => {
                                   </Link>
                                   <div className="cr-cart-desc">
                                     Màu sắc:
-                                    <div className="cr-pro-color">
-                                      <ul className="cr-opt-swatch cr-change-img">
-                                        <li className="active">
-                                          <a className="cr-opt-clr-img">
-                                            <span style={{ backgroundColor: product.color }}></span>
-                                          </a>
-                                        </li>
-                                      </ul>
-                                    </div>
+                                    <ul className="cr-opt-color">
+                                      <li className="active">{product.color}</li>
+                                    </ul>
                                     Kích thước:
-                                    <div className="cr-pro-size">
-                                      <ul className="cr-opt-size">
-                                        <li className="active">
-                                          <a className="cr-opt-sz">{product.size}</a>
-                                        </li>
-                                      </ul>
-                                    </div>
+                                    <ul className="cr-opt-size">
+                                      <li className="active">{product.size}</li>
+                                    </ul>
                                   </div>
                                 </div>
                               </div>

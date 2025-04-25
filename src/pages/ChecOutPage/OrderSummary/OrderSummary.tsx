@@ -46,27 +46,21 @@ const OrderSummary: React.FC<Props> = () => {
                       </Link>
                     </h5>
                     <div className="cart-pro-desc">
-                      <div className="cr-pro-color">
-                        <ul className="cr-opt-swatch cr-change-img">
-                          <li className="active">
-                            <a className="cr-opt-clr-img">
-                              <span style={{ backgroundColor: product.color }}></span>
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
+                      <ul className="cr-opt-color">
+                        <li className="active">{product.color}</li>
+                      </ul>
                       <span>-</span>
-                      <div className="cr-pro-size">
-                        <ul className="cr-opt-size">
-                          <li className="active">
-                            <a className="cr-opt-sz">{product.size}</a>
-                          </li>
-                        </ul>
-                      </div>
+                      <ul className="cr-opt-size">
+                        <li className="active">{product.size}</li>
+                      </ul>
                     </div>
                     <p className="cr-price">
-                      <span className="new-price">{CurrencyUtils.formatCurrencyVND(product.salePrice)}</span>{' '}
-                      <span className="old-price">{CurrencyUtils.formatCurrencyVND(product.originalPrice)}</span>
+                      <span className="new-price">
+                        {CurrencyUtils.formatCurrencyVND(product.salePrice)}
+                      </span>{' '}
+                      <span className="old-price">
+                        {CurrencyUtils.formatCurrencyVND(product.originalPrice)}
+                      </span>
                     </p>
                   </div>
                 </div>

@@ -88,23 +88,13 @@ const Cart: React.FC<Props> = (props) => {
                       {product.productName}
                     </Link>
                     <div className="cart_pro_desc">
-                      <div className="cr-pro-color">
-                        <ul className="cr-opt-swatch cr-change-img">
-                          <li className="active">
-                            <a className="cr-opt-clr-img">
-                              <span style={{ backgroundColor: product.color }}></span>
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
+                      <ul className="cr-opt-color">
+                        <li className="active">{product.color}</li>
+                      </ul>
                       <span>-</span>
-                      <div className="cr-pro-size">
-                        <ul className="cr-opt-size">
-                          <li className="active">
-                            <a className="cr-opt-sz">{product.size}</a>
-                          </li>
-                        </ul>
-                      </div>
+                      <ul className="cr-opt-size">
+                        <li className="active">{product.size}</li>
+                      </ul>
                     </div>
                     <span className="cart-price">
                       <span>{CurrencyUtils.formatCurrencyVND(product.salePrice)}</span>
@@ -168,15 +158,21 @@ const Cart: React.FC<Props> = (props) => {
                 <tbody>
                   <tr>
                     <td className="text-left">Giá sản phẩm :</td>
-                    <td className="text-right">{CurrencyUtils.formatCurrencyVND(totalPrice * 0.9)}</td>
+                    <td className="text-right">
+                      {CurrencyUtils.formatCurrencyVND(totalPrice * 0.9)}
+                    </td>
                   </tr>
                   <tr>
                     <td className="text-left">Thuế VAT (10%) :</td>
-                    <td className="text-right">{CurrencyUtils.formatCurrencyVND(totalPrice * 0.1)}</td>
+                    <td className="text-right">
+                      {CurrencyUtils.formatCurrencyVND(totalPrice * 0.1)}
+                    </td>
                   </tr>
                   <tr>
                     <td className="text-left">Tổng tiền:</td>
-                    <td className="text-right primary-color">{CurrencyUtils.formatCurrencyVND(totalPrice)}</td>
+                    <td className="text-right primary-color">
+                      {CurrencyUtils.formatCurrencyVND(totalPrice)}
+                    </td>
                   </tr>
                 </tbody>
               </table>

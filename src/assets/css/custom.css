@@ -119,3 +119,23 @@
 .cursor-pointer :hover{
     opacity: 0.8;
 }
+
+.half-star {
+    position: relative;
+    color: orange;
+}
+
+.half-star::before {
+    content: '\f47b'; /* remixicon: ri-fire-fill */
+    font-family: 'remixicon';
+    position: absolute;
+    width: 50%;
+    overflow: hidden;
+    color: orange;
+}
+
+.product-other-info {
+    white-space: pre-wrap;
+    line-height: 1.5;
+    font-size: 12px;
+}

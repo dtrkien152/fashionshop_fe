@@ -4,6 +4,9 @@ export const IMAGES = {
     android: new URL('~/assets/img/apps/android.png', import.meta.url).href,
     apple: new URL('~/assets/img/apps/android.png', import.meta.url).href,
   },
+  user:{
+    defaultAvatar:'https://static.vecteezy.com/system/resources/previews/009/734/564/original/default-avatar-profile-icon-of-social-media-user-vector.jpg',
+  },
   instagram: {
     image1: new URL('~/assets/img/insta/1.jpg', import.meta.url).href,
     image2: new URL('~/assets/img/insta/2.jpg', import.meta.url).href,
