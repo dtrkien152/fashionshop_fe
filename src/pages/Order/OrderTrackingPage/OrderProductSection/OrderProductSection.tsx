@@ -13,6 +13,7 @@ interface Props {
   order?: OrderDto;
   onAddProductReview: (payload: any) => Promise<void>;
   onEditProductReview: (payload: any) => Promise<void>;
+  onCancelOrder: () => void;
 }
 
 const OrderProductSection: React.FC<Props> = (props) => {
@@ -147,7 +148,7 @@ const OrderProductSection: React.FC<Props> = (props) => {
                               <div
                                 className={
                                   'cart-qty-plus-minus cr-review-link ' +
-                                  (props.order?.status != ORDER_STATUS.COMPLETED ? '' : '')
+                                  (props.order?.status != ORDER_STATUS.COMPLETED ? 'disabled' : '')
                                 }
                                 style={{ border: 'none', width: 'fit-content' }}
                               >
@@ -259,6 +260,11 @@ const OrderProductSection: React.FC<Props> = (props) => {
               </div>
             </div>
           </div>
+          {props.order?.status === ORDER_STATUS.PENDING && (
+            <div className="cr-btn-group">
+              <button className={'cr-btn-secondary float-end'} onClick={props.onCancelOrder}>Huỷ đơn hàng</button>
+            </div>
+          )}
         </div>
       </div>
       <OrderProductReviewAdd

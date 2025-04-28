@@ -109,9 +109,9 @@ const Header: React.FC<Props> = (props) => {
         <div className="row">
           <div className="col-lg-12">
             <div className="top-header">
-              <a href="/" className="cr-logo">
+              <Link to="/" className="cr-logo">
                 <img src={IMAGES.logo} alt="logo" className="logo" />
-              </a>
+              </Link>
               {/*<form className="cr-search">*/}
               {/*  <input className="search-input" type="text" placeholder="Search For items..." />*/}
               {/*  <select className="form-select" aria-label="Default select example">*/}
@@ -182,14 +182,14 @@ const Header: React.FC<Props> = (props) => {
                       ) : (
                         <>
                           <li>
-                            <a className="dropdown-item" href="/login">
+                            <Link className="dropdown-item" to={ROUTER_PATH.login.extract}>
                               Đăng nhập
-                            </a>
+                            </Link>
                           </li>
                           <li>
-                            <a className="dropdown-item" href="/register">
+                            <Link className="dropdown-item" to={ROUTER_PATH.register.extract}>
                               Đăng Ký
-                            </a>
+                            </Link>
                           </li>
                         </>
                       )}
@@ -520,28 +520,38 @@ const Header: React.FC<Props> = (props) => {
               <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav">
                   <li className="nav-item">
-                    <a className="nav-link" href="/">
+                    <Link className="nav-link" to="/">
                       Trang chủ
-                    </a>
+                    </Link>
                   </li>
-                  <li className="nav-item dropdown">
-                    <a className="nav-link dropdown-toggle" href="javascript:void(0)">
-                      Thể loại
-                    </a>
-                    <ul className="dropdown-menu">
-                      {categories.map((category: ICategoryModel, index) => (
-                        <li key={index}>
-                          <a
-                            className="dropdown-item"
-                            href={`/products?categoryId=${category.id}&page=0`}
-                            onClick={(e) => handleCategoryClick(e, category.id)}
-                          >
-                            {category.name}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </li>
+                  {categories.map((category: ICategoryModel, index) => (
+                    <li className="nav-item">
+                      <a className="nav-link"
+                         href={`/products?categoryId=${category.id}&page=0`}
+                         onClick={(e) => handleCategoryClick(e, category.id)}>
+                        {category.name}
+                      </a>
+                    </li>
+                  ))}
+
+                  {/*<li className="nav-item dropdown">*/}
+                  {/*  <a className="nav-link dropdown-toggle" href="javascript:void(0)">*/}
+                  {/*    Thể loại*/}
+                  {/*  </a>*/}
+                  {/*  <ul className="dropdown-menu">*/}
+                  {/*    {categories.map((category: ICategoryModel, index) => (*/}
+                  {/*      <li key={index}>*/}
+                  {/*        <a*/}
+                  {/*          className="dropdown-item"*/}
+                  {/*          href={`/products?categoryId=${category.id}&page=0`}*/}
+                  {/*          onClick={(e) => handleCategoryClick(e, category.id)}*/}
+                  {/*        >*/}
+                  {/*          {category.name}*/}
+                  {/*        </a>*/}
+                  {/*      </li>*/}
+                  {/*    ))}*/}
+                  {/*  </ul>*/}
+                  {/*</li>*/}
                   {/*<li className="nav-item dropdown">*/}
                   {/*  <a className="nav-link dropdown-toggle" href="javascript:void(0)">*/}
                   {/*    Sản Phẩm*/}

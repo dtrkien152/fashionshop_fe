@@ -2,7 +2,7 @@ import { OrderDto } from '~/dto';
 import * as React from 'react';
 import { useMemo } from 'react';
 import moment from 'moment';
-import { ORDER_STATUS } from '~/constants';
+import { ORDER_STATUS, PaymentStatusLabel } from '~/constants';
 
 interface Props {
   order?: OrderDto;
@@ -70,7 +70,8 @@ const TrackingSection: React.FC<Props> = (props) => {
                   <div className="cr-track-card">
                     <span className="cr-track-title">Phương thức thanh toán</span>
                     <span>
-                      {props.order?.paymentType} <span>({props.order?.paymentStatus})</span>
+                      {props.order?.paymentType}{' '}
+                      <span>({PaymentStatusLabel[props.order?.paymentStatus]})</span>
                     </span>
                   </div>
                 </div>

@@ -15,6 +15,10 @@ export const orderService = {
     httpService.attachTokenToHeader();
     return httpService.put(BASE_URL + '/api/orders', null, { params: { code, status } });
   },
+  handleCancelOrder: (code: string) => {
+    httpService.attachTokenToHeader();
+    return httpService.put(BASE_URL + '/api/orders/cancel', null, { params: { code } });
+  },
   getAllMyOrders: (params: OrderFilter) => {
     httpService.attachTokenToHeader();
     return httpService.get(BASE_URL + '/api/orders//my-orders', { params });

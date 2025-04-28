@@ -1,5 +1,8 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import i18n from 'i18next';
+import { useDispatch } from 'react-redux';
+import { logout } from '~/redux';
+import { LocalStorageUtils } from '~/utils';
 
 export const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -58,10 +61,18 @@ class Services {
     this.axios.interceptors.request.eject(this.interceptors);
   }
 
-  handleResponse(response: AxiosResponse, error: AxiosError, isSuccess: boolean): Promise<AxiosResponse> {
+  handleResponse(
+    response: AxiosResponse,
+    error: AxiosError,
+    isSuccess: boolean
+  ): Promise<AxiosResponse> {
     if (isSuccess) {
       return Promise.resolve(response);
     } else {
+      if (error.response && error.response.status === 401) {
+        LocalStorageUtils.clearUserStorage();
+        window.location.href = '/login';
+      }
       return Promise.reject(error.response);
     }
   }

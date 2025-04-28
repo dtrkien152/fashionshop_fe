@@ -39,6 +39,13 @@ const OrderTrackingPage = () => {
     });
   };
 
+  const handleCancel = () => {
+    orderService.handleCancelOrder(code).then((res) => {
+      toast.success('Huỷ đơn hàng thành công');
+      fetchOrder();
+    })
+  }
+
   return (
     <>
       <TrackingSection order={order} />
@@ -46,6 +53,7 @@ const OrderTrackingPage = () => {
         order={order}
         onAddProductReview={handleAddReview}
         onEditProductReview={handleEditReview}
+        onCancelOrder={handleCancel}
       />
     </>
   );
