@@ -35,7 +35,7 @@ const CartDetailPage = () => {
   const onRemoveFromCart = (productId: number, color: string, size: string) => {
     if (!cartCode) return;
     cartService.removeCartDetail(cartCode, productId, color, size).then(() => {
-      toast.success('Remove product in cart successfully!');
+      toast.success('Đã xóa sản phẩm khỏi giỏ hàng!');
       dispatch(removeFromCart({ productId, color, size }));
     });
   };

@@ -59,7 +59,7 @@ const ProductSection = (props: Props) => {
                 size: productSubDetailSelected.size,
             };
             dispatch(addToCart(cartProduct));
-            toast.success('Add product in cart successfully!');
+            toast.success('Đã thêm sản phẩm vào giỏ hàng!');
         });
     };
 

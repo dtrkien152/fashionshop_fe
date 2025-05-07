@@ -6,7 +6,7 @@ import {
   LoginPage,
   NotFoundPage, OrderListPage, OrderTrackingPage,
   RegisterPage,
-  ForgotPasswordPageChangePassword, VNPayResultsPage,
+  ForgotPasswordPageChangePassword, VNPayResultsPage, PolicyPage,
 } from '~/pages';
 import ProductDetail from '~/pages/Product/ProductDetail/ProductDetail.tsx';
 import { ProductList } from '~/pages/Product/ProductList/ProductList.tsx';
@@ -84,6 +84,10 @@ export const ROUTER_PATH = {
   vnPayResults: {
     relative: 'vnpay/results',
     extract: '/vnpay/results',
+  },
+  policy: {
+    relative: 'policy',
+    extract: '/policy',
   }
 };
 
@@ -154,6 +158,10 @@ export const PUBLIC_ROUTERS: RouteItem[] = [
       {
         path: ROUTER_PATH.vnPayResults.relative,
         component: VNPayResultsPage,
+      },
+      {
+        path: ROUTER_PATH.policy.relative,
+        component: PolicyPage,
       },
     ],
   },
