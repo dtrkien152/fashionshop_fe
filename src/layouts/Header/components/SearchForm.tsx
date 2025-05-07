@@ -38,7 +38,7 @@ export const SearchForm: React.FC<IProps> = ({ categories }) => {
             <input
                 className="search-input"
                 type="text"
-                placeholder="Search For items..."
+                placeholder="Tìm kiếm sản phẩm..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
             />

@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {useParams} from 'react-router-dom';
 import productService from '~/services/product.service.ts';
 import ProductSection from '~/pages/Product/ProductDetail/components/ProductSection.tsx';
 import RecommendProducts from '~/pages/Product/ProductDetail/components/RecommendProducts.tsx';
-import { IProductDetailResponse, IProductSubDetailReviewDto } from '~/dto';
-import { Pagination, Rate } from 'antd';
-import { PageParams } from '~/dto/paging.dto.ts';
+import {IProductDetailResponse, IProductSubDetailReviewDto} from '~/dto';
+import {PageParams} from '~/dto/paging.dto.ts';
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();

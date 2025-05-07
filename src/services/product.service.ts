@@ -14,9 +14,10 @@ const productService = {
     };
     return httpService.post(BASE_URL + '/api/products/search', model);
   },
-  getTopSelling: async () => {
+  getTopSelling: async (categoryIds: number[] | null) => {
     httpService.attachTokenToHeader();
-    return await httpService.get(BASE_URL + '/api/products/top-selling');
+    const query = categoryIds ? `?categoryIds=${categoryIds.join(',')}` : '';
+    return await httpService.get(BASE_URL + '/api/products/top-selling'+query);
   },
   search: async (model: IProductSearchParam) => {
     httpService.attachTokenToHeader();

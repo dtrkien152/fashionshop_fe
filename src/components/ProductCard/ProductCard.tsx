@@ -3,6 +3,8 @@ import { IProductItemResponse } from '~/dto';
 import { useNavigate } from 'react-router-dom';
 import { ROUTER_PATH } from '~/routes';
 import { CurrencyUtils } from '~/utils';
+import {OutOfStockTag} from "~/components/ProductCard/OutOfStockTag.tsx";
+import RatingStars from "~/components/ProductRating/RatingStars.tsx";
 
 interface Props {
   product: IProductItemResponse;
@@ -25,6 +27,7 @@ const ProductCard: React.FC<Props> = ({ product }: Props) => {
           <div className="cr-image-inner zoom-image-hover">
             <img src={product.thumbnailUrl} alt={product.productName} />
           </div>
+          {product.unitInStocks === 0 && <OutOfStockTag />}
           {/*<div className="cr-side-view">*/}
           {/*  <a href="#" className="wishlist" onClick={(e) => e.preventDefault()}>*/}
           {/*    <i className="ri-heart-line"></i>*/}
@@ -50,7 +53,8 @@ const ProductCard: React.FC<Props> = ({ product }: Props) => {
           <a style={{minHeight:48}} href="#" className="title max-2line" onClick={(e) => e.preventDefault()}>
             {product.productName}
           </a>
-          <p className="text">{product.productName}</p>
+
+          {/*<p className="text">{product.productName}</p>*/}
           <p className="cr-price">
             <span className="new-price">{CurrencyUtils.formatCurrencyVND(product.salePrice)}</span>{' '}
             <span className="old-price">

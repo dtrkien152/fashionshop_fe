@@ -57,7 +57,7 @@ const OrderListPage = () => {
           <input
             className="search-input"
             type="search"
-            placeholder="Search For items..."
+            placeholder="Tìm kiếm sản phẩm..."
             value={filterCriteria.searchTerm}
             onChange={(e) =>
               setFilterCriteria((criteria) => ({ ...criteria, searchTerm: e.target.value }))

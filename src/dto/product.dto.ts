@@ -19,6 +19,8 @@ export interface IProductItemResponse {
   imageUrls: [string, string]; // Ảnh đầu là thumbnailUrl của product, ảnh sau là 1 ảnh của subproduct
   colors: string[]; // Các thuộc tính của subproduct
   size: string[]; // Các thuộc tính của subproduct
+  unitInStocks?:number;
+  averageRating?: number;
 }
 
 export interface IProductSearchParam {

@@ -38,7 +38,7 @@ const BlogDetail: React.FC = () => {
 
   return (
     <>
-      <BreadcrumbComponent title="Blog Classic" currentPage="Blog Classic" homePath="/" />
+      <BreadcrumbComponent title="Tin tức" currentPage="Blog Classic" homePath="/" />
       <section className="section-blog-classic padding-tb-100">
         <div className="container">
           <div className="row">

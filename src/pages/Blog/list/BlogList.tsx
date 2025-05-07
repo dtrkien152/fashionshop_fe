@@ -77,7 +77,7 @@ const BlogList: React.FC = () => {
 
   return (
     <>
-      <BreadcrumbComponent title="Blog Classic" currentPage="Blog Classic" homePath="/" />
+      <BreadcrumbComponent title="Tin tức" currentPage="Tin tức" homePath="/" />
       <section className="section-blog-classic padding-tb-100">
         <div className="container">
           <div className="row">

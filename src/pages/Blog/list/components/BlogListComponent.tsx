@@ -23,14 +23,14 @@ export const BlogListComponent: React.FC<BlogListProps> = ({
           <div className="cr-blog-classic" key={post.id} data-aos="fade-up" data-aos-duration="2000">
             <div className="cr-blog-classic-content">
               <div className="cr-comment">
-                <span>By {post.author} <code> / {new Date(post.createdAt).toLocaleDateString()}</code></span>
+                <span>Tác giả: {post.author} <code> / {new Date(post.createdAt).toLocaleDateString()}</code></span>
               </div>
               <h4>{post.title}</h4>
 
               <p>{extractTextFromHTML(post.content, 180)}</p>
 
               {/* 🔥 Sửa đường dẫn thành `/blogs/:code` */}
-              <Link to={`/blogs/${post.code}`}>Read more</Link>
+              <Link to={`/blogs/${post.code}`}>Xem thêm</Link>
             </div>
 
             {post.thumbnailUrl && (
