@@ -112,18 +112,6 @@ const Header: React.FC<Props> = (props) => {
               <Link to="/" className="cr-logo">
                 <img src={IMAGES.logo} alt="logo" className="logo" />
               </Link>
-              {/*<form className="cr-search">*/}
-              {/*  <input className="search-input" type="text" placeholder="Tìm kiếm sản phẩm..." />*/}
-              {/*  <select className="form-select" aria-label="Default select example">*/}
-              {/*    <option selected>Tất cả danh muc</option>*/}
-              {/*    {categories.map((category: ICategoryModel, index: number) => (*/}
-              {/*      <option key={index} value={category.id}>{category.name}</option>*/}
-              {/*    ))}*/}
-              {/*  </select>*/}
-              {/*  <a href="javascript:void(0)" className="search-btn">*/}
-              {/*    <i className="ri-search-line"></i>*/}
-              {/*  </a>*/}
-              {/*</form>*/}
               <SearchForm categories={categories} />
               {/*header */}
               <div className="cr-right-bar">
