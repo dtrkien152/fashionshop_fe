@@ -7,6 +7,7 @@ import {AvatarUploadWrapper} from "~/pages/AuthPage/ProfilePage/components/style
 import {updateAvatar} from "~/redux";
 import toast from "react-hot-toast";
 import axios from "axios";
+import userService from "~/services/user.service.ts";
 
 interface AvatarUploadProps {
     avatarUrl?: string | null;
@@ -52,11 +53,8 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({  avatarUrl, onAvatarChange 
         formData.append("file", previewFile);
 
         try {
-            const response = await axios.post(`/api/user/upload-avatar`, formData, {
-                headers: { "Content-Type": "multipart/form-data" },
-            });
+            const response = await userService.uploadAvatar(formData);
 
-            console.log('dât ',response.data);
             if (response.data) {
                 setCurrentAvatarUrl(response.data);
                 setPreviewFile(null);

@@ -21,6 +21,12 @@ const userService = {
         return httpService.post(`${BASE_URL}/api/user/address`, model);
     },
 
+    uploadAvatar: (formData:any) => {
+        return httpService.post(`${BASE_URL}/api/user/upload-avatar`, formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+        });
+    },
+
     // Cập nhật thông tin cá nhân (ví dụ có sẵn)
     updateProfile: (fullName?: string, phone?: string, gender: boolean = true) => {
         const model = {

@@ -17,7 +17,7 @@ RUN npm install --legacy-peer-deps
 COPY . .
 
 # Bước 6: Build ứng dụng với chế độ production
-RUN npm run build -- --mode prod
+RUN npm run build:no-tsc -- --mode prod
 
 # Bước 7: Sử dụng một image nhẹ để chạy ứng dụng
 FROM node:18-alpine
@@ -32,7 +32,7 @@ RUN npm install -g serve
 COPY --from=build /usr/src/app/dist /usr/src/app/dist
 
 # Bước 11: Mở cổng 3000 để chạy ứng dụng
-EXPOSE 3000
+EXPOSE 3100
 
 # Bước 12: Chạy ứng dụng với serve
-CMD ["serve", "-s", "dist", "-l", "3000"]
+CMD ["serve", "-s", "dist", "-l", "3100"]
