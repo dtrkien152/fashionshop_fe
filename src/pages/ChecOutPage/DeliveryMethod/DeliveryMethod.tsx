@@ -28,7 +28,7 @@ const DeliveryMethod: React.FC<Props> = (props) => {
                   <span className="cr-del-opt-head">Giao hàng tiêu chuẩn</span>
                   <input type="radio" id="normal-ship" name="delivery-options" checked />
                   <label htmlFor="normal-ship">
-                    {props.shipFee?.name} - ${props.shipFee?.fee}
+                    {props.shipFee?.name} - {CurrencyUtils.formatCurrencyVND(props.shipFee?.fee)}
                   </label>
                 </span>
                 {/*<span>*/}
