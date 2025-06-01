@@ -99,6 +99,7 @@
     max-height: 6rem; /* Tuỳ chỉnh chiều cao tối đa */
 }
 
+
 .max-2line {
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -139,3 +140,4 @@
     line-height: 1.5;
     font-size: 12px;
 }
+

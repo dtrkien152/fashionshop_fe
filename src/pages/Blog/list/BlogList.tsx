@@ -70,7 +70,6 @@ const BlogList: React.FC = () => {
     }
   };
 
-
   const handlePageChange = (page: number) => {
     setSearchParams({ ...Object.fromEntries(searchParams.entries()), page: String(page) });
   };
