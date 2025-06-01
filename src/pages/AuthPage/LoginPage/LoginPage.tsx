@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { login, logout } from '~/redux';
 import { useDispatch } from 'react-redux';
 import { authService } from '~/services';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import GoogleSSOButton from '~/pages/AuthPage/SSO/GoogleSSOButton.tsx';
+import { ROUTER_PATH } from '~/routes';
+import { ValidationUtils } from '~/utils/validation.utils.ts';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -41,14 +43,13 @@ const LoginPage = () => {
   }, [dispatch, navigate]);
 
   const handleLogin = async () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!email || !password) {
       setError('Vui lòng nhập email và password');
       return;
     }
 
-    if (!emailRegex.test(email)) {
+    if (!ValidationUtils.isValidEmail(email)) {
       setError('Sai định dạng email,vui lòng nhập lại');
       return;
     }
@@ -97,20 +98,20 @@ const LoginPage = () => {
 
               <form className="cr-content-form" onSubmit={(e) => e.preventDefault()}>
                 <div className="form-group">
-                  <label>Email Address*</label>
+                  <label className="required">Địa chỉ email</label>
                   <input
                     type="email"
-                    placeholder="Enter Your Email"
+                    placeholder="Nhập email"
                     className="cr-form-control"
                     value={email}
                     onChange={handleInputChange(setEmail)}
                   />
                 </div>
                 <div className="form-group">
-                  <label>Password*</label>
+                  <label className="required">Mật khẩu</label>
                   <input
                     type="password"
-                    placeholder="Enter Your Password"
+                    placeholder="Nhập mật khẩu"
                     className="cr-form-control"
                     value={password}
                     onChange={handleInputChange(setPassword)}
@@ -126,17 +127,17 @@ const LoginPage = () => {
                 <div className="remember">
                   <span className="form-group custom">
                     <input type="checkbox" id="rememberMe" />
-                    <label htmlFor="rememberMe">Remember Me</label>
+                    <label htmlFor="rememberMe">Ghi nhớ phiên đăng nhập</label>
                   </span>
-                  <a className="link" href="forgot.html">
+                  <Link className="link" to={ROUTER_PATH.forgotPassword.extract}>
                     Quên mật khẩu?
-                  </a>
+                  </Link>
                 </div>
 
                 <br />
 
                 <div className="login-buttons">
-                  <div style={{ display: 'flex' }}>
+                  <div style={{ display: 'flex', width: '100%' }}>
                     <button
                       type="button"
                       className="cr-button"

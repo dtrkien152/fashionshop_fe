@@ -8,7 +8,7 @@ const postService = {
   },
 
   // Lấy danh sách bài viết theo categoryId
-  search: (params: { categoryId?: number | null; page: number; size: number;keyword:string }) => {
+  search: (params:any) => {
     httpService.attachTokenToHeader();
     return httpService.post(BASE_URL + `/api/posts/search`, params);
   },

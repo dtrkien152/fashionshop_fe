@@ -1,15 +1,15 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import { Footer, Header } from '~/layouts';
 import { Outlet } from 'react-router-dom';
-import { Cart } from '~/components';
+import { Cart, FacebookMessage } from '~/components';
 import { OutletWrapper } from '~/layouts/DefaultLayout/styles.ts';
 import { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '~/redux/store.ts';
-import { setCartCode, setOpenCart, setProducts } from '~/redux';
+import { setCartCode, setOpenCart, setProducts, setSites, setVouchers } from '~/redux';
 import { useFingerprints } from '~/hooks';
-import { useEffect } from 'react';
-import { cartService } from '~/services';
+import { cartService, siteService, voucherService } from '~/services';
 
 interface DefaultLayoutProps {}
 
@@ -30,11 +30,32 @@ const DefaultLayout: React.FC<DefaultLayoutProps> = () => {
   }, [isLoggedIn, fingerprint]);
 
   useEffect(() => {
+    if (!isLoggedIn) return;
+    fetchVoucher();
+  }, [isLoggedIn]);
+
+  useEffect(() => {
     if (!cartCode) return;
     cartService.getCartDetails(cartCode).then((res) => {
       dispatch(setProducts(res.data));
-    })
+    });
   }, [cartCode]);
+
+  useEffect(() => {
+    fetchSites();
+  }, []);
+
+  const fetchSites = () => {
+    siteService.getAllSite().then((res) => {
+      dispatch(setSites(res.data));
+    });
+  };
+
+  const fetchVoucher = () => {
+    voucherService.getMyVoucher().then((res) => {
+      dispatch(setVouchers(res.data));
+    });
+  };
 
   return (
     <>
@@ -45,6 +66,7 @@ const DefaultLayout: React.FC<DefaultLayoutProps> = () => {
         <Outlet />
       </OutletWrapper>
       <Footer />
+      <FacebookMessage pageId={'61574962320482'} />
       <Cart open={openCart} onClose={() => dispatch(setOpenCart(false))} />
     </>
   );

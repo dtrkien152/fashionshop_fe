@@ -19,7 +19,7 @@ export const cartService = {
     return httpService.put(BASE_URL + '/api/carts', payload);
   },
   syncCartDetails: (payload: CartDetailRequest) => {
-    return httpService.post(BASE_URL + '/api/carts', payload);
+    return httpService.post(BASE_URL + '/api/carts/sync', payload);
   },
   removeCartDetail: (cartCode: string, productId: number, color: string, size: string) => {
     return httpService.delete(BASE_URL + '/api/carts', { params: { cartCode, productId, color, size } });

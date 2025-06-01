@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
+import { Link } from 'react-router-dom';
+import { ROUTER_PATH } from '~/routes';
 
 interface Props {}
 const HeroSwiper: React.FC<Props> = () => {
@@ -30,15 +32,14 @@ const HeroSwiper: React.FC<Props> = () => {
                       <h5>
                         <span>100%</span> Cotton Fabric
                       </h5>
-                      <h1>Fashion sale for women's.</h1>
+                      <h1>Đón đầu xu hướng – Tỏa sáng phong cách riêng!</h1>
                       <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet reiciendis
-                        beatae consequuntur.
+                        Khám phá bộ sưu tập mới nhất dành riêng cho phái đẹp, giúp bạn nổi bật ở mọi khoảnh khắc.
                       </p>
                       <div className="cr-last-buttons">
-                        <a href="shop-left-sidebar.html" className="cr-button">
-                          shop now
-                        </a>
+                        <Link to={ROUTER_PATH.productList.extract} className="cr-button">
+                          Mua sắm ngay
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -54,19 +55,22 @@ const HeroSwiper: React.FC<Props> = () => {
                   <div className="col-lg-12">
                     <div className="cr-left-side-contain slider-animation">
                       <h5>
-                        <span>100%</span> Cotton Fabric
+                        <span>100%</span> Vải Cotton Thoáng Mát
                       </h5>
-                      <h1>Explore jeans summer sale.</h1>
+                      <h1>Khám Phá Ưu Đãi Jeans Mùa Hè</h1>
                       <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet reiciendis
-                        beatae consequuntur.
+                        Chất liệu thoáng mát, kiểu dáng thời thượng – hoàn hảo cho mùa hè sôi động!
+                      </p>
+                      <p>
+                        Ưu đãi hấp dẫn chỉ có trong mùa này, đừng bỏ lỡ!
                       </p>
                       <div className="cr-last-buttons">
-                        <a href="shop-left-sidebar.html" className="cr-button">
-                          shop now
-                        </a>
+                        <Link to={ROUTER_PATH.productList.extract} className="cr-button">
+                          Mua sắm ngay
+                        </Link>
                       </div>
                     </div>
+
                   </div>
                 </div>
               </div>

@@ -1,16 +1,20 @@
+import { IProductSubDetailReview } from '~/models';
+
 export interface CartDetailRequest {
   cartCode: string;
   products: CartProduct[];
 }
 
 export interface CartProduct {
-  productId: number;
+  productId?: number;
+  productSubDetailId?: number;
   productName?: string | any;
   thumbnailUrl?:string | any;
   originalPrice?: number | any;
   salePrice?: number | any;
   totalPrice?: number | any;
-  color: string;
-  size: string;
-  unit: number;
+  color?: string;
+  size?: string;
+  unit?: number;
+  review?: IProductSubDetailReview
 }

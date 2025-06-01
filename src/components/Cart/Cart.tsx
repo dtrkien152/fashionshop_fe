@@ -48,7 +48,7 @@ const Cart: React.FC<Props> = (props) => {
   const onRemoveFromCart = (productId: number, color: string, size: string) => {
     if (!cartCode) return;
     cartService.removeCartDetail(cartCode, productId, color, size).then(() => {
-      toast.success('Remove product in cart successfully!');
+      toast.success('Đã xóa sản phẩm khỏi giỏ hàng!');
       dispatch(removeFromCart({ productId, color, size }));
     });
   };
@@ -60,7 +60,7 @@ const Cart: React.FC<Props> = (props) => {
         <div className="cr-cart-inner">
           <div className="cr-cart-top">
             <div className="cr-cart-title">
-              <h6>My Cart</h6>
+              <h6>Giỏ hàng</h6>
               <button type="button" className="close-cart" onClick={props.onClose}>
                 ×
               </button>
@@ -88,23 +88,13 @@ const Cart: React.FC<Props> = (props) => {
                       {product.productName}
                     </Link>
                     <div className="cart_pro_desc">
-                      <div className="cr-pro-color">
-                        <ul className="cr-opt-swatch cr-change-img">
-                          <li className="active">
-                            <a className="cr-opt-clr-img">
-                              <span style={{ backgroundColor: product.color }}></span>
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
+                      <ul className="cr-opt-color">
+                        <li className="active">{product.color}</li>
+                      </ul>
                       <span>-</span>
-                      <div className="cr-pro-size">
-                        <ul className="cr-opt-size">
-                          <li className="active">
-                            <a className="cr-opt-sz">{product.size}</a>
-                          </li>
-                        </ul>
-                      </div>
+                      <ul className="cr-opt-size">
+                        <li className="active">{product.size}</li>
+                      </ul>
                     </div>
                     <span className="cart-price">
                       <span>{CurrencyUtils.formatCurrencyVND(product.salePrice)}</span>
@@ -167,16 +157,22 @@ const Cart: React.FC<Props> = (props) => {
               <table className="table cart-table">
                 <tbody>
                   <tr>
-                    <td className="text-left">Sub-Total :</td>
-                    <td className="text-right">{CurrencyUtils.formatCurrencyVND(totalPrice * 0.9)}</td>
+                    <td className="text-left">Giá sản phẩm :</td>
+                    <td className="text-right">
+                      {CurrencyUtils.formatCurrencyVND(totalPrice * 0.9)}
+                    </td>
                   </tr>
                   <tr>
-                    <td className="text-left">VAT (10%) :</td>
-                    <td className="text-right">{CurrencyUtils.formatCurrencyVND(totalPrice * 0.1)}</td>
+                    <td className="text-left">Thuế VAT (10%) :</td>
+                    <td className="text-right">
+                      {CurrencyUtils.formatCurrencyVND(totalPrice * 0.1)}
+                    </td>
                   </tr>
                   <tr>
-                    <td className="text-left">Total :</td>
-                    <td className="text-right primary-color">{CurrencyUtils.formatCurrencyVND(totalPrice)}</td>
+                    <td className="text-left">Tổng tiền:</td>
+                    <td className="text-right primary-color">
+                      {CurrencyUtils.formatCurrencyVND(totalPrice)}
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -189,7 +185,7 @@ const Cart: React.FC<Props> = (props) => {
                 }}
                 className="cr-button"
               >
-                View Cart
+                Xem giỏ hàng
               </a>
               <a
                 onClick={() => {
@@ -198,7 +194,7 @@ const Cart: React.FC<Props> = (props) => {
                 }}
                 className="cr-btn-secondary"
               >
-                Checkout
+                Thanh toán
               </a>
             </div>
           </div>

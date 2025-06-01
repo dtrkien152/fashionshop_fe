@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ROUTER_PATH } from '~/routes';
 import { CurrencyUtils } from '~/utils';
 import { OrderDto } from '~/dto';
+import { OrderStatusLabel } from '~/constants';
 
 interface Props {
   order: OrderDto;
@@ -12,8 +13,8 @@ const OrderItem: React.FC<Props> = (props) => {
   const navigate = useNavigate();
 
   const onNavigateOrderTracking = () => {
-    navigate(ROUTER_PATH.orderTracking.extract.replace(":code", props.order.code));
-  }
+    navigate(ROUTER_PATH.orderTracking.extract.replace(':code', props.order.code));
+  };
 
   return (
     <div className="cr-order-item">
@@ -22,10 +23,14 @@ const OrderItem: React.FC<Props> = (props) => {
           <div className="cr-sb-title">
             <h3 className="cr-sidebar-title">
               <span>
-                Mã đơn hàng: <span className="cr-order-code" onClick={() => onNavigateOrderTracking()}>#{props.order.code}</span>
+                Mã đơn hàng:{' '}
+                <span className="cr-order-code" onClick={() => onNavigateOrderTracking()}>
+                  #{props.order.code}
+                </span>
               </span>
               <span className="float-end">
-                Trạng thái: <span className="cr-order-status">{props.order.status}</span>
+                Trạng thái:{' '}
+                <span className="cr-order-status">{OrderStatusLabel[props.order.status]}</span>
               </span>
             </h3>
           </div>
@@ -64,23 +69,13 @@ const OrderItem: React.FC<Props> = (props) => {
                                 </Link>
                                 <div className="cr-cart-desc">
                                   Màu sắc:
-                                  <div className="cr-pro-color">
-                                    <ul className="cr-opt-swatch cr-change-img">
-                                      <li className="active">
-                                        <a className="cr-opt-clr-img">
-                                          <span style={{ backgroundColor: product.color }}></span>
-                                        </a>
-                                      </li>
-                                    </ul>
-                                  </div>
+                                  <ul className="cr-opt-color">
+                                    <li className="active">{product.color}</li>
+                                  </ul>
                                   Kích thước:
-                                  <div className="cr-pro-size">
-                                    <ul className="cr-opt-size">
-                                      <li className="active">
-                                        <a className="cr-opt-sz">{product.size}</a>
-                                      </li>
-                                    </ul>
-                                  </div>
+                                  <ul className="cr-opt-size">
+                                    <li className="active">{product.size}</li>
+                                  </ul>
                                 </div>
                               </div>
                             </div>
@@ -91,9 +86,13 @@ const OrderItem: React.FC<Props> = (props) => {
                   </table>
                 </div>
                 <div className="cr-checkout-summary-total">
-                  <span className="text-left">Total Amount</span>
+                  <span className="text-left">Tổng tiền</span>
                   <span className="text-right">
-                    {CurrencyUtils.formatCurrencyVND(1000000 + 30000 - 20000)}
+                    {CurrencyUtils.formatCurrencyVND(
+                      props.order.originTotalPrice +
+                        props.order.shipFee -
+                        props.order.voucherDiscountPrice
+                    )}
                   </span>
                 </div>
               </div>

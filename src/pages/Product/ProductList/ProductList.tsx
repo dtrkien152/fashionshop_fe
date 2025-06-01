@@ -2,9 +2,9 @@ import * as React from 'react';
 import { IProductItemResponse, IProductSearchParam } from '~/dto';
 import { useSearchParams } from 'react-router-dom';
 import { productService } from '~/services';
-import { CurrencyUtils } from '~/utils';
 import { CategorySelect } from '~/pages/Product/ProductList/components/CategorySelect.tsx';
 import { SORT_BY_ENUM } from '~/constants';
+import { ProductCard } from '~/components';
 
 const DEFAULT_SEARCH_PARAMS: IProductSearchParam = {
   keyword: null,
@@ -41,6 +41,7 @@ export const ProductList = () => {
 
   const fetchProducts = async () => {
     const params = buildSearchParams();
+    // @ts-ignore
     const model = { ...params, page: params.page + 1 };
     productService
       .search(model)
@@ -131,58 +132,8 @@ export const ProductList = () => {
               </div>
               <div className="row col-50 mb-minus-24">
                 {products.map((product: IProductItemResponse, index) => (
-                  <div
-                    key={index}
-                    className="col-lg-3 col-6 cr-product-box mb-24"
-                    data-product-id={product.id} // Gắn thuộc tính động vào thẻ div
-                  >
-                    <div className="cr-product-card">
-                      <div className="cr-product-image">
-                        <div className="cr-image-inner zoom-image-hover">
-                          <img src={product.thumbnailUrl} alt={product.productName} />
-                        </div>
-                        <div className="cr-side-view">
-                          <a href="#" className="wishlist" onClick={(e) => e.preventDefault()}>
-                            <i className="ri-heart-line"></i>
-                          </a>
-                          <a
-                            className="model-oraganic-product"
-                            data-bs-toggle="modal"
-                            href="#quickview"
-                            role="button"
-                            onClick={(e) => e.preventDefault()}
-                          >
-                            <i className="ri-eye-line"></i>
-                          </a>
-                        </div>
-                        <a className="cr-shopping-bag" href="#" onClick={(e) => e.preventDefault()}>
-                          <i className="ri-shopping-bag-line"></i>
-                        </a>
-                      </div>
-                      <div className="cr-product-details">
-                        <div className="cr-brand">
-                          <a href="#">{product.category}</a>
-                          <div className="cr-star">
-                            <i className="ri-star-fill"></i>
-                            <i className="ri-star-fill"></i>
-                            <i className="ri-star-fill"></i>
-                            <i className="ri-star-fill"></i>
-                            <i className="ri-star-line"></i>
-                            <p>(4.5)</p>
-                          </div>
-                        </div>
-                        <a href="#" className="title" onClick={(e) => e.preventDefault()}>
-                          {product.productName}
-                        </a>
-                        <p className="text">{product.productName}</p>
-                        <p className="cr-price">
-                          <span className="new-price">{CurrencyUtils.formatCurrencyVND(product.salePrice)}</span>{' '}
-                          <span className="old-price">
-                            {CurrencyUtils.formatCurrencyVND(product.originalPrice)}
-                          </span>
-                        </p>
-                      </div>
-                    </div>
+                  <div key={index} className="col-lg-3 col-6">
+                    <ProductCard product={product} />
                   </div>
                 ))}
               </div>

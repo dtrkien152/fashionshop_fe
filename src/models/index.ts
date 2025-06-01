@@ -23,3 +23,4 @@ export * from "./user_address.model";
 export * from "./user_voucher.model";
 export * from "./voucher.model";
 export * from "./ship_fee.model";
+export * from './product_sub_detail_review.model';

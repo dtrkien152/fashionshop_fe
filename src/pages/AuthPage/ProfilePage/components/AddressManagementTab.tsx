@@ -6,7 +6,6 @@ import AddressCreateModal from './AddressCreateModal';
 import userService from '~/services/user.service.ts';
 import { IUserAddress } from '~/models';
 
-
 const AddressManagementTab: React.FC = () => {
   const [addressData, setAddressData] = useState<IUserAddress[]>([]);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -63,55 +62,52 @@ const AddressManagementTab: React.FC = () => {
   return (
     <>
       <List
+        style={{ paddingTop: '24px' }}
         grid={{ gutter: 16, column: 1 }}
         dataSource={addressData}
         renderItem={(item) => (
           <List.Item key={item.id}>
             <Card style={{ width: '100%' }}>
-              <Row align="middle">
-                <Col flex="40px">
-                  <Radio
-                    checked={item.id === defaultAddressId}
-                    onChange={() => handleSetDefault(item.id)}
-                  />
-                </Col>
-                <Col flex="auto">
-                  <Row align="middle">
-                    <Col flex="25px">
-                      <EnvironmentOutlined style={{ fontSize: '20px', color: '#1890ff' }} />
-                    </Col>
-                    <Col flex="auto">
-                      <p style={{ margin: 0, fontWeight: 'bold' }}>
-                        {item.id === defaultAddressId && (
-                          <span style={{ color: 'gray', marginRight: '8px' }}>(Mặc định)</span>
-                        )}
-                        {item.addressName}
-                      </p>
-                      <p style={{ margin: 0, color: '#555' }}>{item.fullAddress}</p>
-                    </Col>
-                    <Space>
-                      <Button type="link" onClick={() => handleUpdateAddress(item)}>
-                        Sửa
+              <Flex align="baseline" gap={16}>
+                <Radio
+                  checked={item.id === defaultAddressId}
+                  onChange={() => handleSetDefault(item.id)}
+                />
+                <Row align="stretch">
+                  <Col flex="25px">
+                    <EnvironmentOutlined style={{ fontSize: '16px', color: '#1890ff' }} />
+                  </Col>
+                  <Col flex="auto">
+                    <p style={{ margin: 0, fontWeight: 'bold' }}>
+                      {item.id === defaultAddressId && (
+                        <span style={{ color: 'gray', marginRight: '8px' }}>(Mặc định)</span>
+                      )}
+                      {item.addressName}
+                    </p>
+                    <p style={{ margin: 0, color: '#555' }}>{item.fullAddress}</p>
+                  </Col>
+                  <Space>
+                    <Button type="link" onClick={() => handleUpdateAddress(item)}>
+                      Sửa
+                    </Button>
+                    <Popconfirm
+                      title="Bạn có chắc chắn muốn xóa địa chỉ này không?"
+                      onConfirm={() => handleDelete(item.id)}
+                      okText="Xóa"
+                      cancelText="Hủy"
+                    >
+                      <Button type="link" danger>
+                        Xóa
                       </Button>
-                      <Popconfirm
-                        title="Bạn có chắc chắn muốn xóa địa chỉ này không?"
-                        onConfirm={() => handleDelete(item.id)}
-                        okText="Xóa"
-                        cancelText="Hủy"
-                      >
-                        <Button type="link" danger>
-                          Xóa
-                        </Button>
-                      </Popconfirm>
-                    </Space>
-                  </Row>
-                </Col>
-              </Row>
+                    </Popconfirm>
+                  </Space>
+                </Row>
+              </Flex>
             </Card>
           </List.Item>
         )}
       />
-      <Flex align="center" justify="center">
+      <Flex align="center" justify="center" style={{ paddingBottom: '24px' }}>
         <Button type="dashed" onClick={handleCreateAddress}>
           Thêm địa chỉ mới
         </Button>

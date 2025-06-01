@@ -7,6 +7,7 @@ import { CurrencyUtils } from '~/utils';
 import { cartService } from '~/services';
 import toast from 'react-hot-toast';
 import { CartDetailRequest } from '~/dto';
+import * as React from 'react';
 
 const CartDetailPage = () => {
   const dispatch = useDispatch();
@@ -34,7 +35,7 @@ const CartDetailPage = () => {
   const onRemoveFromCart = (productId: number, color: string, size: string) => {
     if (!cartCode) return;
     cartService.removeCartDetail(cartCode, productId, color, size).then(() => {
-      toast.success('Remove product in cart successfully!');
+      toast.success('Đã xóa sản phẩm khỏi giỏ hàng!');
       dispatch(removeFromCart({ productId, color, size }));
     });
   };
@@ -59,11 +60,11 @@ const CartDetailPage = () => {
                           <table>
                             <thead>
                               <tr>
-                                <th>Product</th>
-                                <th>price</th>
-                                <th className="text-center">Quantity</th>
-                                <th>Total</th>
-                                <th>Action</th>
+                                <th>Sản phẩm</th>
+                                <th>Đơn giá</th>
+                                <th className="text-center">Số lượng</th>
+                                <th>Giá tiền</th>
+                                <th></th>
                               </tr>
                             </thead>
                             <tbody>
@@ -94,25 +95,13 @@ const CartDetailPage = () => {
                                         </Link>
                                         <div className="cr-cart-desc">
                                           Màu sắc:
-                                          <div className="cr-pro-color">
-                                            <ul className="cr-opt-swatch cr-change-img">
-                                              <li className="active">
-                                                <a className="cr-opt-clr-img">
-                                                  <span
-                                                    style={{ backgroundColor: product.color }}
-                                                  ></span>
-                                                </a>
-                                              </li>
-                                            </ul>
-                                          </div>
+                                          <ul className="cr-opt-color">
+                                            <li className="active">{product.color}</li>
+                                          </ul>
                                           Kích thước:
-                                          <div className="cr-pro-size">
-                                            <ul className="cr-opt-size">
-                                              <li className="active">
-                                                <a className="cr-opt-sz">{product.size}</a>
-                                              </li>
-                                            </ul>
-                                          </div>
+                                          <ul className="cr-opt-size">
+                                            <li className="active">{product.size}</li>
+                                          </ul>
                                         </div>
                                       </div>
                                     </div>
@@ -177,10 +166,10 @@ const CartDetailPage = () => {
                   <div className="col-lg-12">
                     <div className="cr-cart-update-bottom">
                       <Link to={ROUTER_PATH.home.extract} className="cr-links">
-                        Continue Shopping
+                        Tiếp tục mua sắm
                       </Link>
                       <Link to={ROUTER_PATH.checkout.extract} className="cr-button">
-                        Check Out
+                        Thanh toán
                       </Link>
                     </div>
                   </div>

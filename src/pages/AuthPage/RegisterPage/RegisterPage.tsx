@@ -1,6 +1,7 @@
 import React, {useState, ChangeEvent, FormEvent} from 'react';
 import authService from "~/services/auth.service.ts";
 import {useNavigate} from "react-router-dom";
+import { ValidationUtils } from '~/utils/validation.utils.ts';
 
 interface FormData {
     email: string;
@@ -24,10 +25,6 @@ const RegisterPage: React.FC = () => {
     const [errors, setErrors] = useState<FormErrors>({});
     const [apiError, setApiError] = useState<string>('');
 
-    // Kiểm tra định dạng email
-    const isValidEmail = (email: string): boolean =>
-        /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
     // Xử lý khi input thay đổi
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
@@ -42,7 +39,7 @@ const RegisterPage: React.FC = () => {
 
         if (!formData.email) {
             newErrors.email = 'Vui lòng nhập email.';
-        } else if (!isValidEmail(formData.email)) {
+        } else if (!ValidationUtils.isValidEmail(formData.email)) {
             newErrors.email = 'Email không đúng định dạng.';
         }
 
@@ -67,7 +64,7 @@ const RegisterPage: React.FC = () => {
         e.preventDefault(); // Chặn reload trang khi submit form
         if (!validateForm()) return;
         authService.register(formData.email, formData.password).then(() => {
-            alert('Đăng ký thành công! Mã kích hoạt sẽ được gửi đến account');
+            alert('Đăng ký thành công! Mã kích hoạt sẽ được gửi đến tài khoản');
             navigate('/login');
         }).catch((error) => {
         console.log('error', error);
@@ -100,7 +97,7 @@ const RegisterPage: React.FC = () => {
                             <div className="row">
                                 <div className="col-12">
                                     <div className="form-group">
-                                        <label>Email*</label>
+                                        <label className="required">Email</label>
                                         <input
                                             type="text"
                                             placeholder="Email"
@@ -115,7 +112,7 @@ const RegisterPage: React.FC = () => {
                                     </div>
 
                                     <div className="form-group">
-                                        <label>Mật khẩu*</label>
+                                        <label className="required">Mật khẩu</label>
                                         <input
                                             type="password"
                                             placeholder="Nhập mật khẩu"
@@ -130,7 +127,7 @@ const RegisterPage: React.FC = () => {
                                     </div>
 
                                     <div className="form-group">
-                                        <label>Xác nhận mật khẩu</label>
+                                        <label className="required">Xác nhận mật khẩu</label>
                                         <input
                                             type="password"
                                             placeholder="Xác nhận mật khẩu"
@@ -165,8 +162,6 @@ const RegisterPage: React.FC = () => {
         </div>
 
 </section>
-)
-    ;
-};
+)};
 
 export default RegisterPage;

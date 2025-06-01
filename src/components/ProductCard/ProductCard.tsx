@@ -1,15 +1,10 @@
 import * as React from 'react';
-import { useState } from 'react';
 import { IProductItemResponse } from '~/dto';
 import { useNavigate } from 'react-router-dom';
-import { CartDetailRequest, CartProduct } from '~/dto';
-import { useDispatch, useSelector } from 'react-redux';
-import { addToCart } from '~/redux';
 import { ROUTER_PATH } from '~/routes';
-import toast from 'react-hot-toast';
 import { CurrencyUtils } from '~/utils';
-import { cartService } from '~/services';
-import { RootState } from '~/redux/store.ts';
+import {OutOfStockTag} from "~/components/ProductCard/OutOfStockTag.tsx";
+import RatingStars from "~/components/ProductRating/RatingStars.tsx";
 
 interface Props {
   product: IProductItemResponse;
@@ -17,122 +12,55 @@ interface Props {
 
 const ProductCard: React.FC<Props> = ({ product }: Props) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { cartCode } = useSelector((state: RootState) => state.cart);
-  const [colorSelected, setColorSelected] = useState<string>(product.colors[0]);
-  const [sizeSelected, setSizeSelected] = useState<string>(product.size[0]);
-
-  const onClickAddToCard = () => {
-    const payload = {
-      products: [
-        {
-          productId: product.id,
-          color: colorSelected,
-          size: sizeSelected,
-          unit: 1
-        },
-      ],
-      cartCode: cartCode,
-    } as CartDetailRequest;
-    cartService.addToCartDetails(payload).then(() => {
-      const cartProduct: CartProduct = {
-        productId: product.id,
-        productName: product.productName,
-        thumbnailUrl: product.thumbnailUrl,
-        salePrice: product.salePrice,
-        originalPrice: product.originalPrice,
-        unit: 1,
-        color: colorSelected,
-        size: sizeSelected,
-      };
-      console.log(cartProduct);
-      dispatch(addToCart(cartProduct));
-      toast.success('Add product in cart successfully!');
-    });
-  };
 
   const handleNavigate = () => {
     navigate(ROUTER_PATH.productDetail.extract.replace(':id', product.id.toString()));
   };
 
   return (
-    <div className="product-card-2" onClick={handleNavigate} style={{ cursor: 'pointer' }}>
-      <div className="cr-product-inner">
-        <div className="cr-pro-image-outer">
-          <div className="cr-pro-image">
-            <div className="image">
-              <img className="main-image" src={product.thumbnailUrl} alt="Product" />
-              {/*<img className="hover-image" src={product?.images[1] || ''} alt="Product" />*/}
-            </div>
-            {product?.flag && (
-              <span className="flags">
-                <span className={product.flag.type}>{product.flag.value}</span>
-              </span>
-            )}
-            <div className="cr-pro-actions">
-              <a
-                className="model-oraganic-product"
-                data-bs-toggle="modal"
-                role="button"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <i className="ri-eye-line"></i>
-              </a>
-              <a
-                title="Add To Cart"
-                className="add-to-cart cr-shopping-bag"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onClickAddToCard();
-                }}
-              >
-                <i className="ri-shopping-cart-line"></i>
-              </a>
-              <a
-                className="cr-btn-group wishlist"
-                title="Wishlist"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <i className="ri-heart-line"></i>
-              </a>
-            </div>
+    <div
+      className="cr-product-box mb-24"
+      onClick={handleNavigate} style={{ cursor: 'pointer' }}
+    >
+      <div className="cr-product-card">
+        <div className="cr-product-image">
+          <div className="cr-image-inner zoom-image-hover">
+            <img src={product.thumbnailUrl} alt={product.productName} />
           </div>
+          {product.unitInStocks === 0 && <OutOfStockTag />}
+          {/*<div className="cr-side-view">*/}
+          {/*  <a href="#" className="wishlist" onClick={(e) => e.preventDefault()}>*/}
+          {/*    <i className="ri-heart-line"></i>*/}
+          {/*  </a>*/}
+          {/*  <a*/}
+          {/*    className="model-oraganic-product"*/}
+          {/*    data-bs-toggle="modal"*/}
+          {/*    href="#quickview"*/}
+          {/*    role="button"*/}
+          {/*    onClick={(e) => e.preventDefault()}*/}
+          {/*  >*/}
+          {/*    <i className="ri-eye-line"></i>*/}
+          {/*  </a>*/}
+          {/*</div>*/}
+          <a className="cr-shopping-bag" href="#" onClick={(e) => e.preventDefault()}>
+            <i className="ri-shopping-bag-line"></i>
+          </a>
         </div>
-        <div className="cr-pro-content">
-          <div className="cr-info">
-            <span>{product?.category}</span>
+        <div className="cr-product-details">
+          <div className="cr-brand">
+            <a href="#">{product.category}</a>
           </div>
-          <h5 className="cr-pro-title">
-            <span>{product?.productName}</span>
-          </h5>
-          <span className="cr-price">
-            <span className="new-price">{CurrencyUtils.formatCurrencyVND(product?.salePrice)}</span>
-            <span className="old-price">{CurrencyUtils.formatCurrencyVND(product?.originalPrice)}</span>
-          </span>
-          <div className="cr-pro-option">
-            <div className="cr-pro-color">
-              <ul className="cr-opt-swatch cr-change-img">
-                {product?.colors?.map((color, index) => (
-                  <li key={index} className={color === colorSelected ? 'active' : ''}>
-                    <a onClick={() => setColorSelected(color)} className="cr-opt-clr-img">
-                      <span style={{ backgroundColor: color }}></span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="cr-pro-size">
-              <ul className="cr-opt-size">
-                {product?.size?.map((size, index) => (
-                  <li key={index} className={size === sizeSelected ? 'active' : ''}>
-                    <a onClick={() => setSizeSelected(size)} className="cr-opt-sz">
-                      {size}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
+          <a style={{minHeight:48}} href="#" className="title max-2line" onClick={(e) => e.preventDefault()}>
+            {product.productName}
+          </a>
+
+          {/*<p className="text">{product.productName}</p>*/}
+          <p className="cr-price">
+            <span className="new-price">{CurrencyUtils.formatCurrencyVND(product.salePrice)}</span>{' '}
+            <span className="old-price">
+                            {CurrencyUtils.formatCurrencyVND(product.originalPrice)}
+                          </span>
+          </p>
         </div>
       </div>
     </div>

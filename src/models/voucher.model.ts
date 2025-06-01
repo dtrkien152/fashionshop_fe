@@ -1,9 +1,9 @@
 export interface IVoucher {
   id?: number;
-  code?: string;
-  triggerPrice?: number;
-  discountPercent?: number;
-  maxDiscountPrice?: number;
+  code: string;
+  triggerPrice: number;
+  discountPercent: number;
+  maxDiscountPrice: number;
   startAt?: Date;
   endAt?: Date;
   isActive?: boolean;

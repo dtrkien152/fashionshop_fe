@@ -98,3 +98,46 @@
     text-overflow: ellipsis;
     max-height: 6rem; /* Tuỳ chỉnh chiều cao tối đa */
 }
+
+
+.max-2line {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* Giới hạn 2 dòng */
+    overflow: hidden; /* Ẩn phần vượt quá */
+    text-overflow: ellipsis; /* Thêm dấu '...' */
+}
+.max-1line {
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical !important;
+    -webkit-line-clamp: 2 !important; /* Giới hạn 1 dòng */
+    overflow: hidden ; /* Ẩn phần vượt quá */
+    text-overflow: ellipsis !important; /* Thêm dấu '...' */
+}
+.cursor-pointer{
+    cursor: pointer;
+}
+.cursor-pointer :hover{
+    opacity: 0.8;
+}
+
+.half-star {
+    position: relative;
+    color: orange;
+}
+
+.half-star::before {
+    content: '\f47b'; /* remixicon: ri-fire-fill */
+    font-family: 'remixicon';
+    position: absolute;
+    width: 50%;
+    overflow: hidden;
+    color: orange;
+}
+
+.product-other-info {
+    white-space: pre-wrap;
+    line-height: 1.5;
+    font-size: 12px;
+}
+

@@ -1,7 +1,10 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import i18n from 'i18next';
+import { useDispatch } from 'react-redux';
+import { logout } from '~/redux';
+import { LocalStorageUtils } from '~/utils';
 
-export const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:5000';
+export const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 class Services {
   axios: any;
@@ -37,8 +40,10 @@ class Services {
     );
   }
 
-  attachTokenToHeader() {
-    const token = localStorage.getItem('token');
+  attachTokenToHeader(token?: string) {
+    if (!token) {
+      token = localStorage.getItem('token') as string;
+    }
     if (token) {
       this.interceptors = this.axios.interceptors.request.use(
         function (config: any) {
@@ -52,28 +57,22 @@ class Services {
     }
   }
 
-  attachTokenToHeaderCustom(token) {
-    if (token) {
-      this.interceptors = this.axios.interceptors.request.use(
-          function (config: any) {
-            config.headers.Authorization = `Bearer ${token}`;
-            return config;
-          },
-          function (error: any) {
-            return Promise.reject(error);
-          }
-      );
-    }
-  }
-
   removeInterceptors() {
     this.axios.interceptors.request.eject(this.interceptors);
   }
 
-  handleResponse(response: AxiosResponse, error: AxiosError, isSuccess: boolean): Promise<AxiosResponse> {
+  handleResponse(
+    response: AxiosResponse,
+    error: AxiosError,
+    isSuccess: boolean
+  ): Promise<AxiosResponse> {
     if (isSuccess) {
       return Promise.resolve(response);
     } else {
+      if (error.response && error.response.status === 401) {
+        LocalStorageUtils.clearUserStorage();
+        window.location.href = '/login';
+      }
       return Promise.reject(error.response);
     }
   }

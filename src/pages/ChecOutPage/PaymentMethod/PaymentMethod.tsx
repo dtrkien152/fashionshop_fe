@@ -1,30 +1,46 @@
 import * as React from 'react';
+import { PAYMENT_METHOD } from '~/constants';
 
-interface Props {}
+interface Props {
+  paymentMethod: PAYMENT_METHOD;
+  onBinding: (paymentMethod: PAYMENT_METHOD) => void;
+}
 
-const PaymentMethod: React.FC<Props> = () => {
+const PaymentMethod: React.FC<Props> = (props) => {
   return (
     <div className="cr-sidebar-wrap cr-checkout-pay-wrap">
       <div className="cr-sidebar-block">
         <div className="cr-sb-title">
-          <h3 className="cr-sidebar-title">Payment Method</h3>
+          <h3 className="cr-sidebar-title">Phương thức thanh toán</h3>
         </div>
         <div className="cr-sb-block-content">
           <div className="cr-checkout-pay">
             <div className="cr-pay-desc">
-              Please select the preferred payment method to use on this order.
+              Vui lòng chọn phương thức thanh toán mà bạn muốn sử dụng cho đơn hàng này.
             </div>
             <form action="#" className="payment-options">
               <span className="cr-pay-option">
                 <span>
-                  <input type="radio" id="pay1" name="payment-options" checked />
-                  <label htmlFor="pay1">Cash On Delivery</label>
+                  <input
+                    type="radio"
+                    id="pay1"
+                    name="payment-options"
+                    checked={props.paymentMethod === PAYMENT_METHOD.COD}
+                    onChange={() => props.onBinding(PAYMENT_METHOD.COD)}
+                  />
+                  <label htmlFor="pay1">Thanh toán khi nhận hàng</label>
                 </span>
               </span>
               <span className="cr-pay-option">
                 <span>
-                  <input type="radio" id="pay2" name="payment-options" disabled />
-                  <label htmlFor="pay2">VN-PAY</label>
+                  <input
+                    type="radio"
+                    id="pay2"
+                    name="payment-options"
+                    checked={props.paymentMethod === PAYMENT_METHOD.VNPAY}
+                    onChange={() => props.onBinding(PAYMENT_METHOD.VNPAY)}
+                  />
+                  <label htmlFor="pay2">Chuyển khoản VN-PAY</label>
                 </span>
               </span>
             </form>

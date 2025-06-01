@@ -2,47 +2,50 @@ import * as React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import { IMAGES } from '~/images';
+import { ROUTER_PATH } from '~/routes';
+import { Link } from 'react-router-dom';
 
 interface Props {}
 const ProductBanner: React.FC<Props> = () => {
   const banners = [
     {
       img: IMAGES.productBanner.image4,
-      title: 'Womens Summer Fashion',
+      title: 'Thời Trang Mùa Hè Dành Cho Nữ',
       discount: '25%',
-      text: 'on first order',
+      text: 'cho đơn hàng đầu tiên',
     },
     {
       img: IMAGES.productBanner.image5,
-      title: 'Cotton Jacket for mens',
+      title: 'Áo Khoác Cotton Dành Cho Nam',
       discount: '33%',
-      text: 'on first order',
+      text: 'cho đơn hàng đầu tiên',
     },
     {
       img: IMAGES.productBanner.image6,
-      title: 'Children Latest Fashion',
+      title: 'Thời Trang Mới Nhất Dành Cho Trẻ Em',
       discount: '15%',
-      text: 'on first order',
+      text: 'cho đơn hàng đầu tiên',
     },
     {
       img: IMAGES.productBanner.image4,
-      title: 'Womens Summer Fashion',
+      title: 'Thời Trang Mùa Hè Dành Cho Nữ',
       discount: '25%',
-      text: 'on first order',
+      text: 'cho đơn hàng đầu tiên',
     },
     {
       img: IMAGES.productBanner.image5,
-      title: 'Cotton Jacket for mens',
+      title: 'Áo Khoác Cotton Dành Cho Nam',
       discount: '33%',
-      text: 'on first order',
+      text: 'cho đơn hàng đầu tiên',
     },
     {
       img: IMAGES.productBanner.image6,
-      title: 'Children Latest Fashion',
+      title: 'Thời Trang Mới Nhất Dành Cho Trẻ Em',
       discount: '15%',
-      text: 'on first order',
+      text: 'cho đơn hàng đầu tiên',
     },
   ];
+
   return (
     <section className="section-product-banner padding-b-100">
       <div className="container">
@@ -70,13 +73,13 @@ const ProductBanner: React.FC<Props> = () => {
                         dangerouslySetInnerHTML={{ __html: banner.title.replace(' ', '<br />') }}
                       />
                       <p>
-                        <span className="percent">{banner.discount}</span> Off
+                        <span className="percent">{banner.discount}</span> Sale
                         <span className="text"> {banner.text}</span>
                       </p>
                       <div className="cr-product-banner-buttons">
-                        <a href="shop-left-sidebar.html" className="cr-button">
+                        <Link to={ROUTER_PATH.productList.extract} className="cr-button">
                           shop now
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>

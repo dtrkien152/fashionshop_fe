@@ -18,9 +18,9 @@ export const shipFeeService = {
     httpService.attachTokenToHeader();
     return httpService.get(BASE_URL + '/api/ship-fee');
   },
-  getFee: (price: number) => {
+  getFee: (wardCode?: string, districtId?: number) => {
     httpService.attachTokenToHeader();
-    return httpService.get(BASE_URL + '/api/ship-fee/calculator', {params: { price } });
+    return httpService.get(BASE_URL + '/api/ship-fee/calculator', {params: { wardCode, districtId } });
   },
 };
 export default shipFeeService;

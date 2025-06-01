@@ -1,11 +1,12 @@
 import { DefaultLayout } from '~/layouts';
 import {
   CartDetailPage,
-  CheckOutPage,
+  CheckOutPage, ForgotPasswordPage,
   HomePage,
   LoginPage,
   NotFoundPage, OrderListPage, OrderTrackingPage,
   RegisterPage,
+  ForgotPasswordPageChangePassword, VNPayResultsPage, PolicyPage,
 } from '~/pages';
 import ProductDetail from '~/pages/Product/ProductDetail/ProductDetail.tsx';
 import { ProductList } from '~/pages/Product/ProductList/ProductList.tsx';
@@ -44,6 +45,14 @@ export const ROUTER_PATH = {
     relative: 'login',
     extract: '/login',
   },
+  forgotPassword: {
+    relative: 'forgot-password',
+    extract: '/forgot-password',
+  },
+  forgotPasswordChangePassword: {
+    relative: 'forgot-password/change-password',
+    extract: '/forgot-password/change-password',
+  },
   register: {
     relative: 'register',
     extract: '/register',
@@ -71,6 +80,14 @@ export const ROUTER_PATH = {
   blogDetail: {
     relative: 'blogs/:code',
     extract: '/blogs/:code',
+  },
+  vnPayResults: {
+    relative: 'vnpay/results',
+    extract: '/vnpay/results',
+  },
+  policy: {
+    relative: 'policy',
+    extract: '/policy',
   }
 };
 
@@ -100,6 +117,14 @@ export const PUBLIC_ROUTERS: RouteItem[] = [
         component: OrderTrackingPage,
       },
       {
+        path: ROUTER_PATH.forgotPassword.relative,
+        component: ForgotPasswordPage,
+      },
+      {
+        path: ROUTER_PATH.forgotPasswordChangePassword.relative,
+        component: ForgotPasswordPageChangePassword,
+      },
+      {
         path: ROUTER_PATH.login.relative,
         component: LoginPage,
       },
@@ -122,7 +147,6 @@ export const PUBLIC_ROUTERS: RouteItem[] = [
         path: ROUTER_PATH.googleCallback.relative,
         component: GoogleCallback,
       },
-
       {
         path: ROUTER_PATH.blogList.relative,
         component: BlogList,
@@ -130,6 +154,14 @@ export const PUBLIC_ROUTERS: RouteItem[] = [
       {
         path: ROUTER_PATH.blogDetail.relative,
         component: BlogDetail,
+      },
+      {
+        path: ROUTER_PATH.vnPayResults.relative,
+        component: VNPayResultsPage,
+      },
+      {
+        path: ROUTER_PATH.policy.relative,
+        component: PolicyPage,
       },
     ],
   },

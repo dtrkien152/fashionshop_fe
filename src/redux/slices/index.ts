@@ -6,3 +6,5 @@ export * from './voucherSlice';
 export { default as voucherReducer } from './voucherSlice';
 export * from './cartSlice';
 export { default as cartReducer } from './cartSlice';
+export * from './siteSlice';
+export { default as siteReducer } from './siteSlice';

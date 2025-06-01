@@ -2,21 +2,23 @@ import {
   AccountInfo,
   BillingSummary,
   CustomerDetails,
-  DeliveryMethod,
-  OrderSummary, OrderVoucher,
+  OrderSummary,
+  OrderVoucher,
   PaymentMethod,
 } from '~/pages';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '~/redux/store.ts';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { orderService, shipFeeService } from '~/services';
-import { IShipFee } from '~/models';
+import { IVoucher } from '~/models';
 import { OrderCreateRequest, OrderProduct } from '~/dto';
-import { PAYMENT_STATUS, PAYMENT_TYPE } from '~/constants';
-import toast from 'react-hot-toast';
-import { resetCart } from '~/redux';
+import { PAYMENT_METHOD, PAYMENT_STATUS } from '~/constants';
 import { useNavigate } from 'react-router-dom';
+import { ValidationUtils } from '~/utils/validation.utils.ts';
 import { ROUTER_PATH } from '~/routes';
+import { resetCart } from '~/redux';
+import toast from 'react-hot-toast';
+import { OrderShippingModal } from '~/pages/ChecOutPage/OrderShippingModal';
 
 const CheckOutPage = () => {
   const dispatch = useDispatch();
@@ -30,25 +32,41 @@ const CheckOutPage = () => {
     fullName?: string;
     phone?: string;
     address?: string;
+    provinceId?: number;
+    districtId?: number;
+    wardCode?: string;
   }>({});
+  const [voucherSelected, setVoucherSelected] = useState<IVoucher | undefined>();
+  const [paymentMethod, setPaymentMethod] = useState<PAYMENT_METHOD>(PAYMENT_METHOD.COD);
+  const [confirmShipFeeOpen, setConfirmShipFeeOpen] = useState(false);
   const { isLoggedIn } = useSelector((state: RootState) => state.auth);
   const { cartCode } = useSelector((state: RootState) => state.cart);
   const { products } = useSelector((state: RootState) => state.cart);
 
-  const totalPrice = useMemo(
-    () => products.reduce((acc, cur) => acc + (cur.salePrice * cur.unit), 0),
+  const originTotalPrice = useMemo(
+    () => products.reduce((acc, cur) => acc + cur.salePrice * cur.unit, 0),
     [products]
   );
 
-  const [shipFee, setShipFee] = useState<IShipFee>();
+  const [shipFee, setShipFee] = useState<{ fee: number }>();
 
-  useEffect(() => {
-    shipFeeService.getFee(totalPrice).then((response) => {
-      setShipFee(response.data);
-    });
-  }, [totalPrice]);
+  // useEffect(() => {
+  //   shipFeeService.getFee(originTotalPrice).then((response) => {
+  //     setShipFee(response.data);
+  //   });
+  // }, [originTotalPrice]);
 
-  const onCreateOrder = () => {
+  const onCalculateFee = async () => {
+    if (!validateOrder()) return;
+    const shipFeeResponse = await shipFeeService.getFee(
+      customerInfo.wardCode,
+      customerInfo.districtId
+    );
+    setShipFee(shipFeeResponse.data);
+    setConfirmShipFeeOpen(true);
+  };
+
+  const onCreateOrder = async () => {
     if (!validateOrder()) return;
     const payload: OrderCreateRequest = {
       products: products.map((p0) => {
@@ -60,28 +78,37 @@ const CheckOutPage = () => {
         } as OrderProduct;
       }),
       payment: {
-        type: PAYMENT_TYPE.COD,
+        type: paymentMethod,
         status: PAYMENT_STATUS.PENDING,
       },
       customer: {
         name: customerInfo.fullName as string,
         address: customerInfo.address as string,
         phone: customerInfo.phone as string,
+        districtId: customerInfo.districtId as number,
+        wardCode: customerInfo.wardCode as string,
       },
-      siteId: 1,
-      cartCode
+      siteId: 0,
+      cartCode,
+      voucherCode: voucherSelected?.code,
     };
     const orderRequest =
       accountInfo.accountType === 'USER'
         ? orderService.createMyOrder(payload)
         : orderService.createOrder(payload, accountInfo?.email as string);
     orderRequest.then((response) => {
-      const code = response.data.code;
-      dispatch(resetCart());
-      toast.success(
-        `Đơn hàng ${code} của bạn đã được đặt thành công!`
-      );
-      navigate(ROUTER_PATH.orderTracking.extract.replace(":code", code));
+      switch (paymentMethod) {
+        case PAYMENT_METHOD.VNPAY:
+          const paymentUrl = response.data.paymentUrl as string;
+          window.location.href = paymentUrl;
+          break;
+        case PAYMENT_METHOD.COD:
+          const code = response.data.order.code;
+          dispatch(resetCart());
+          toast.success(`Đơn hàng ${code} của bạn đã được đặt thành công!`);
+          navigate(ROUTER_PATH.orderTracking.extract.replace(':code', code));
+          break;
+      }
     });
   };
 
@@ -94,7 +121,6 @@ const CheckOutPage = () => {
 
   const validateAccount = () => {
     let invalid = true;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (accountInfo.accountType === 'USER' && !isLoggedIn) {
       invalid = false;
       setError((error: any) => ({
@@ -110,7 +136,7 @@ const CheckOutPage = () => {
           account: 'Vui lòng nhập email để có thể tạo đơn hàng',
         }));
       }
-      if (accountInfo.email && !emailRegex.test(accountInfo.email)) {
+      if (accountInfo.email && !ValidationUtils.isValidEmail(accountInfo.email)) {
         invalid = false;
         setError((error: any) => ({
           ...error,
@@ -124,7 +150,6 @@ const CheckOutPage = () => {
   const validateCustomer = () => {
     console.log(customerInfo);
     let invalid = true;
-    const phoneRegex = /^(?:\+84|0)(3[2-9]|5[2689]|7[0-9]|8[1-9]|9[0-9])\d{6,7}$/;
     if (!customerInfo.fullName) {
       invalid = false;
       setError((error: any) => ({
@@ -139,7 +164,7 @@ const CheckOutPage = () => {
         phone: 'Vui lòng nhập số điện thoại',
       }));
     }
-    if (customerInfo.phone && !phoneRegex.test(customerInfo.phone)) {
+    if (customerInfo.phone && !ValidationUtils.isValidPhoneNumber(customerInfo.phone)) {
       invalid = false;
       setError((error: any) => ({
         ...error,
@@ -157,36 +182,53 @@ const CheckOutPage = () => {
   };
 
   return (
-    <section className="cr-checkout-section padding-tb-100">
-      <div className="container">
-        <div className="row">
-          <div className="cr-checkout-rightside col-lg-4 col-md-12">
-            <OrderSummary />
-            <OrderVoucher />
-            <DeliveryMethod shipFee={shipFee} />
-            <BillingSummary
-              totalPrice={totalPrice}
-              shipFeePrice={shipFee?.fee || 0}
-              voucherDiscountPrice={0}
-            />
-            <PaymentMethod />
-          </div>
-          <div className="cr-checkout-leftside col-lg-8 col-md-12 m-t-991">
-            <div className="cr-checkout-content">
-              <div className="cr-checkout-inner">
-                <AccountInfo error={error} setError={setError} onBinding={setAccountInfo} />
-                <CustomerDetails error={error} setError={setError} onBinding={setCustomerInfo} />
-                <span className="cr-check-order-btn">
-                  <a className="cr-button mt-30" onClick={onCreateOrder}>
-                    Place Order
-                  </a>
-                </span>
+    <>
+      <section className="cr-checkout-section padding-tb-100">
+        <div className="container">
+          <div className="row">
+            <div className="cr-checkout-rightside col-lg-4 col-md-12">
+              <OrderSummary />
+              <OrderVoucher
+                originTotalPrice={originTotalPrice}
+                onSelectVoucher={setVoucherSelected}
+              />
+              {/*<DeliveryMethod shipFee={shipFee} />*/}
+              <BillingSummary
+                originTotalPrice={originTotalPrice}
+                voucherDiscountPrice={
+                  voucherSelected
+                    ? Math.min(
+                        originTotalPrice * (voucherSelected.discountPercent / 100),
+                        voucherSelected.maxDiscountPrice
+                      )
+                    : 0
+                }
+              />
+              <PaymentMethod paymentMethod={paymentMethod} onBinding={setPaymentMethod} />
+            </div>
+            <div className="cr-checkout-leftside col-lg-8 col-md-12 m-t-991">
+              <div className="cr-checkout-content">
+                <div className="cr-checkout-inner">
+                  <AccountInfo error={error} setError={setError} onBinding={setAccountInfo} />
+                  <CustomerDetails error={error} setError={setError} onBinding={setCustomerInfo} />
+                  <span className="cr-check-order-btn">
+                    <a className="cr-button mt-30" onClick={onCalculateFee}>
+                      Đặt hàng
+                    </a>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+      <OrderShippingModal
+        open={confirmShipFeeOpen}
+        fee={shipFee?.fee}
+        onSave={() => onCreateOrder()}
+        onClose={() => setConfirmShipFeeOpen(false)}
+      />
+    </>
   );
 };
 export default CheckOutPage;

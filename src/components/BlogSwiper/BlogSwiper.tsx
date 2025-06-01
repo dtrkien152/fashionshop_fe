@@ -75,7 +75,7 @@ const BlogSwiper: React.FC = () => {
                         </Tooltip>
                       </h5>
                       <a className="read" href={`/blogs/${post.code}`}>
-                        Read More
+                        Xem thêm
                       </a>
                     </div>
                   </div>

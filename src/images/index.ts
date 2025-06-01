@@ -4,6 +4,9 @@ export const IMAGES = {
     android: new URL('~/assets/img/apps/android.png', import.meta.url).href,
     apple: new URL('~/assets/img/apps/android.png', import.meta.url).href,
   },
+  user:{
+    defaultAvatar:'https://static.vecteezy.com/system/resources/previews/009/734/564/original/default-avatar-profile-icon-of-social-media-user-vector.jpg',
+  },
   instagram: {
     image1: new URL('~/assets/img/insta/1.jpg', import.meta.url).href,
     image2: new URL('~/assets/img/insta/2.jpg', import.meta.url).href,
@@ -21,10 +24,6 @@ export const IMAGES = {
     image14: new URL('~/assets/img/insta/14.jpg', import.meta.url).href,
     image15: new URL('~/assets/img/insta/15.jpg', import.meta.url).href,
     image16: new URL('~/assets/img/insta/16.jpg', import.meta.url).href,
-    image17: new URL('~/assets/img/insta/17.jpg', import.meta.url).href,
-    image18: new URL('~/assets/img/insta/18.jpg', import.meta.url).href,
-    image19: new URL('~/assets/img/insta/19.jpg', import.meta.url).href,
-    image20: new URL('~/assets/img/insta/20.jpg', import.meta.url).href,
   },
   product: {
     image1: new URL('~/assets/img/product/1.jpg', import.meta.url).href,

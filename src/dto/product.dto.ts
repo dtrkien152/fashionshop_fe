@@ -1,4 +1,5 @@
 import { SORT_BY_ENUM } from '~/constants';
+import { IProductSubDetailReview } from '~/models';
 
 export interface IProductItemResponse {
   id: number;
@@ -6,6 +7,10 @@ export interface IProductItemResponse {
   productName: string;
   salePrice: number;
   originalPrice: number;
+  description: string;
+  unitOnOrder: string;
+  branch: string;
+  avgRating: number;
   flag: {
     type: 'sale' | 'new' | 'hot';
     value: string;
@@ -14,6 +19,8 @@ export interface IProductItemResponse {
   imageUrls: [string, string]; // Ảnh đầu là thumbnailUrl của product, ảnh sau là 1 ảnh của subproduct
   colors: string[]; // Các thuộc tính của subproduct
   size: string[]; // Các thuộc tính của subproduct
+  unitInStocks?:number;
+  averageRating?: number;
 }
 
 export interface IProductSearchParam {
@@ -29,7 +36,7 @@ export interface IProductSubDetailResponse {
   size: string;
   color: string;
   isActive: boolean;
-  totalQuantity: number;
+  unitInStocks: any;
 }
 
 export interface IProductDetailResponse {
@@ -40,8 +47,19 @@ export interface IProductDetailResponse {
   imageUrls?: string[];
   categoryId: number;
   salePrice: number;
+  brand?: string;
+  gender?: string;
+  weight?: string;
+  other_info?: string;
+  totalAvailable?: number;
   originalPrice: number;
   categoryName: string;
   unitOnOrder: number;
+  averageRating?: number;
+  category_name?: string;
   productSubDetails: IProductSubDetailResponse[] | [];
+}
+
+export interface IProductSubDetailReviewDto extends IProductSubDetailReview{
+  customerName?: number;
 }

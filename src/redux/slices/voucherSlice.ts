@@ -18,5 +18,5 @@ const voucherSlice = createSlice({
     }
   },
 });
-export const {  } = voucherSlice.actions;
+export const { setVouchers, addVoucher } = voucherSlice.actions;
 export default voucherSlice.reducer;

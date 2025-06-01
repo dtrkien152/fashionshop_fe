@@ -7,7 +7,10 @@ import { ORDER_STATUS, ORDER_STATUS_OPTIONS } from '~/constants';
 
 const OrderListPage = () => {
   const [orders, setOrders] = useState<OrderDto[]>([]);
-  const [filterCriteria, setFilterCriteria] = useState<OrderFilter>({});
+  const [filterCriteria, setFilterCriteria] = useState<OrderFilter>({
+    page: 1,
+    limit: 100,
+  });
 
   useEffect(() => {
     handleSearch();
@@ -23,7 +26,7 @@ const OrderListPage = () => {
 
   const handleSearch = () => {
     orderService.getAllMyOrders(filterCriteria).then((res) => {
-      setOrders(res.data);
+      setOrders(res.data.data);
     });
   };
 
@@ -31,13 +34,22 @@ const OrderListPage = () => {
     <div className="cr-order-list padding-tb-50">
       <div className="container">
         <div className="cr-status-tabs">
-          <a className={'cr-status-tab ' + (!filterCriteria.status ? 'active' : '')}
-             onClick={() => onChangeStatusFilter()}>Tất cả</a>
+          <a
+            className={'cr-status-tab ' + (!filterCriteria.status ? 'active' : '')}
+            onClick={() => onChangeStatusFilter()}
+          >
+            Tất cả
+          </a>
           {ORDER_STATUS_OPTIONS.map((status, index) => (
-            <a key={index}
-               className={'cr-status-tab ' + (filterCriteria.status === status.value ? 'active' : '')}
-               onClick={() => onChangeStatusFilter(status.value)}
-            >{status.label}</a>
+            <a
+              key={index}
+              className={
+                'cr-status-tab ' + (filterCriteria.status === status.value ? 'active' : '')
+              }
+              onClick={() => onChangeStatusFilter(status.value)}
+            >
+              {status.label}
+            </a>
           ))}
         </div>
         {/*<div className="title-2 mb-30">*/}
@@ -45,7 +57,7 @@ const OrderListPage = () => {
           <input
             className="search-input"
             type="search"
-            placeholder="Search For items..."
+            placeholder="Tìm kiếm sản phẩm..."
             value={filterCriteria.searchTerm}
             onChange={(e) =>
               setFilterCriteria((criteria) => ({ ...criteria, searchTerm: e.target.value }))
@@ -55,7 +67,9 @@ const OrderListPage = () => {
             className="form-select"
             aria-label="Select category"
             value={filterCriteria.searchBy}
-            onChange={(e) => setFilterCriteria((criteria) => ({ ...criteria, searchBy: e.target.value }))}
+            onChange={(e) =>
+              setFilterCriteria((criteria) => ({ ...criteria, searchBy: e.target.value }))
+            }
           >
             <option value="">Tìm kiếm điều kiện</option>
             <option value="code">Mã đơn hàng</option>

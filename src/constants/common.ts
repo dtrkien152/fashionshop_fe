@@ -22,6 +22,7 @@ export enum SORT_BY_ENUM {
 
 export enum ORDER_STATUS {
   PENDING = 'PENDING',
+  CANCEL = 'CANCEL',
   CONFIRMED = 'CONFIRMED',
   SHIPPING = 'SHIPPING',
   REJECTED = 'REJECTED',
@@ -37,12 +38,27 @@ export const ORDER_STATUS_OPTIONS: { label: string; value: ORDER_STATUS }[] = [
   { label: 'Trả hàng', value: ORDER_STATUS.RETURN },
 ];
 
-export enum PAYMENT_TYPE {
+export enum PAYMENT_METHOD {
   VNPAY = 'VNPAY',
   COD = 'COD',
 }
 
 export enum PAYMENT_STATUS {
   PENDING = 'PENDING',
-  CONFIRMED = 'CONFIRMED',
+  PAID = 'PAID',
 }
+
+export const OrderStatusLabel = {
+  PENDING: 'Chờ xác nhận',
+  CANCEL: 'Đã huỷ',
+  CONFIRMED: 'Xác nhận',
+  SHIPPING: 'Đang giao hàng',
+  REJECTED: 'Đơn từ chối',
+  COMPLETED: 'Hoàn thành',
+  RETURN: 'Hoàn hàng',
+};
+
+export const PaymentStatusLabel = {
+  PENDING: 'Chưa thanh toánn',
+  CONFIRMED: 'Đã thanh toán',
+};

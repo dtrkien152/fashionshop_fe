@@ -2,8 +2,8 @@ import * as React from 'react';
 import { CurrencyUtils } from '~/utils';
 
 interface Props {
-  totalPrice: number;
-  shipFeePrice: number;
+  originTotalPrice: number;
+  // shipFeePrice: number;
   voucherDiscountPrice: number;
 }
 
@@ -12,29 +12,39 @@ const BillingSummary: React.FC<Props> = (props) => {
     <div className="cr-sidebar-wrap">
       <div className="cr-sidebar-block">
         <div className="cr-sb-title">
-          <h3 className="cr-sidebar-title">Summary</h3>
+          <h3 className="cr-sidebar-title">Tóm tắt đơn hàng</h3>
         </div>
         <div className="cr-sb-block-content">
           <div className="cr-checkout-summary">
             <div>
-              <span className="text-left">Sub-Total</span>
-              <span className="text-right">{CurrencyUtils.formatCurrencyVND(props.totalPrice * 0.9)}</span>
+              <span className="text-left">Giá sản phẩm</span>
+              <span className="text-right">
+                {CurrencyUtils.formatCurrencyVND(props.originTotalPrice * 0.9)}
+              </span>
             </div>
             <div>
-              <span className="text-left">VAT (10%): </span>
-              <span className="text-right">{CurrencyUtils.formatCurrencyVND(props.totalPrice * 0.1)}</span>
+              <span className="text-left">Thuế VAT (10%) </span>
+              <span className="text-right">
+                {CurrencyUtils.formatCurrencyVND(props.originTotalPrice * 0.1)}
+              </span>
             </div>
+            {/*<div>*/}
+            {/*  <span className="text-left">Phí vận chuyển</span>*/}
+            {/*  <span className="text-right">{CurrencyUtils.formatCurrencyVND(props.shipFeePrice)}</span>*/}
+            {/*</div>*/}
             <div>
-              <span className="text-left">Delivery Charges</span>
-              <span className="text-right">{CurrencyUtils.formatCurrencyVND(props.shipFeePrice)}</span>
-            </div>
-            <div>
-              <span className="text-left">Voucher Charges</span>
-              <span className="text-right">{CurrencyUtils.formatCurrencyVND(props.voucherDiscountPrice)}</span>
+              <span className="text-left">Mã giảm giá</span>
+              <span className="text-right">
+                {CurrencyUtils.formatCurrencyVND(props.voucherDiscountPrice)}
+              </span>
             </div>
             <div className="cr-checkout-summary-total">
-              <span className="text-left">Total Amount</span>
-              <span className="text-right">{CurrencyUtils.formatCurrencyVND(props.totalPrice + props.shipFeePrice - props.voucherDiscountPrice)}</span>
+              <span className="text-left">Tổng tiền</span>
+              <span className="text-right">
+                {CurrencyUtils.formatCurrencyVND(
+                  props.originTotalPrice - props.voucherDiscountPrice
+                )}
+              </span>
             </div>
           </div>
         </div>

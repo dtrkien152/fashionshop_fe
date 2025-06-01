@@ -28,7 +28,7 @@ export const BlogCategoryNav: React.FC = () => {
   return (
     <li className="nav-item dropdown">
       <a className="nav-link dropdown-toggle" href="javascript:void(0)">
-        Blog
+        Tin tức
       </a>
       <ul className="dropdown-menu">
         {categories.length > 0 ? (

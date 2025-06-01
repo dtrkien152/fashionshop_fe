@@ -17,7 +17,7 @@ export const BreadcrumbComponent: React.FC<BreadcrumbProps> = ({ title, currentP
               <div className="cr-breadcrumb-title">
                 <h2>{title}</h2>
                 <span>
-                  <Link to={homePath}>Home</Link> - {currentPage}
+                  <Link to={homePath}>Trang chủ</Link> - {currentPage}
                 </span>
               </div>
             </div>
